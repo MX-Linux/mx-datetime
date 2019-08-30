@@ -94,7 +94,7 @@ void MXDateTime::on_btnReadRTC_clicked()
     const QString btext = ui->btnReadRTC->text();
     ui->btnReadRTC->setText(tr("Reading..."));
     QByteArray rtcout;
-    execute("/sbin/hwclock -D", &rtcout);
+    execute("/sbin/hwclock --verbose", &rtcout);
     isRTCUTC = rtcout.contains("\nHardware clock is on UTC time\n");
     if (isRTCUTC) ui->radRTCUTC->setChecked(true);
     else ui->radRTCLocal->setChecked(true);
@@ -106,7 +106,7 @@ void MXDateTime::on_btnReadRTC_clicked()
 void MXDateTime::on_btnSystemToRTC_clicked()
 {
     setClockLock(true);
-    if (execute("/sbin/hwclock -w")) {
+    if (execute("/sbin/hwclock --systohc")) {
         QMessageBox::information(this, windowTitle(), "Success.");
     } else {
         QMessageBox::warning(this, windowTitle(), "Failure.");
@@ -117,7 +117,7 @@ void MXDateTime::on_btnSystemToRTC_clicked()
 void MXDateTime::on_btnRTCToSystem_clicked()
 {
     setClockLock(true);
-    if (execute("/sbin/hwclock -s")) {
+    if (execute("/sbin/hwclock -hctosys")) {
         QMessageBox::information(this, windowTitle(), "Success.");
     } else {
         QMessageBox::warning(this, windowTitle(), "Failure.");

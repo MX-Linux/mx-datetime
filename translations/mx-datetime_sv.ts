@@ -135,6 +135,7 @@
     </message>
     <message>
         <location filename="../datetime.cpp" line="268"/>
+        <location filename="../datetime.cpp" line="282"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -149,13 +150,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="291"/>
+        <location filename="../datetime.cpp" line="296"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="309"/>
+        <location filename="../datetime.cpp" line="315"/>
         <source>MX Date \&amp; Time Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <location filename="../main.cpp" line="45"/>
+        <source>You must run this program as root.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

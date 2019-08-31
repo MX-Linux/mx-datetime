@@ -16,8 +16,10 @@
 // This file is part of mx-datetime.
 
 #include "datetime.h"
+#include <unistd.h>
 #include <QApplication>
 #include <QIcon>
+#include <QMessageBox>
 #include <QTranslator>
 
 int main(int argc, char *argv[])
@@ -33,8 +35,14 @@ int main(int argc, char *argv[])
     appTran.load(QString("mx-datetime_") + QLocale::system().name(), "/usr/share/mx-datetime/locale");
     a.installTranslator(&appTran);
 
-    MXDateTime w;
-    w.show();
-
-    return a.exec();
+    if (getuid() == 0) {
+        MXDateTime w;
+        w.show();
+        return a.exec();
+    } else {
+        QApplication::beep();
+        QMessageBox::critical(0, QString::null,
+                              QApplication::tr("You must run this program as root."));
+        return 1;
+    }
 }

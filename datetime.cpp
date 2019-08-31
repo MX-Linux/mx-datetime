@@ -276,7 +276,7 @@ void MXDateTime::on_btnAbout_clicked()
         QByteArray user;
         execute("logname", &user);
         user = user.trimmed();
-        QString env_run = "su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ")";
+        QString env_run = "su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") ";
         if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
             system("mx-viewer " + url.toUtf8() + " " + tr("License").toUtf8() + "&");
         } else {
@@ -312,7 +312,7 @@ void MXDateTime::on_btnHelp_clicked()
     user = user.trimmed();
     QString exec = "su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open";
     if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
-        exec = "mx-viewer"; // mx-viwer drops rights, no need to run as user
+        exec = "mx-viewer"; // mx-viewer drops rights, no need to run as user
         url += " " + tr("MX Date \\& Time Help");
     }
     QString cmd = QString(exec + " " + url + "\"&");

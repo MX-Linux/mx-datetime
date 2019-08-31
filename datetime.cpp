@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include "datetime.h"
 #include "ui_datetime.h"
+#include "version.h"
 
 MXDateTime::MXDateTime(QWidget *parent) :
     QDialog(parent),
@@ -252,4 +253,62 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     if (output) *output = proc.readAllStandardOutput();
     qDebug() << "Execute" << cmd;
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
+}
+
+void MXDateTime::on_btnAbout_clicked()
+{
+    this->hide();
+    QString url = "file:///usr/share/doc/mx-time-date/license.html";
+    QMessageBox msgBox(QMessageBox::NoIcon,
+                       tr("About MX Time & Date"), "<p align=\"center\"><b><h2>" +
+                       tr("MX Time & Date") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
+                       tr("GUI program for setting the time and date in MX Linux") +
+                       "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
+                       tr("Copyright (c) MX Linux") + "<br /><br /></p>");
+    QPushButton *btnLicense = msgBox.addButton(tr("License"), QMessageBox::HelpRole);
+    QPushButton *btnChangelog = msgBox.addButton(tr("Changelog"), QMessageBox::HelpRole);
+    QPushButton *btnCancel = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
+    btnCancel->setIcon(QIcon::fromTheme("window-close"));
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == btnLicense) {
+        if (system("command -v mx-viewer") == 0) {
+            system("mx-viewer " + url.toUtf8());
+        } else {
+            system("xdg-open " + url.toUtf8());
+        }
+    } else if (msgBox.clickedButton() == btnChangelog) {
+        QDialog *changelog = new QDialog(this);
+        changelog->resize(600, 500);
+
+        QTextEdit *text = new QTextEdit;
+        text->setReadOnly(true);
+        QByteArray rtcout;
+        execute("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()  + "/changelog.gz", &rtcout);
+        text->setText(rtcout);
+
+        QPushButton *btnClose = new QPushButton(tr("&Close"));
+        btnClose->setIcon(QIcon::fromTheme("window-close"));
+        connect(btnClose, &QPushButton::clicked, changelog, &QDialog::close);
+
+        QVBoxLayout *layout = new QVBoxLayout;
+        layout->addWidget(text);
+        layout->addWidget(btnClose);
+        changelog->setLayout(layout);
+        changelog->exec();
+    }
+    this->show();
+}
+
+void MXDateTime::on_btnHelp_clicked()
+{
+    QString url = "/usr/share/doc/mx-time-date/help/mx-time-date.html";
+    QString cmd;
+    if (system("command -v mx-viewer") == 0) {
+        cmd = QString("mx-viewer " + url + " " + tr("MX Time & Date Help"));
+    } else {
+        cmd = QString("xdg-open " + url);
+    }
+    system(cmd.toUtf8());
 }

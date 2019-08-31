@@ -1,0 +1,49 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Sat, 31 Aug 2019 01:46:35 -0400
+Source: mx-datetime
+Binary: mx-datetime mx-datetime-dbgsym
+Architecture: source amd64
+Version: 0.19.8
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date and Time
+Changes:
+ mx-datetime (0.19.8) mx; urgency=medium
+ .
+   * initial release
+Checksums-Sha1:
+ d487ae5d9f6c6b363417c813b824ba4cbcd820ab 1123 mx-datetime_0.19.8.dsc
+ 75062d7b44b257fe66747fdbf37a484f85aef59f 22424 mx-datetime_0.19.8.tar.xz
+ 17f0315c84ec6920ec6ae45c6d51369fdc224f23 762544 mx-datetime-dbgsym_0.19.8_amd64.deb
+ 0a06fe17fdf104f1e07dca292ba5bb77a3906cce 10529 mx-datetime_0.19.8_amd64.buildinfo
+ 1b01df7d75bdeecd2c862012c87a875f386fee01 40360 mx-datetime_0.19.8_amd64.deb
+Checksums-Sha256:
+ 5e074e3ee004bafd0cf8929ea1dab5dad91bb06c7a8bbb7cd56e0b7b25b2cd02 1123 mx-datetime_0.19.8.dsc
+ 775c07585b18a280fc542f470c39b45236c77bce5e5c805f7a23d240adc11ed4 22424 mx-datetime_0.19.8.tar.xz
+ 1f5d5343fa12a6d2e17e569dce97570ba7d1d35ca46566be0536c61f0df8a54c 762544 mx-datetime-dbgsym_0.19.8_amd64.deb
+ 08ec1d19adc6e88862caff33470da16d2b22bcfcf7445b74c54581289e3f1723 10529 mx-datetime_0.19.8_amd64.buildinfo
+ 7a79356eeea528342974032277755a76dd356a7f8746a656cb76275d588f1315 40360 mx-datetime_0.19.8_amd64.deb
+Files:
+ 03f6a672a05e8a4f94d52748699a4a63 1123 admin optional mx-datetime_0.19.8.dsc
+ 7120e22ddcd05727c1665a8ac17af5a1 22424 admin optional mx-datetime_0.19.8.tar.xz
+ 32be55b0e99a7d5827ed61748ccf31dd 762544 debug optional mx-datetime-dbgsym_0.19.8_amd64.deb
+ 777219ef88aedff4d9ccf6657797dce5 10529 admin optional mx-datetime_0.19.8_amd64.buildinfo
+ c476fc17a0352e5e068c537ebfde405c 40360 admin optional mx-datetime_0.19.8_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1qDj4THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumB79CACfcJAHmWXLwHvaVJOw164u/Vv1GJGQ
+ca4gOY9wAc7CDXiHb6BAOf1ImyRTjM0iDNedUInD5Y0pmGtoE0yecw3Tite7FaBT
+ZMNwINS/77k9EzfsIHOYT4gzcIhlWSl9xaONPOghs3/1BL7qV7JjgJl5NG9Z74oO
+/pmg5f7pQvi7egZ6EGRfmHYVMf5ksh3u1Zb2tx6sI9AOhWzzMUPrzOylC5BH28/p
+OVBKZSUpmiXhmT/W9krhQtSrtAIDcPo0WZR8i0lJPR3TEbQGJEG6jRk74v6M1v7M
+/YnKdu9/KPridVSbLOrW+HYE7laFJ0tUjjdhJ0eSAP4DeMnaY3bcGMx/
+=J+JO
+-----END PGP SIGNATURE-----

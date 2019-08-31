@@ -17,10 +17,22 @@
 
 #include "datetime.h"
 #include <QApplication>
+#include <QIcon>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setWindowIcon(QIcon::fromTheme("mx-datetime"));
+
+    QTranslator qtTran;
+    qtTran.load(QString("qt_") + QLocale::system().name());
+    a.installTranslator(&qtTran);
+
+    QTranslator appTran;
+    appTran.load(QString("mx-datetime_") + QLocale::system().name(), "/usr/share/mx-datetime/locale");
+    a.installTranslator(&appTran);
+
     MXDateTime w;
     w.show();
 

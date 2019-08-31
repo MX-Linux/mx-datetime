@@ -258,10 +258,10 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 void MXDateTime::on_btnAbout_clicked()
 {
     this->hide();
-    QString url = "file:///usr/share/doc/mx-time-date/license.html";
+    QString url = "file:///usr/share/doc/mx-datetime/license.html";
     QMessageBox msgBox(QMessageBox::NoIcon,
-                       tr("About MX Time & Date"), "<p align=\"center\"><b><h2>" +
-                       tr("MX Time & Date") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
+                       tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" +
+                       tr("MX Date & Time") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
                        tr("GUI program for setting the time and date in MX Linux") +
                        "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
                        tr("Copyright (c) MX Linux") + "<br /><br /></p>");
@@ -303,10 +303,10 @@ void MXDateTime::on_btnAbout_clicked()
 
 void MXDateTime::on_btnHelp_clicked()
 {
-    QString url = "/usr/share/doc/mx-time-date/help/mx-time-date.html";
+    QString url = "/usr/share/doc/mx-datetime/help/mx-datetime.html";
     QString cmd;
     if (system("command -v mx-viewer") == 0) {
-        cmd = QString("mx-viewer " + url + " " + tr("MX Time & Date Help"));
+        cmd = QString("mx-viewer " + url + " " + tr("MX Date \\& Time Help"));
     } else {
         cmd = QString("xdg-open " + url);
     }

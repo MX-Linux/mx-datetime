@@ -1,0 +1,17 @@
+Source: mx-datetime
+Section: admin
+Priority: optional
+Maintainer: Adrian <adrian@mxlinux.org>
+Build-Depends: debhelper (>=9.2), 
+	qt5-default, 
+	qttools5-dev-tools
+Standards-Version: 3.9.8
+
+Package: mx-datetime
+Architecture: any
+Depends: gzip,
+         xdg-utils | mx-viewer,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: MX Date and Time
+ Program for changing the date and time settings

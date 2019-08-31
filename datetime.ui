@@ -37,7 +37,7 @@
        <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="autoDefault">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -320,7 +320,7 @@
        <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="autoDefault">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -361,7 +361,7 @@
        <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="autoDefault">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>

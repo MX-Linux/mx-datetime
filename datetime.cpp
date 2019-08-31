@@ -30,7 +30,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
 {
     ui->setupUi(this);
     QTextCharFormat tcfmt;
-    tcfmt.setFontPointSize(8.0);
+    tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
     ui->calendar->setHeaderTextFormat(tcfmt);
 
     is_systemd = (QFileInfo("/usr/bin/timedatectl").isExecutable()

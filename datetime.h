@@ -38,9 +38,8 @@ public:
 
 private slots:
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
-    void on_btnCancel_clicked();
+    void on_btnClose_clicked();
     void on_btnApply_clicked();
-    void on_btnOK_clicked();
     void on_calendar_clicked(const QDate &date);
     void on_btnReadRTC_clicked();
     void on_btnSystemToRTC_clicked();

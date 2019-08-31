@@ -139,51 +139,12 @@ void MXDateTime::on_btnSyncNTP_clicked()
     setClockLock(false);
 }
 
-void MXDateTime::on_btnCancel_clicked()
+void MXDateTime::on_btnClose_clicked()
 {
     qApp->exit(0);
 }
 
 void MXDateTime::on_btnApply_clicked()
-{
-    saveSysTimeConfig();
-    // Refresh the UI with newly set values
-    loadSysTimeConfig();
-}
-
-void MXDateTime::on_btnOK_clicked()
-{
-    saveSysTimeConfig();
-    qApp->exit();
-}
-
-// SYSTEM TIME CONFIGURATION MANAGEMENT
-
-void MXDateTime::loadSysTimeConfig()
-{
-    QFile file("/etc/timezone");
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        const QString line(file.readLine().trimmed());
-        ixTimeZone = ui->cmbTimeZone->findText(line);
-        ui->cmbTimeZone->setCurrentIndex(ixTimeZone);
-        file.close();
-    }
-
-    enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
-    ui->chkNTP->setChecked(enabledNTP);
-    if (!(is_systemd || is_openrc)) ui->chkNTP->setEnabled(false);
-    on_btnReadRTC_clicked();
-
-    timer = new QTimer(this);
-    timeDelta = 0;
-    secUpdating = true;
-    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime());
-    timeChanged = false;
-    timer->start(1000 - QTime::currentTime().msec());
-}
-
-void MXDateTime::saveSysTimeConfig()
 {
     // Set the date, and optionally, the time
     if (timeDelta) {
@@ -237,9 +198,36 @@ void MXDateTime::saveSysTimeConfig()
         }
         execute("/sbin/hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
     }
+
+    // Refresh the UI with newly set values
+    loadSysTimeConfig();
 }
 
 // HELPER FUNCTIONS
+
+void MXDateTime::loadSysTimeConfig()
+{
+    QFile file("/etc/timezone");
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        const QString line(file.readLine().trimmed());
+        ixTimeZone = ui->cmbTimeZone->findText(line);
+        ui->cmbTimeZone->setCurrentIndex(ixTimeZone);
+        file.close();
+    }
+
+    enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+    ui->chkNTP->setChecked(enabledNTP);
+    if (!(is_systemd || is_openrc)) ui->chkNTP->setEnabled(false);
+    on_btnReadRTC_clicked();
+
+    timer = new QTimer(this);
+    timeDelta = 0;
+    secUpdating = true;
+    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
+    ui->timeEdit->setDateTime(QDateTime::currentDateTime());
+    timeChanged = false;
+    timer->start(1000 - QTime::currentTime().msec());
+}
 
 void MXDateTime::setClockLock(bool locked)
 {
@@ -247,8 +235,7 @@ void MXDateTime::setClockLock(bool locked)
     ui->tabDateTime->setDisabled(locked);
     ui->tabSync->setDisabled(locked);
     ui->btnApply->setDisabled(locked);
-    ui->btnOK->setDisabled(locked);
-    ui->btnCancel->setDisabled(locked);
+    ui->btnClose->setDisabled(locked);
     if (!locked) qApp->restoreOverrideCursor();
 }
 

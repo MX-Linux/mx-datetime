@@ -1,5 +1,5 @@
 mx-datetime		usr/bin
 mx-datetime.desktop	usr/share/applications
-images/mx-datetime.png	usr/share/icons/hicolor/64x64/apps
+images/mx-datetime.svg	usr/share/icons/hicolor/scalable/apps
 license.html            usr/share/doc/mx-datetime
 translations/*.qm	usr/share/mx-datetime/locale

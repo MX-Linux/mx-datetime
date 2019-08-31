@@ -257,7 +257,6 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 
 void MXDateTime::on_btnAbout_clicked()
 {
-    this->hide();
     QString url = "/usr/share/doc/mx-datetime/license.html";
     QMessageBox msgBox(QMessageBox::NoIcon,
                        tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" +
@@ -303,7 +302,6 @@ void MXDateTime::on_btnAbout_clicked()
         changelog->setLayout(layout);
         changelog->exec();
     }
-    this->show();
 }
 
 void MXDateTime::on_btnHelp_clicked()

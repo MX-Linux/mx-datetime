@@ -53,12 +53,13 @@ void ClockFace::paintEvent(QPaintEvent *)
     };
     // Colour calculations.
     QColor colNumbers = palette().text().color();
-    QColor colHour = palette().foreground().color();
-    colHour.setAlpha(150);
+    colNumbers.setAlpha(150);
+    QColor colHour = colNumbers;
     QColor colMinute = colHour;
     QColor colSecond = colMinute;
     colHour.setRed(255 - colHour.red());
     colMinute.setBlue(255 - colSecond.blue());
+    colSecond.setGreen(255 - colSecond.green());
 
     // Paint the clock.
     QPainter painter(this);

@@ -12,3 +12,6 @@ SOURCES += main.cpp datetime.cpp \
 HEADERS += datetime.h \
     clockface.h
 FORMS += datetime.ui
+
+RESOURCES += \
+    images.qrc

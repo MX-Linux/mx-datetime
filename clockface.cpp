@@ -52,6 +52,7 @@ void ClockFace::paintEvent(QPaintEvent *)
         QPoint(98, 0), QPoint(93, -2)
     };
     // Colour calculations.
+    QColor colNumbers = palette().text().color();
     QColor colHour = palette().foreground().color();
     colHour.setAlpha(150);
     QColor colMinute = colHour;
@@ -65,6 +66,18 @@ void ClockFace::paintEvent(QPaintEvent *)
     painter.translate(width() / 2, height() / 2);
     const int side = qMin(width(), height());
     painter.scale(side / 200.0, side / 200.0);
+    // Numbers.
+    painter.save();
+    painter.setBrush(colNumbers);
+    for (int ixi = 0; ixi < 12; ++ixi) {
+        static const char *numerals[] = {
+            "I", "II", "III", "IV", "V", "VI",
+            "VII", "VIII", "IX", "X", "XI", "XII"
+        };
+        painter.rotate(30.0);
+        painter.drawText(-12, -87, 24, 12, Qt::AlignCenter, numerals[ixi]);
+    }
+    painter.restore();
     // Hour hand.
     painter.setPen(colHour.darker());
     painter.setBrush(colHour);

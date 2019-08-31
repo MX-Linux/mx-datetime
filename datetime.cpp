@@ -258,7 +258,7 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 void MXDateTime::on_btnAbout_clicked()
 {
     this->hide();
-    QString url = "file:///usr/share/doc/mx-datetime/license.html";
+    QString url = "/usr/share/doc/mx-datetime/license.html";
     QMessageBox msgBox(QMessageBox::NoIcon,
                        tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" +
                        tr("MX Date & Time") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
@@ -273,10 +273,15 @@ void MXDateTime::on_btnAbout_clicked()
     msgBox.exec();
 
     if (msgBox.clickedButton() == btnLicense) {
-        if (system("command -v mx-viewer") == 0) {
-            system("mx-viewer " + url.toUtf8());
+        QString url = "/usr/share/doc/mx-datetime/license.html";
+        QByteArray user;
+        execute("logname", &user);
+        user = user.trimmed();
+        QString env_run = "su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ")";
+        if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
+            system(env_run.toUtf8() + "mx-viewer " + url.toUtf8() + " " + tr("License").toUtf8() + "\"&");
         } else {
-            system("xdg-open " + url.toUtf8());
+            system(env_run.toUtf8() + "xdg-open " + url.toUtf8() + "\"&");
         }
     } else if (msgBox.clickedButton() == btnChangelog) {
         QDialog *changelog = new QDialog(this);
@@ -304,11 +309,14 @@ void MXDateTime::on_btnAbout_clicked()
 void MXDateTime::on_btnHelp_clicked()
 {
     QString url = "/usr/share/doc/mx-datetime/help/mx-datetime.html";
-    QString cmd;
-    if (system("command -v mx-viewer") == 0) {
-        cmd = QString("mx-viewer " + url + " " + tr("MX Date \\& Time Help"));
-    } else {
-        cmd = QString("xdg-open " + url);
+    QString exec = "xdg-open";
+    if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
+        exec = "mx-viewer";
+        url += " " + tr("MX Date \\& Time Help");
     }
+    QByteArray user;
+    execute("logname", &user);
+    user = user.trimmed();
+    QString cmd = QString("su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " + exec + " " + url + "\"&");
     system(cmd.toUtf8());
 }

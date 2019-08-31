@@ -40,11 +40,6 @@ CMakeLists.txt.user*
 # Debian debhelper folder
 debian/.debhelper/
 
-# Exclude debian folder, each distro will use custom debian configuration
-debian
-
 # Exclude binary
 mx-datetime
 
-# Exclude build folder
-debs

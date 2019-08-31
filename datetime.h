@@ -45,9 +45,7 @@ private slots:
     void on_btnSystemToRTC_clicked();
     void on_btnRTCToSystem_clicked();
     void on_btnSyncNTP_clicked();
-
     void on_btnAbout_clicked();
-
     void on_btnHelp_clicked();
 
 private:

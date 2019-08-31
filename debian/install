@@ -1,0 +1,5 @@
+mx-datetime		usr/bin
+mx-datetime.desktop	usr/share/applications
+images/mx-datetime.png	usr/share/icons/hicolor/96x96/apps
+license.html            usr/share/doc/mx-datetime
+translations/*.qm	usr/share/mx-datetime/locale

@@ -12,20 +12,20 @@ Build-Depends: debhelper (>= 9.2), qt5-default, qttools5-dev-tools
 Package-List:
  mx-datetime deb admin optional arch=any
 Checksums-Sha1:
- 3b06bccd8ed84bb7a4cae4c1b231245442700e7c 22680 mx-datetime_0.19.8.tar.xz
+ 03e55a4ff89a4e01a9d984fdd6d87a1edc3c5ef7 21148 mx-datetime_0.19.8.tar.xz
 Checksums-Sha256:
- a09a8e6789d24be1e2d3086318784f926037c10e11ee81a0124a6751a1919ea1 22680 mx-datetime_0.19.8.tar.xz
+ a91968d199067ca2f16988e78c9f912506ebb2c7f217c572384e41007c35387e 21148 mx-datetime_0.19.8.tar.xz
 Files:
- f83913e1cf8aecafe9c37b0aa7e45471 22680 mx-datetime_0.19.8.tar.xz
+ 7883cc9290cf93e03b1048d3f8341af7 21148 mx-datetime_0.19.8.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1qHCUTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumKp4B/9/GTSONq7pmE3gQKGV2/iqLGCQwa0r
-a/t7fXk0I7wFs4TUMSNoZOpLBzUieIAKaMUoUwIB8OBOnSKGRyDZhge8uFqeK3Ra
-imghIiYa5liKeCwHqIO2kCrB8LCIBPpl/wQ81TN/IlYPJAocqdWf3nqV278kHqLr
-7AE7Tuh6MO/FqQWeGR6ARzHTXS/JHa3/cDleGZVkQ2FzwAlwNlhwezZJdUG/kMS4
-mxBmBo1Yute6iSx3ONddIFZqTuVYc64mEy1gUGEy3jDf7I1ia9QI6LdcVwpf/J+b
-wjSvH6wtpKtSIIqYBKDDTNDyabc8jRCX7BS1BN7LRhu7JBkP2CqHoAdZ
-=7GG0
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1qqYETHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumGfjB/9p/HhNuyYpncBUe3tWjm8st7VfnHXd
+B0AM6lijaCgN2YBg/iIsgb+bCfAOnIsHBKTcUKIze++GA5MSqQ3D2+kQUpo6DprM
+Zi3qcWZ8Bps/7NY5U8PJpKdLmoGX+8k2E0fEGCCSAdbsEAxMJTKrxkDQXrwyfIJQ
+Dv87vBSl0/i+whVdWXjIEh95tN3rfFNaEl/xSutFs2b9Wq5uNCiHnNNQU3gVvoHl
+fzPSyVCQjMzGLWdKPBGNVNuTgDtvXZCCY0fW3S5ql1QPQbRduLNvXiBZqLjUQ9Hy
+hAhN1Z9CJREwb/7+MCc4EbVlGn+fJXu4MPWw3qUpXz+HfBEYSBK/hOzW
+=D5xN
 -----END PGP SIGNATURE-----

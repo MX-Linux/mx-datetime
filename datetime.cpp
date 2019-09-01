@@ -147,21 +147,10 @@ void MXDateTime::on_btnClose_clicked()
 
 void MXDateTime::on_btnApply_clicked()
 {
-    // Set the date, and optionally, the time
-    if (timeDelta) {
-        QString cmd;
-        if (is_systemd) cmd = "timedatectl set-time ";
-        else cmd = "date -s ";
-        if (timeChanged) cmd += ui->timeEdit->dateTime().toString(Qt::ISODate);
-        else {
-            cmd += ui->timeEdit->date().toString(Qt::ISODate) + "T"
-                    + QTime::currentTime().toString(Qt::ISODate);
-        }
-        qDebug() << "Time set:" << cmd;
-        execute(cmd);
-    }
+    // Compensation for the execution time of this section.
+    QDateTime calcDrift = QDateTime::currentDateTimeUtc();
 
-    // Set the time zone if changed.
+    // Set the time zone (if changed) before setting the time.
     if (ui->cmbTimeZone->currentIndex() != ixTimeZone) {
         const QString &newzone = ui->cmbTimeZone->currentText();
         if (is_systemd) execute("timedatectl set-timezone " + newzone);
@@ -172,6 +161,22 @@ void MXDateTime::on_btnApply_clicked()
                 file.write(newzone.toUtf8());
                 file.close();
             }
+        }
+    }
+
+    // Set the date and time if their controls have been altered.
+    if (timeDelta) {
+        QString cmd;
+        if (is_systemd) cmd = "timedatectl set-time ";
+        else cmd = "date -s ";
+        static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
+        QDateTime newTime = ui->timeEdit->dateTime();
+        if (timeChanged) {
+            quint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
+            execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
+        } else {
+            newTime.setTime(QTime::currentTime());
+            execute(cmd + newTime.toString(dtFormat));
         }
     }
 

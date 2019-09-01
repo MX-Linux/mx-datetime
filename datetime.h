@@ -23,6 +23,7 @@
 #include <QByteArray>
 #include <QTimer>
 #include <QDateTime>
+#include <QTimeEdit>
 
 namespace Ui {
 class MXDateTime;
@@ -65,6 +66,14 @@ private:
     void secUpdate();
     void setClockLock(bool locked);
     bool execute(const QString &cmd, QByteArray *output = nullptr);
+};
+
+// QTimeEdit subclassing just to stop the cursor and selection jumping every second.
+class MTimeEdit : public QTimeEdit
+{
+public:
+    MTimeEdit(QWidget *parent = 0);
+    void updateDateTime(const QDateTime &dateTime);
 };
 
 #endif // DATETIME_H

@@ -25,7 +25,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="1">
-        <widget class="QTimeEdit" name="timeEdit">
+        <widget class="MTimeEdit" name="timeEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -400,6 +400,11 @@
    <extends>QWidget</extends>
    <header>clockface.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MTimeEdit</class>
+   <extends>QTimeEdit</extends>
+   <header>datetime.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -166,7 +166,7 @@ void MXDateTime::on_btnApply_clicked()
         const QString &newzone = ui->cmbTimeZone->currentText();
         if (is_systemd) execute("timedatectl set-timezone " + newzone);
         else {
-            execute("ln -nfs /usr/share/zoneinfo/posix/" + newzone + "/etc/localtime");
+            execute("ln -nfs /usr/share/zoneinfo/posix/" + newzone + " /etc/localtime");
             QFile file("/etc/timezone");
             if (file.open(QFile::WriteOnly | QFile::Text)) {
                 file.write(newzone.toUtf8());

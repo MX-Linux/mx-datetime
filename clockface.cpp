@@ -44,12 +44,12 @@ void ClockFace::paintEvent(QPaintEvent *)
         QPoint(-1, 0), QPoint(0, -95)
     };
     static const QPoint markMinute[] = {
-        QPoint(92, 0), QPoint(93, 1),
-        QPoint(96, 0), QPoint(93, -1)
+        QPoint(0, -94), QPoint(1, -97),
+        QPoint(0, -98), QPoint(-1, -97)
     };
     static const QPoint markHour[] = {
-        QPoint(91, 0), QPoint(93, 2),
-        QPoint(98, 0), QPoint(93, -2)
+        QPoint(0, -91), QPoint(2, -96),
+        QPoint(0, -98), QPoint(-2, -96)
     };
     // Colour calculations.
     QColor colNumbers = palette().text().color();
@@ -99,6 +99,11 @@ void ClockFace::paintEvent(QPaintEvent *)
     painter.save();
     painter.rotate(6.0 * time.second());
     painter.drawConvexPolygon(handSecond, 4);
+    colNumbers.setAlpha(255);
+    painter.setPen(colNumbers);
+    painter.setBrush(colNumbers);
+    if ((time.second() % 5) == 0) painter.drawConvexPolygon(markHour, 4);
+    else painter.drawConvexPolygon(markMinute, 4);
     painter.restore();
     // Marks around the circumference.
     painter.setPen(colHour.darker());

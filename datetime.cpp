@@ -17,6 +17,7 @@
 
 #include <QDebug>
 #include <QDateTime>
+#include <QTimeZone>
 #include <QFileInfo>
 #include <QProcess>
 #include <QTextCharFormat>
@@ -39,6 +40,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
     is_openrc = QFileInfo::exists("/run/openrc");
 
     // timezone
+    ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
     ui->cmbTimeZone->clear();
     QFile file("/usr/share/zoneinfo/zone.tab");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
@@ -67,7 +69,7 @@ MXDateTime::~MXDateTime()
 void MXDateTime::secUpdate()
 {
     secUpdating = true;
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime().addSecs(timeDelta));
+    ui->timeEdit->setDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
     timer->setInterval(1000 - QTime::currentTime().msec());
     ui->calendar->setSelectedDate(ui->timeEdit->date());
     secUpdating = false;
@@ -77,9 +79,19 @@ void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
     ui->clock->setTime(dateTime.time());
     if (!secUpdating) {
-        timeDelta = QDateTime::currentDateTime().secsTo(dateTime);
+        timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
         if (!calChanging) timeChanged = true;
     }
+}
+
+void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
+{
+    if (index < 0 || index >= ui->cmbTimeZone->count()) return;
+    // Calculate and store the difference between current and newly selected time zones.
+    const QDateTime &current = QDateTime::currentDateTime();
+    zoneDelta = QTimeZone(ui->cmbTimeZone->itemText(index).toUtf8()).offsetFromUtc(current)
+              - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
+    secUpdate(); // Make the change immediately visible
 }
 
 void MXDateTime::on_calendar_clicked(const QDate &date)
@@ -151,7 +163,7 @@ void MXDateTime::on_btnApply_clicked()
     QDateTime calcDrift = QDateTime::currentDateTimeUtc();
 
     // Set the time zone (if changed) before setting the time.
-    if (ui->cmbTimeZone->currentIndex() != ixTimeZone) {
+    if (zoneDelta) {
         const QString &newzone = ui->cmbTimeZone->currentText();
         if (is_systemd) execute("timedatectl set-timezone " + newzone);
         else {
@@ -172,7 +184,7 @@ void MXDateTime::on_btnApply_clicked()
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
         QDateTime newTime = ui->timeEdit->dateTime();
         if (timeChanged) {
-            quint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
+            qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
             execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
         } else {
             newTime.setTime(QTime::currentTime());
@@ -213,13 +225,15 @@ void MXDateTime::on_btnApply_clicked()
 
 void MXDateTime::loadSysTimeConfig()
 {
+    ui->cmbTimeZone->blockSignals(true);
     QFile file("/etc/timezone");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         const QString line(file.readLine().trimmed());
-        ixTimeZone = ui->cmbTimeZone->findText(line);
-        ui->cmbTimeZone->setCurrentIndex(ixTimeZone);
+        ui->cmbTimeZone->setCurrentIndex(ui->cmbTimeZone->findText(line));
         file.close();
     }
+    zoneDelta = 0;
+    ui->cmbTimeZone->blockSignals(false);
 
     enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
     ui->chkNTP->setChecked(enabledNTP);

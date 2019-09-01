@@ -38,6 +38,7 @@ public:
 
 private slots:
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
+    void on_cmbTimeZone_currentIndexChanged(int index);
     void on_btnClose_clicked();
     void on_btnApply_clicked();
     void on_calendar_clicked(const QDate &date);
@@ -51,14 +52,14 @@ private slots:
 private:
     Ui::MXDateTime *ui;
     QTimer *timer;
-    quint64 timeDelta = 0;
+    qint64 timeDelta = 0;
+    int zoneDelta = 0;
     bool is_systemd, is_openrc;
     bool enabledNTP;
     bool isRTCUTC;
     bool timeChanged = false;
     bool calChanging = false;
     bool secUpdating = false;
-    int ixTimeZone;
     void loadSysTimeConfig();
     void saveSysTimeConfig();
     void secUpdate();

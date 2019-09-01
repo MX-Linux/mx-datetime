@@ -242,6 +242,7 @@ void MXDateTime::setClockLock(bool locked)
 
 bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 {
+    qDebug() << "Exec:" << cmd;
     QProcess proc(this);
     QEventLoop eloop;
     connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), &eloop, &QEventLoop::quit);
@@ -250,10 +251,16 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     proc.closeWriteChannel();
     eloop.exec();
     disconnect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), 0, 0);
-    if (output) *output = proc.readAllStandardOutput();
-    qDebug() << "Execute" << cmd;
+    const QByteArray &sout = proc.readAllStandardOutput();
+    if (output) *output = sout;
+    else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
+    const QByteArray &serr = proc.readAllStandardError();
+    if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
+    qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
 }
+
+// MX STANDARD USER INTERFACE
 
 void MXDateTime::on_btnAbout_clicked()
 {

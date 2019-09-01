@@ -55,9 +55,9 @@ private:
     bool is_systemd, is_openrc;
     bool enabledNTP;
     bool isRTCUTC;
-    bool timeChanged;
-    bool calChanging;
-    bool secUpdating;
+    bool timeChanged = false;
+    bool calChanging = false;
+    bool secUpdating = false;
     int ixTimeZone;
     void loadSysTimeConfig();
     void saveSysTimeConfig();

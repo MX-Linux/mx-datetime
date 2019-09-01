@@ -22,6 +22,7 @@
 #include <QProcess>
 #include <QTextCharFormat>
 #include <QMessageBox>
+#include <QLineEdit>
 #include "datetime.h"
 #include "ui_datetime.h"
 #include "version.h"
@@ -70,9 +71,11 @@ MXDateTime::~MXDateTime()
 void MXDateTime::secUpdate()
 {
     secUpdating = true;
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
+    ui->timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
     timer->setInterval(1000 - QTime::currentTime().msec());
-    ui->calendar->setSelectedDate(ui->timeEdit->date());
+    if(ui->calendar->selectedDate() != ui->timeEdit->date()) {
+        ui->calendar->setSelectedDate(ui->timeEdit->date());
+    }
     secUpdating = false;
 }
 
@@ -278,6 +281,22 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
     qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
+}
+
+// SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND
+
+MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
+{
+}
+void MTimeEdit::updateDateTime(const QDateTime &dateTime)
+{
+    QLineEdit *ledit = lineEdit();
+    int curSelStart = ledit->selectionStart();
+    int curSelLength = ledit->selectedText().length();
+    int curpos = ledit->cursorPosition();
+    setDateTime(dateTime);
+    ledit->setCursorPosition(curpos);
+    if (curSelStart >= 0) ledit->setSelection(curSelStart, curSelLength);
 }
 
 // MX STANDARD USER INTERFACE

@@ -63,7 +63,7 @@ void ClockFace::paintEvent(QPaintEvent *)
 
     // Paint the clock.
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     painter.translate(width() / 2, height() / 2);
     const int side = qMin(width(), height());
     painter.scale(side / 200.0, side / 200.0);
@@ -80,28 +80,28 @@ void ClockFace::paintEvent(QPaintEvent *)
     }
     painter.restore();
     // Hour hand.
-    painter.setPen(colHour.darker());
     painter.setBrush(colHour);
+    painter.setPen(colHour.darker());
     painter.save();
-    painter.rotate(30.0 * ((time.hour() + time.minute() / 60.0)));
+    painter.rotate(30.0 * (time.hour() + (time.minute() / 60.0)));
     painter.drawConvexPolygon(handHour, 4);
     painter.restore();
     // Minute hand.
-    painter.setPen(colMinute.darker());
     painter.setBrush(colMinute);
+    painter.setPen(colMinute.darker());
     painter.save();
-    painter.rotate(6.0 * (time.minute() + time.second() / 60.0));
+    painter.rotate(6.0 * (time.minute() + (time.second() / 60.0)));
     painter.drawConvexPolygon(handMinute, 4);
     painter.restore();
     // Second hand.
-    painter.setPen(colSecond.darker());
     painter.setBrush(colSecond);
+    painter.setPen(colSecond.darker());
     painter.save();
     painter.rotate(6.0 * time.second());
     painter.drawConvexPolygon(handSecond, 4);
     colNumbers.setAlpha(255);
-    painter.setPen(colNumbers);
     painter.setBrush(colNumbers);
+    painter.setPen(Qt::NoPen);
     if ((time.second() % 5) == 0) painter.drawConvexPolygon(markHour, 4);
     else painter.drawConvexPolygon(markMinute, 4);
     painter.restore();

@@ -101,7 +101,7 @@ void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
 void MXDateTime::on_calendar_clicked(const QDate &date)
 {
     calChanging = true;
-    ui->timeEdit->setDateTime(QDateTime(date, ui->timeEdit->time()));
+    ui->timeEdit->updateDateTime(QDateTime(date, ui->timeEdit->time()));
     calChanging = false;
 }
 
@@ -291,12 +291,19 @@ MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
 void MTimeEdit::updateDateTime(const QDateTime &dateTime)
 {
     QLineEdit *ledit = lineEdit();
-    int curSelStart = ledit->selectionStart();
-    int curSelLength = ledit->selectedText().length();
-    int curpos = ledit->cursorPosition();
+    // Original cursor position and selections
+    int select = ledit->selectionStart();
+    int cursor = ledit->cursorPosition();
+    // Calculation for backward selections.
+    if (select >= 0 && select >= cursor) {
+        const int cslength = ledit->selectedText().length();
+        if (cslength > 0) select = cursor + cslength;
+    }
+    // Set the date/time as normal.
     setDateTime(dateTime);
-    ledit->setCursorPosition(curpos);
-    if (curSelStart >= 0) ledit->setSelection(curSelStart, curSelLength);
+    // Restore cursor and selection.
+    if (select >= 0) ledit->setSelection(select, cursor - select);
+    else ledit->setCursorPosition(cursor);
 }
 
 // MX STANDARD USER INTERFACE

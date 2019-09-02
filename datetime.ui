@@ -14,6 +14,107 @@
    <string>MX Date &amp; Time</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="3">
+    <widget class="QLabel" name="lblLogo">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="images.qrc">:/icons/images/logo.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="btnHelp">
+     <property name="text">
+      <string>Help</string>
+     </property>
+     <property name="icon">
+      <iconset theme="help-contents">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QPushButton" name="btnApply">
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset theme="dialog-ok">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="btnAbout">
+     <property name="text">
+      <string>About...</string>
+     </property>
+     <property name="icon">
+      <iconset theme="help-about">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QPushButton" name="btnClose">
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="icon">
+      <iconset theme="window-close">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="0" colspan="7">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -144,86 +245,29 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabSync">
+     <widget class="QWidget" name="tabHardware">
       <attribute name="title">
-       <string>Synchronization</string>
+       <string>Hardware Clock</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Network Time (Network Time Protocol)</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="3" column="1">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="btnSyncNTP">
-            <property name="text">
-             <string>Synchronize Now</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QCheckBox" name="chkNTP">
-            <property name="text">
-             <string>Automatically synchronize system time with NTP server:</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Hardware Clock (Real-time Clock)</string>
+          <string>Hardware Clock tools</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="1" column="0">
-           <widget class="QPushButton" name="btnReadRTC">
+          <item row="0" column="0" colspan="2">
+           <widget class="QPushButton" name="btnReadHardware">
+            <property name="toolTip">
+             <string>Obtain information from the Hardware Clock and present it in the box below. This button does not</string>
+            </property>
             <property name="text">
-             <string>Read RTC data</string>
+             <string>Read the Hardware Clock</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="btnSystemToRTC">
-            <property name="text">
-             <string>Copy system time to RTC</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="btnRTCToSystem">
-            <property name="text">
-             <string>Copy RTC time to system</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="3">
-           <widget class="QPlainTextEdit" name="txtRTC">
+          <item row="1" column="0" colspan="2">
+           <widget class="QPlainTextEdit" name="txtHardwareClock">
             <property name="lineWrapMode">
              <enum>QPlainTextEdit::NoWrap</enum>
             </property>
@@ -232,169 +276,139 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="3">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QLabel" name="lblZoneRTC">
-              <property name="text">
-               <string>RTC Time Zone:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radRTCUTC">
-              <property name="toolTip">
-               <string>Universally Coordinated Time (or Greenwich Meridian Time)</string>
-              </property>
-              <property name="text">
-               <string>UTC</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Maximum</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radRTCLocal">
-              <property name="text">
-               <string>Local time</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Time transfer</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="btnSystemToHardware">
+            <property name="toolTip">
+             <string>Immediately set the Hardware Clock to match the current time registered by the System Clock.</string>
+            </property>
+            <property name="text">
+             <string>System Clock to Hardware Clock</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnHardwareToSystem">
+            <property name="toolTip">
+             <string>Immediately set the System Clock to match the current time registered by the Hardware Clock.</string>
+            </property>
+            <property name="text">
+             <string>Hardware Clock to System Clock</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Time zone for the Hardware Clock</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="2">
+           <widget class="QRadioButton" name="radHardwareLocal">
+            <property name="text">
+             <string>Local</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="radHardwareUTC">
+            <property name="toolTip">
+             <string>Universally Coordinated Time (or Greenwich Meridian Time)</string>
+            </property>
+            <property name="text">
+             <string>UTC</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Maximum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>22</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="3">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="btnAbout">
-     <property name="text">
-      <string>About...</string>
-     </property>
-     <property name="icon">
-      <iconset theme="help-about">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="btnHelp">
-     <property name="text">
-      <string>Help</string>
-     </property>
-     <property name="icon">
-      <iconset theme="help-contents">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="3">
-    <widget class="QLabel" name="lblLogo">
-     <property name="maximumSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="images.qrc">:/icons/images/logo.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4">
-    <spacer name="horizontalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="5">
-    <widget class="QPushButton" name="btnApply">
-     <property name="text">
-      <string>Apply</string>
-     </property>
-     <property name="icon">
-      <iconset theme="dialog-ok">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="6">
-    <widget class="QPushButton" name="btnClose">
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="icon">
-      <iconset theme="window-close">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
+     <widget class="QWidget" name="tabNetwork">
+      <attribute name="title">
+       <string>Network Time</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="0">
+        <widget class="QComboBox" name="comboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>238</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QPushButton" name="btnSyncNTP">
+         <property name="text">
+          <string>Synchronize Now</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QCheckBox" name="chkNTP">
+         <property name="text">
+          <string>Automatically synchronize system time with NTP server:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
@@ -422,15 +436,8 @@
   <tabstop>btnHelp</tabstop>
   <tabstop>btnApply</tabstop>
   <tabstop>btnClose</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>btnSyncNTP</tabstop>
-  <tabstop>chkNTP</tabstop>
-  <tabstop>btnReadRTC</tabstop>
-  <tabstop>btnSystemToRTC</tabstop>
-  <tabstop>btnRTCToSystem</tabstop>
-  <tabstop>txtRTC</tabstop>
-  <tabstop>radRTCUTC</tabstop>
-  <tabstop>radRTCLocal</tabstop>
+  <tabstop>btnReadHardware</tabstop>
+  <tabstop>txtHardwareClock</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

@@ -43,9 +43,9 @@ private slots:
     void on_btnClose_clicked();
     void on_btnApply_clicked();
     void on_calendar_clicked(const QDate &date);
-    void on_btnReadRTC_clicked();
-    void on_btnSystemToRTC_clicked();
-    void on_btnRTCToSystem_clicked();
+    void on_btnReadHardware_clicked();
+    void on_btnSystemToHardware_clicked();
+    void on_btnHardwareToSystem_clicked();
     void on_btnSyncNTP_clicked();
     void on_btnAbout_clicked();
     void on_btnHelp_clicked();
@@ -57,7 +57,7 @@ private:
     int zoneDelta = 0;
     bool is_systemd, is_openrc;
     bool enabledNTP;
-    bool isRTCUTC;
+    bool isHardwareUTC;
     bool timeChanged = false;
     bool calChanging = false;
     bool secUpdating = false;

@@ -46,7 +46,12 @@ private slots:
     void on_btnReadHardware_clicked();
     void on_btnSystemToHardware_clicked();
     void on_btnHardwareToSystem_clicked();
-    void on_btnSyncNTP_clicked();
+    void on_btnSyncNow_clicked();
+    void on_tblServers_itemSelectionChanged();
+    void on_btnServerAdd_clicked();
+    void on_btnServerRemove_clicked();
+    void on_btnServerMoveUp_clicked();
+    void on_btnServerMoveDown_clicked();
     void on_btnAbout_clicked();
     void on_btnHelp_clicked();
 
@@ -58,6 +63,7 @@ private:
     bool is_systemd, is_openrc;
     bool enabledNTP;
     bool isHardwareUTC;
+    void moveServerRow(int movement);
     bool timeChanged = false;
     bool calChanging = false;
     bool secUpdating = false;

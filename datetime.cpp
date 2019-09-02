@@ -105,22 +105,22 @@ void MXDateTime::on_calendar_clicked(const QDate &date)
     calChanging = false;
 }
 
-void MXDateTime::on_btnReadRTC_clicked()
+void MXDateTime::on_btnReadHardware_clicked()
 {
     setClockLock(true);
-    const QString btext = ui->btnReadRTC->text();
-    ui->btnReadRTC->setText(tr("Reading..."));
+    const QString btext = ui->btnReadHardware->text();
+    ui->btnReadHardware->setText(tr("Reading..."));
     QByteArray rtcout;
     execute("/sbin/hwclock --verbose", &rtcout);
-    isRTCUTC = rtcout.contains("\nHardware clock is on UTC time\n");
-    if (isRTCUTC) ui->radRTCUTC->setChecked(true);
-    else ui->radRTCLocal->setChecked(true);
-    ui->txtRTC->setPlainText(QString(rtcout.trimmed()));
-    ui->btnReadRTC->setText(btext);
+    isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
+    if (isHardwareUTC) ui->radHardwareUTC->setChecked(true);
+    else ui->radHardwareLocal->setChecked(true);
+    ui->txtHardwareClock->setPlainText(QString(rtcout.trimmed()));
+    ui->btnReadHardware->setText(btext);
     setClockLock(false);
 }
 
-void MXDateTime::on_btnSystemToRTC_clicked()
+void MXDateTime::on_btnSystemToHardware_clicked()
 {
     setClockLock(true);
     if (execute("/sbin/hwclock --systohc")) {
@@ -131,7 +131,7 @@ void MXDateTime::on_btnSystemToRTC_clicked()
     setClockLock(false);
 }
 
-void MXDateTime::on_btnRTCToSystem_clicked()
+void MXDateTime::on_btnHardwareToSystem_clicked()
 {
     setClockLock(true);
     if (execute("/sbin/hwclock -hctosys")) {
@@ -209,8 +209,8 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // RTC settings
-    const bool rtcUTC = ui->radRTCUTC->isChecked();
-    if (rtcUTC != isRTCUTC) {
+    const bool rtcUTC = ui->radHardwareUTC->isChecked();
+    if (rtcUTC != isHardwareUTC) {
         if (is_systemd) {
             execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));
         } else if(is_openrc) {
@@ -242,7 +242,7 @@ void MXDateTime::loadSysTimeConfig()
     enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
     ui->chkNTP->setChecked(enabledNTP);
     if (!(is_systemd || is_openrc)) ui->chkNTP->setEnabled(false);
-    on_btnReadRTC_clicked();
+    on_btnReadHardware_clicked();
 
     timer = new QTimer(this);
     timeDelta = 0;
@@ -257,7 +257,8 @@ void MXDateTime::setClockLock(bool locked)
 {
     if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
     ui->tabDateTime->setDisabled(locked);
-    ui->tabSync->setDisabled(locked);
+    ui->tabHardware->setDisabled(locked);
+    ui->tabNetwork->setDisabled(locked);
     ui->btnApply->setDisabled(locked);
     ui->btnClose->setDisabled(locked);
     if (!locked) qApp->restoreOverrideCursor();

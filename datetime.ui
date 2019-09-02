@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
+    <width>544</width>
     <height>420</height>
    </rect>
   </property>
@@ -29,6 +29,48 @@
       <pixmap resource="images.qrc">:/icons/images/logo.png</pixmap>
      </property>
      <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="btnAbout">
+     <property name="text">
+      <string>About...</string>
+     </property>
+     <property name="icon">
+      <iconset theme="help-about">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QPushButton" name="btnApply">
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="icon">
+      <iconset theme="dialog-ok">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QPushButton" name="btnClose">
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="icon">
+      <iconset theme="window-close">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+     <property name="default">
       <bool>true</bool>
      </property>
     </widget>
@@ -56,48 +98,6 @@
        <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5">
-    <widget class="QPushButton" name="btnApply">
-     <property name="text">
-      <string>Apply</string>
-     </property>
-     <property name="icon">
-      <iconset theme="dialog-ok">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="btnAbout">
-     <property name="text">
-      <string>About...</string>
-     </property>
-     <property name="icon">
-      <iconset theme="help-about">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="autoDefault">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="6">
-    <widget class="QPushButton" name="btnClose">
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="icon">
-      <iconset theme="window-close">
-       <normaloff>.</normaloff>.</iconset>
-     </property>
-     <property name="default">
       <bool>true</bool>
      </property>
     </widget>
@@ -370,41 +370,116 @@
        <string>Network Time</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="5" column="1">
+        <widget class="QToolButton" name="btnServerMoveDown">
+         <property name="toolTip">
+          <string>Move the selected item down</string>
+         </property>
+         <property name="icon">
+          <iconset theme="down">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer_2">
+       <item row="4" column="1">
+        <widget class="QToolButton" name="btnServerMoveUp">
+         <property name="toolTip">
+          <string>Move the selected item up</string>
+         </property>
+         <property name="icon">
+          <iconset theme="up">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QToolButton" name="btnServerRemove">
+         <property name="toolTip">
+          <string>Remove the current item from the list</string>
+         </property>
+         <property name="icon">
+          <iconset theme="remove">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QToolButton" name="btnServerAdd">
+         <property name="toolTip">
+          <string>Add an item to the list</string>
+         </property>
+         <property name="icon">
+          <iconset theme="add">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>238</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QPushButton" name="btnSyncNTP">
-         <property name="text">
-          <string>Synchronize Now</string>
-         </property>
-        </widget>
+       <item row="1" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QCheckBox" name="chkAutoSync">
+           <property name="text">
+            <string>Automatically update the System Clock with NTP servers:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnSyncNow">
+           <property name="toolTip">
+            <string>Immediately update the system clock with NTP servers.</string>
+           </property>
+           <property name="text">
+            <string>Update Now</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="0" colspan="3">
-        <widget class="QCheckBox" name="chkNTP">
-         <property name="text">
-          <string>Automatically synchronize system time with NTP server:</string>
+       <item row="2" column="0" rowspan="5">
+        <widget class="QTableWidget" name="tblServers">
+         <property name="toolTip">
+          <string>List of NTP servers to use.</string>
          </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>10</number>
+         </attribute>
+         <attribute name="horizontalHeaderMinimumSectionSize">
+          <number>10</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Use</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Pool</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Address</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

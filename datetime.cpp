@@ -36,6 +36,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
     ui->calendar->setHeaderTextFormat(tcfmt);
+    ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     is_systemd = (QFileInfo("/usr/bin/timedatectl").isExecutable()
                   && execute("pidof systemd"));
@@ -105,6 +106,8 @@ void MXDateTime::on_calendar_clicked(const QDate &date)
     calChanging = false;
 }
 
+// HARDWARE CLOCK
+
 void MXDateTime::on_btnReadHardware_clicked()
 {
     setClockLock(true);
@@ -142,19 +145,129 @@ void MXDateTime::on_btnHardwareToSystem_clicked()
     setClockLock(false);
 }
 
-void MXDateTime::on_btnSyncNTP_clicked()
+// NETWORK TIME
+
+void MXDateTime::on_btnSyncNow_clicked()
 {
     setClockLock(true);
-    QString btext = ui->btnSyncNTP->text();
-    ui->btnSyncNTP->setText(tr("Synchronizing..."));
-    if (execute("/usr/sbin/ntpdate -u 0.pool.ntp.org")) {
-        QMessageBox::information(this, windowTitle(), "Success.");
-    } else {
-        QMessageBox::warning(this, windowTitle(), "Failure.");
+    QString command("/usr/sbin/ntpdate -u");
+    const int serverCount = ui->tblServers->rowCount();
+    bool canUse = false;
+    for (int ixi = 0; ixi < serverCount; ++ixi) {
+        const QCheckBox *itemCheckUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(ixi, 0));
+        if (itemCheckUse->isChecked()) {
+            command.append(' ');
+            command.append(ui->tblServers->item(ixi, 2)->text());
+            canUse = true;
+        }
     }
-    ui->btnSyncNTP->setText(btext);
+    if (canUse) {
+        QString btext = ui->btnSyncNow->text();
+        ui->btnSyncNow->setText(tr("Updating..."));
+        if (execute(command)) {
+            QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
+        } else {
+            QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
+        }
+        ui->btnSyncNow->setText(btext);
+    } else {
+        QMessageBox::critical(this, windowTitle(), tr("No NTP servers are selected for use."));
+    }
     setClockLock(false);
 }
+
+void MXDateTime::on_tblServers_itemSelectionChanged()
+{
+    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    bool remove = false, up = false, down = false;
+    if (ranges.count() == 1) {
+        const QTableWidgetSelectionRange &range = ranges.at(0);
+        remove = true;
+        if (range.topRow() > 0) up = true;
+        if (range.bottomRow() < (ui->tblServers->rowCount() - 1)) down = true;
+    }
+    ui->btnServerRemove->setEnabled(remove);
+    ui->btnServerMoveUp->setEnabled(up);
+    ui->btnServerMoveDown->setEnabled(down);
+}
+
+void MXDateTime::on_btnServerAdd_clicked()
+{
+    QCheckBox *itemCheckUse = new QCheckBox(ui->tblServers);
+    QCheckBox *itemCheckPool = new QCheckBox(ui->tblServers);
+    QTableWidgetItem *item = new QTableWidgetItem();
+    itemCheckUse->setChecked(true);
+    itemCheckPool->setChecked(false);
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
+    const int newRow = ui->tblServers->rowCount();
+    ui->tblServers->insertRow(newRow);
+    ui->tblServers->setCellWidget(newRow, 0, itemCheckUse);
+    ui->tblServers->setCellWidget(newRow, 1, itemCheckPool);
+    ui->tblServers->setItem(newRow, 2, item);
+    ui->tblServers->setCurrentItem(item);
+    ui->tblServers->editItem(item);
+}
+
+void MXDateTime::on_btnServerRemove_clicked()
+{
+    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    for (int ixi = ranges.count() - 1; ixi >= 0; --ixi) {
+        const int top = ranges.at(ixi).topRow();
+        for (int row = ranges.at(ixi).bottomRow(); row >= top; --row) {
+            ui->tblServers->removeRow(row);
+        }
+    }
+}
+
+void MXDateTime::on_btnServerMoveUp_clicked()
+{
+    moveServerRow(-1);
+}
+void MXDateTime::on_btnServerMoveDown_clicked()
+{
+    moveServerRow(1);
+}
+void MXDateTime::moveServerRow(int movement)
+{
+    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    if (ranges.count() == 1) {
+        const QTableWidgetSelectionRange &range = ranges.at(0);
+        int end, row;
+        if (movement < 0) {
+            row = range.topRow();
+            end = range.bottomRow();
+        } else {
+            row = range.bottomRow();
+            end = range.topRow();
+        }
+        row += movement;
+        // Save the original row contents.
+        bool targetUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
+        bool targetPool = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 1))->isChecked();
+        QTableWidgetItem *targetItem = ui->tblServers->takeItem(row, 2);
+        // Update the list selection.
+        const QTableWidgetSelectionRange targetRange(row, range.leftColumn(), end + movement, range.rightColumn());
+        ui->tblServers->setCurrentItem(nullptr);
+        ui->tblServers->setRangeSelected(targetRange, true);
+        // Move items one by one.
+        do {
+            row -= movement;
+            bool use = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
+            bool pool = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 1))->isChecked();
+            QTableWidgetItem *item = ui->tblServers->takeItem(row, 2);
+            const int step = row + movement;
+            static_cast<QCheckBox *>(ui->tblServers->cellWidget(step, 0))->setChecked(use);
+            static_cast<QCheckBox *>(ui->tblServers->cellWidget(step, 1))->setChecked(pool);
+            ui->tblServers->setItem(step, 2, item);
+        } while (row != end);
+        // Move the target where the range originally finished.
+        static_cast<QCheckBox *>(ui->tblServers->cellWidget(end, 0))->setChecked(targetUse);
+        static_cast<QCheckBox *>(ui->tblServers->cellWidget(end, 1))->setChecked(targetPool);
+        ui->tblServers->setItem(end, 2, targetItem);
+    }
+}
+
+// OTHER
 
 void MXDateTime::on_btnClose_clicked()
 {
@@ -197,7 +310,7 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // NTP settings
-    const bool ntp = ui->chkNTP->isChecked();
+    const bool ntp = ui->chkAutoSync->isChecked();
     if (ntp != enabledNTP) {
         if(is_systemd) {
             execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
@@ -240,8 +353,8 @@ void MXDateTime::loadSysTimeConfig()
     ui->cmbTimeZone->blockSignals(false);
 
     enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
-    ui->chkNTP->setChecked(enabledNTP);
-    if (!(is_systemd || is_openrc)) ui->chkNTP->setEnabled(false);
+    ui->chkAutoSync->setChecked(enabledNTP);
+    if (!(is_systemd || is_openrc)) ui->chkAutoSync->setEnabled(false);
     on_btnReadHardware_clicked();
 
     timer = new QTimer(this);

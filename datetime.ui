@@ -115,6 +115,12 @@
           </property>
           <item>
            <widget class="QCalendarWidget" name="calendar">
+            <property name="font">
+             <font>
+              <family>Sans</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="minimumDate">
              <date>
               <year>1970</year>

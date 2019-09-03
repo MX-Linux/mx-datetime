@@ -119,6 +119,9 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <property name="tabBarAutoHide">
+      <bool>true</bool>
+     </property>
      <widget class="QWidget" name="tabDateTime">
       <attribute name="title">
        <string>Date and Time</string>

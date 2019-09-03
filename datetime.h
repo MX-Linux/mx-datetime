@@ -60,6 +60,7 @@ private slots:
 private:
     Ui::MXDateTime *ui;
     QTimer *timer;
+    bool clockLock = false;
     qint64 timeDelta = 0;
     int zoneDelta = 0;
     bool is_systemd, is_openrc;

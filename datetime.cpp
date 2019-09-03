@@ -15,6 +15,7 @@
 //
 // This file is part of mx-datetime.
 
+#include <unistd.h>
 #include <QDebug>
 #include <QDateTime>
 #include <QTimeZone>
@@ -37,6 +38,12 @@ MXDateTime::MXDateTime(QWidget *parent) :
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
     ui->calendar->setHeaderTextFormat(tcfmt);
+
+    // Operate with reduced functionality if not running as root.
+    if (getuid() != 0) {
+        ui->btnApply->hide();
+        ui->tabWidget->tabBar()->hide();
+    }
 
     // Make the NTP server table columns the right proportions.
     int colSizes[3];
@@ -433,7 +440,6 @@ void MXDateTime::loadSysTimeConfig()
 {
     // Time zone.
     ui->cmbTimeZone->blockSignals(true);
-    QFile file("/etc/timezone");
     const QByteArray &zone = QTimeZone::systemTimeZoneId();
     int index = ui->cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
     ui->cmbTimeArea->setCurrentIndex(index);
@@ -444,7 +450,7 @@ void MXDateTime::loadSysTimeConfig()
     ui->cmbTimeZone->blockSignals(false);
 
     // Network time.
-    file.setFileName("/etc/ntp.conf");
+    QFile file("/etc/ntp.conf");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QByteArray conf;
         while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
@@ -494,13 +500,16 @@ void MXDateTime::loadSysTimeConfig()
 
 void MXDateTime::setClockLock(bool locked)
 {
-    if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
-    ui->tabDateTime->setDisabled(locked);
-    ui->tabHardware->setDisabled(locked);
-    ui->tabNetwork->setDisabled(locked);
-    ui->btnApply->setDisabled(locked);
-    ui->btnClose->setDisabled(locked);
-    if (!locked) qApp->restoreOverrideCursor();
+    if (clockLock != locked) {
+        if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
+        ui->tabDateTime->setDisabled(locked);
+        ui->tabHardware->setDisabled(locked);
+        ui->tabNetwork->setDisabled(locked);
+        ui->btnApply->setDisabled(locked);
+        ui->btnClose->setDisabled(locked);
+        if (!locked) qApp->restoreOverrideCursor();
+        clockLock = locked;
+    }
 }
 
 bool MXDateTime::execute(const QString &cmd, QByteArray *output)

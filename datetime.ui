@@ -462,14 +462,9 @@
          <attribute name="horizontalHeaderMinimumSectionSize">
           <number>10</number>
          </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
          </attribute>
-         <column>
-          <property name="text">
-           <string>Use</string>
-          </property>
-         </column>
          <column>
           <property name="text">
            <string>Type</string>
@@ -477,12 +472,12 @@
          </column>
          <column>
           <property name="text">
-           <string>Options</string>
+           <string>Address</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Address</string>
+           <string>Options</string>
           </property>
          </column>
         </widget>

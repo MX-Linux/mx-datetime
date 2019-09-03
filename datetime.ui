@@ -472,7 +472,12 @@
          </column>
          <column>
           <property name="text">
-           <string>Pool</string>
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Options</string>
           </property>
          </column>
          <column>

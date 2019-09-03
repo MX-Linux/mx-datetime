@@ -150,6 +150,7 @@ void MXDateTime::on_btnHardwareToSystem_clicked()
 void MXDateTime::on_btnSyncNow_clicked()
 {
     setClockLock(true);
+    // Command preparation.
     QString command("/usr/sbin/ntpdate -u");
     const int serverCount = ui->tblServers->rowCount();
     bool canUse = false;
@@ -157,23 +158,27 @@ void MXDateTime::on_btnSyncNow_clicked()
         const QCheckBox *itemCheckUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(ixi, 0));
         if (itemCheckUse->isChecked()) {
             command.append(' ');
-            command.append(ui->tblServers->item(ixi, 2)->text());
+            command.append(ui->tblServers->item(ixi, 3)->text());
             canUse = true;
         }
     }
+    // Command execution.
+    bool rexit = false;
     if (canUse) {
         QString btext = ui->btnSyncNow->text();
         ui->btnSyncNow->setText(tr("Updating..."));
-        if (execute(command)) {
-            QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
-        } else {
-            QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
-        }
+        rexit = execute(command);
         ui->btnSyncNow->setText(btext);
+    }
+    // Finishing touches.
+    setClockLock(false);
+    if (rexit) {
+        QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
+    } else if (canUse) {
+        QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
     } else {
         QMessageBox::critical(this, windowTitle(), tr("No NTP servers are selected for use."));
     }
-    setClockLock(false);
 }
 
 void MXDateTime::on_tblServers_itemSelectionChanged()
@@ -193,19 +198,29 @@ void MXDateTime::on_tblServers_itemSelectionChanged()
 
 void MXDateTime::on_btnServerAdd_clicked()
 {
+    QTableWidgetItem *item = addServerRow(true, "server", QString(), QString());
+    ui->tblServers->setCurrentItem(item);
+    ui->tblServers->editItem(item);
+}
+QTableWidgetItem *MXDateTime::addServerRow(bool use, const QString &type, const QString &options, const QString &address)
+{
     QCheckBox *itemCheckUse = new QCheckBox(ui->tblServers);
-    QCheckBox *itemCheckPool = new QCheckBox(ui->tblServers);
-    QTableWidgetItem *item = new QTableWidgetItem();
-    itemCheckUse->setChecked(true);
-    itemCheckPool->setChecked(false);
+    QComboBox *itemComboType = new QComboBox(ui->tblServers);
+    QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
+    QTableWidgetItem *item = new QTableWidgetItem(address);
+    itemCheckUse->setChecked(use);
+    itemComboType->addItem("Pool", QVariant("pool"));
+    itemComboType->addItem("Server", QVariant("server"));
+    itemComboType->addItem("Peer", QVariant("peer"));
+    itemComboType->setCurrentIndex(itemComboType->findData(QVariant(type)));
     item->setFlags(item->flags() | Qt::ItemIsEditable);
     const int newRow = ui->tblServers->rowCount();
     ui->tblServers->insertRow(newRow);
     ui->tblServers->setCellWidget(newRow, 0, itemCheckUse);
-    ui->tblServers->setCellWidget(newRow, 1, itemCheckPool);
-    ui->tblServers->setItem(newRow, 2, item);
-    ui->tblServers->setCurrentItem(item);
-    ui->tblServers->editItem(item);
+    ui->tblServers->setCellWidget(newRow, 1, itemComboType);
+    ui->tblServers->setItem(newRow, 2, itemOptions);
+    ui->tblServers->setItem(newRow, 3, item);
+    return item;
 }
 
 void MXDateTime::on_btnServerRemove_clicked()
@@ -243,8 +258,9 @@ void MXDateTime::moveServerRow(int movement)
         row += movement;
         // Save the original row contents.
         bool targetUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
-        bool targetPool = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 1))->isChecked();
-        QTableWidgetItem *targetItem = ui->tblServers->takeItem(row, 2);
+        int targetType = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 1))->currentIndex();
+        QTableWidgetItem *targetItemOptions = ui->tblServers->takeItem(row, 2);
+        QTableWidgetItem *targetItem = ui->tblServers->takeItem(row, 3);
         // Update the list selection.
         const QTableWidgetSelectionRange targetRange(row, range.leftColumn(), end + movement, range.rightColumn());
         ui->tblServers->setCurrentItem(nullptr);
@@ -253,17 +269,20 @@ void MXDateTime::moveServerRow(int movement)
         do {
             row -= movement;
             bool use = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
-            bool pool = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 1))->isChecked();
-            QTableWidgetItem *item = ui->tblServers->takeItem(row, 2);
+            int type = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 1))->currentIndex();
+            QTableWidgetItem *itemOptions = ui->tblServers->takeItem(row, 2);
+            QTableWidgetItem *item = ui->tblServers->takeItem(row, 3);
             const int step = row + movement;
             static_cast<QCheckBox *>(ui->tblServers->cellWidget(step, 0))->setChecked(use);
-            static_cast<QCheckBox *>(ui->tblServers->cellWidget(step, 1))->setChecked(pool);
-            ui->tblServers->setItem(step, 2, item);
+            static_cast<QComboBox *>(ui->tblServers->cellWidget(step, 1))->setCurrentIndex(type);
+            ui->tblServers->setItem(step, 2, itemOptions);
+            ui->tblServers->setItem(step, 3, item);
         } while (row != end);
         // Move the target where the range originally finished.
         static_cast<QCheckBox *>(ui->tblServers->cellWidget(end, 0))->setChecked(targetUse);
-        static_cast<QCheckBox *>(ui->tblServers->cellWidget(end, 1))->setChecked(targetPool);
-        ui->tblServers->setItem(end, 2, targetItem);
+        static_cast<QComboBox *>(ui->tblServers->cellWidget(end, 1))->setCurrentIndex(targetType);
+        ui->tblServers->setItem(end, 2, targetItemOptions);
+        ui->tblServers->setItem(end, 3, targetItem);
     }
 }
 
@@ -318,6 +337,38 @@ void MXDateTime::on_btnApply_clicked()
             if (QFile::exists("/etc/init.d/ntpd")) {
                 execute("rc-update " + QString(ntp?"add":"del") + " ntpd");
             }
+        } else if (ntp){
+            execute("update-rc.d ntp enable");
+            execute("service ntp start");
+        } else {
+            execute("service ntp stop");
+            execute("update-rc.d ntp disable");
+        }
+    }
+    QByteArray confServersNew;
+    for (int ixi = 0; ixi < ui->tblServers->rowCount(); ++ixi) {
+        confServersNew.append('\n');
+        if (static_cast<QCheckBox *>(ui->tblServers->cellWidget(ixi, 0))->isChecked() == false) {
+            confServersNew.append('#');
+        }
+        QComboBox *comboType = static_cast<QComboBox *>(ui->tblServers->cellWidget(ixi, 1));
+        const QString &options = ui->tblServers->item(ixi, 2)->text().trimmed();
+        confServersNew.append(comboType->currentData().toString());
+        confServersNew.append(' ');
+        confServersNew.append(ui->tblServers->item(ixi, 3)->text().trimmed());
+        if (!options.isEmpty()) {
+            confServersNew.append(' ');
+            confServersNew.append(options);
+        }
+    }
+    if (confServersNew != confServers) {
+        if (!QFile::exists("/etc/ntp.conf.bak")) QFile::copy("/etc/ntp.conf", "/etc/ntp.conf.bak");
+        QFile file("/etc/ntp.conf");
+        if (file.open(QFile::WriteOnly | QFile::Text)){
+            file.write(confBaseNTP);
+            file.write("\n\n# Generated by MX Date & Time");
+            file.write(confServersNew);
+            file.close();
         }
     }
 
@@ -342,6 +393,7 @@ void MXDateTime::on_btnApply_clicked()
 
 void MXDateTime::loadSysTimeConfig()
 {
+    // Time zone.
     ui->cmbTimeZone->blockSignals(true);
     QFile file("/etc/timezone");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
@@ -352,11 +404,46 @@ void MXDateTime::loadSysTimeConfig()
     zoneDelta = 0;
     ui->cmbTimeZone->blockSignals(false);
 
-    enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+    // Network time.
+    file.setFileName("/etc/ntp.conf");
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        QByteArray conf;
+        while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
+        confServers.clear();
+        while(!file.atEnd()) {
+            const QByteArray &bline = file.readLine();
+            const QString line(bline.trimmed());
+            const QRegularExpression tregex("^#?(pool|server|peer)\\s");
+            if(!line.contains(tregex)) conf.append(bline);
+            else {
+                QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
+                QString curarg = args.at(0);
+                QString options;
+                bool use = true;
+                if (curarg.startsWith('#')) {
+                    use = false;
+                    curarg = curarg.remove(0, 1);
+                }
+                for (int ixi = 2; ixi < args.count(); ++ixi) {
+                    options.append(' ');
+                    options.append(args.at(ixi));
+                }
+                addServerRow(use, curarg, options.trimmed(), args.at(1));
+                confServers.append('\n');
+                confServers.append(line);
+            }
+        }
+        confBaseNTP = conf.trimmed();
+        file.close();
+    }
+    if (is_systemd) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+    else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
     ui->chkAutoSync->setChecked(enabledNTP);
-    if (!(is_systemd || is_openrc)) ui->chkAutoSync->setEnabled(false);
+
+    // Hardware clock.
     on_btnReadHardware_clicked();
 
+    // Date and time.
     timer = new QTimer(this);
     timeDelta = 0;
     secUpdating = true;

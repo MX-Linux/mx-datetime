@@ -24,6 +24,7 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QTimeEdit>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class MXDateTime;
@@ -61,8 +62,11 @@ private:
     qint64 timeDelta = 0;
     int zoneDelta = 0;
     bool is_systemd, is_openrc;
+    QByteArray confBaseNTP;
+    QByteArray confServers;
     bool enabledNTP;
     bool isHardwareUTC;
+    QTableWidgetItem *addServerRow(bool use, const QString &type, const QString &options, const QString &address);
     void moveServerRow(int movement);
     bool timeChanged = false;
     bool calChanging = false;

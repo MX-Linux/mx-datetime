@@ -32,6 +32,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
     ui(new Ui::MXDateTime)
 {
     ui->setupUi(this);
+    setClockLock(true);
     setWindowFlags(Qt::Window); // for the close, min and max buttons
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
@@ -51,20 +52,18 @@ MXDateTime::MXDateTime(QWidget *parent) :
                   && execute("pidof systemd"));
     is_openrc = QFileInfo::exists("/run/openrc");
 
-    // timezone
+    // Time zone areas.
+    const QList<QByteArray> &zones = QTimeZone::availableTimeZoneIds();
     ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
-    ui->cmbTimeZone->clear();
-    QFile file("/usr/share/zoneinfo/zone.tab");
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        while(!file.atEnd()) {
-            const QString line(file.readLine().trimmed());
-            if(!line.startsWith('#')) {
-                ui->cmbTimeZone->addItem(line.section("\t", 2, 2));
-            }
+    ui->cmbTimeArea->clear();
+    for (const QByteArray &zone : zones) {
+        const QString &area = QString(zone).section('/', 0, 0);
+        if (!area.startsWith("UTC") && ui->cmbTimeArea->findData(area) < 0) {
+            ui->cmbTimeArea->addItem(area, QVariant(area.toUtf8()));
         }
-        file.close();
     }
-    ui->cmbTimeZone->model()->sort(0);
+    ui->cmbTimeArea->model()->sort(0);
+    ui->cmbTimeArea->addItem("Offset UTC");
 
     // load the system values into the UI
     ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
@@ -98,12 +97,30 @@ void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
     }
 }
 
+void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
+{
+    if (index < 0 || index >= ui->cmbTimeArea->count()) return;
+    const QByteArray &area = ui->cmbTimeArea->itemData(index).toByteArray();
+    const QList<QByteArray> &zones = QTimeZone::availableTimeZoneIds();
+    ui->cmbTimeZone->clear();
+    for (const QByteArray &zone : zones) {
+        if (area.isEmpty()) {
+            if (zone.startsWith(QString("UTC").toUtf8())) {
+                const int start = (zone.length() > 3) ? 3 : 0;
+                ui->cmbTimeZone->addItem(QString(zone.constData() + start), QVariant(zone));
+            }
+        } else if (zone.startsWith(area)) {
+            ui->cmbTimeZone->addItem(QString(zone).section('/', 1), QVariant(zone));
+        }
+    }
+    ui->cmbTimeZone->model()->sort(0);
+}
 void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
 {
     if (index < 0 || index >= ui->cmbTimeZone->count()) return;
     // Calculate and store the difference between current and newly selected time zones.
     const QDateTime &current = QDateTime::currentDateTime();
-    zoneDelta = QTimeZone(ui->cmbTimeZone->itemText(index).toUtf8()).offsetFromUtc(current)
+    zoneDelta = QTimeZone(ui->cmbTimeZone->itemData(index).toByteArray()).offsetFromUtc(current)
               - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
     secUpdate(); // Make the change immediately visible
 }
@@ -322,7 +339,7 @@ void MXDateTime::on_btnApply_clicked()
 
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
-        const QString &newzone = ui->cmbTimeZone->currentText();
+        const QString newzone(ui->cmbTimeZone->currentData().toByteArray());
         if (is_systemd) execute("timedatectl set-timezone " + newzone);
         else {
             execute("ln -nfs /usr/share/zoneinfo/" + newzone + " /etc/localtime");
@@ -417,11 +434,12 @@ void MXDateTime::loadSysTimeConfig()
     // Time zone.
     ui->cmbTimeZone->blockSignals(true);
     QFile file("/etc/timezone");
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        const QString line(file.readLine().trimmed());
-        ui->cmbTimeZone->setCurrentIndex(ui->cmbTimeZone->findText(line));
-        file.close();
-    }
+    const QByteArray &zone = QTimeZone::systemTimeZoneId();
+    int index = ui->cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
+    ui->cmbTimeArea->setCurrentIndex(index);
+    qApp->processEvents();
+    index = ui->cmbTimeZone->findData(QVariant(zone));
+    ui->cmbTimeZone->setCurrentIndex(index);
     zoneDelta = 0;
     ui->cmbTimeZone->blockSignals(false);
 

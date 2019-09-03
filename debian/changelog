@@ -1,3 +1,17 @@
+mx-datetime (0.19.9) mx; urgency=medium
+
+  * Operate with reduced functionality if not running as root. Fixed setClockLock() deadlock condition.
+  * GUI control size adjustments.
+  * Split time zone combo box into two. Also some GUI tweaks along the way.
+  * NTP Server table columns reordered. Validate before syncing or saving.
+  * The NTP GUI now works.
+  * Revamped the NTP GUI.
+  * GUI rework. Separated RTC and NTP tabs. Replaced references to RTC with Hardware Clock.
+  * Set the calendar font so it doesn't look fat.
+  * Icon update.
+
+ -- Adrian <adrian@mxlinux.org>  Tue, 03 Sep 2019 14:57:14 -0400
+
 mx-datetime (0.19.8) mx; urgency=medium
 
   * initial release

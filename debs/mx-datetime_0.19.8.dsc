@@ -8,24 +8,24 @@ Architecture: any
 Version: 0.19.8
 Maintainer: Adrian <adrian@mxlinux.org>
 Standards-Version: 3.9.8
-Build-Depends: debhelper (>= 9.2), qt5-default, qttools5-dev-tools
+Build-Depends: debhelper (>= 9.2), qtbase5-dev, qttools5-dev-tools
 Package-List:
  mx-datetime deb admin optional arch=any
 Checksums-Sha1:
- 16bb9be0571f15ab7283f3940dff5cab9d0048c2 17156 mx-datetime_0.19.8.tar.xz
+ d3f0009af5665aad1faf39ddf543a4d0e1154616 20128 mx-datetime_0.19.8.tar.xz
 Checksums-Sha256:
- d501dd96b2a18da4cfbab3c1b67e252b0c7dc2a1f01c238d82325e57262b21f2 17156 mx-datetime_0.19.8.tar.xz
+ 764ef3e07778f1bf60e14f0211a4224657ef6d46983b9b03dc9a16d9283e201b 20128 mx-datetime_0.19.8.tar.xz
 Files:
- 1709ecaa150cc4eafd94ed94c5ad4c3b 17156 mx-datetime_0.19.8.tar.xz
+ 16e2dac688c11f0bc4b9f4401d2fca75 20128 mx-datetime_0.19.8.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1qr94THGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumJQHB/wKaDyopaBPZidpkR76oVtIZvKWyXbk
-qQdGL7aHeDzR9Twkae/8CHSRplPEY3/nGJUxxRtfmRmLyOnSDm9S6tXa+jVA7Btr
-oJbEH0UdtsBoB+Yjdz2RAKGYLoQpi+cbQimNqrJPhj+uXg5G2VKbRMvvlIB7xcfD
-84bRHI87c4r88WD+qq+iZ6DdgbxHa5XyFw6QkRGvQFYqOUV78wnOo9SDYObkdv8V
-4XZNPcMDL4VwfVNAVX8gBoaIrv6erql3Q4A6eH95Bwy4esEsWSPIyrlVZXCLJwtb
-7Bqax5gMF0uipzP25h+21mf4M/BQFmQMQJ4/R5wbLfr66GS2SS13I7Rt
-=SvtT
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1utKITHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumPUuB/9AC5Q9eQ4CwddqLlTtBAjS8M5kR7Ei
+jmtI0NB5hFEb1YRuAsGCMBh+f8I79G3H6k+WhGeJNzA+ql8OyYSsPTtPf4rSLmYV
+9EMCgQGI0jkrpw15OXWHj6lFmCQMnls7CLPGoHkEzTGKhG3FtHIsT3hty8K3UeVt
+1NnR/A4rAe/6Ra2DKvGUCIzbLwQpwZiynzqB5Ng++Omrtih0hKiMraUSvuFEK5Qf
+j4VWbeq7dcy+OiSQIA+oNfGnxeu2gG2gn67hFOdn/NNbu3HNARXpMdnxWiG5lAmk
+ji9hzZGHZkL2B8ZNBqzFR6OMywmSf67oi1dPkRV5RqSyjyNtbIOzCmgo
+=AJDC
 -----END PGP SIGNATURE-----

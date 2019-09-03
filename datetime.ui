@@ -179,15 +179,9 @@
        </item>
        <item row="0" column="1">
         <widget class="MTimeEdit" name="timeEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="font">
           <font>
-           <family>DejaVu Sans Mono</family>
+           <family>Monospace</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -207,7 +201,7 @@
          <item>
           <widget class="QComboBox" name="cmbTimeArea">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
+            <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -215,7 +209,7 @@
            <property name="font">
             <font>
              <family>Sans</family>
-             <pointsize>10</pointsize>
+             <pointsize>9</pointsize>
             </font>
            </property>
            <property name="sizeAdjustPolicy">
@@ -234,8 +228,11 @@
            <property name="font">
             <font>
              <family>Sans</family>
-             <pointsize>10</pointsize>
+             <pointsize>9</pointsize>
             </font>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContents</enum>
            </property>
           </widget>
          </item>
@@ -243,6 +240,12 @@
        </item>
        <item row="1" column="1" colspan="2">
         <widget class="QFrame" name="frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>

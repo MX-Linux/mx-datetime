@@ -36,7 +36,16 @@ MXDateTime::MXDateTime(QWidget *parent) :
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
     ui->calendar->setHeaderTextFormat(tcfmt);
+
+    // Make the NTP server table columns the right proportions.
+    int colSizes[3];
+    addServerRow(true, QString(), QString(), QString());
     ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    for (int ixi = 0; ixi < 3; ++ixi) colSizes[ixi] = ui->tblServers->columnWidth(ixi);
+    ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    for (int ixi = 0; ixi < 3; ++ixi) ui->tblServers->setColumnWidth(ixi, colSizes[ixi]);
+    ui->tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->tblServers->removeRow(0);
 
     is_systemd = (QFileInfo("/usr/bin/timedatectl").isExecutable()
                   && execute("pidof systemd"));
@@ -149,36 +158,52 @@ void MXDateTime::on_btnHardwareToSystem_clicked()
 
 void MXDateTime::on_btnSyncNow_clicked()
 {
+    if (!validateServerList()) return;
     setClockLock(true);
     // Command preparation.
-    QString command("/usr/sbin/ntpdate -u");
     const int serverCount = ui->tblServers->rowCount();
-    bool canUse = false;
+    QString args;
     for (int ixi = 0; ixi < serverCount; ++ixi) {
-        const QCheckBox *itemCheckUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(ixi, 0));
-        if (itemCheckUse->isChecked()) {
-            command.append(' ');
-            command.append(ui->tblServers->item(ixi, 3)->text());
-            canUse = true;
-        }
+        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+        const QString &address = item->text().trimmed();
+        if (item->checkState() == Qt::Checked) args += " " + address;
     }
     // Command execution.
     bool rexit = false;
-    if (canUse) {
+    if (!args.isEmpty()) {
         QString btext = ui->btnSyncNow->text();
         ui->btnSyncNow->setText(tr("Updating..."));
-        rexit = execute(command);
+        rexit = execute("/usr/sbin/ntpdate -u" + args);
         ui->btnSyncNow->setText(btext);
     }
     // Finishing touches.
     setClockLock(false);
     if (rexit) {
         QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
-    } else if (canUse) {
+    } else if (!args.isEmpty()) {
         QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
     } else {
-        QMessageBox::critical(this, windowTitle(), tr("No NTP servers are selected for use."));
+        QMessageBox::critical(this, windowTitle(), tr("None of the NTP servers on the list are currently enabled."));
     }
+}
+bool MXDateTime::validateServerList()
+{
+    bool allValid = true;
+    const int serverCount = ui->tblServers->rowCount();
+    for (int ixi = 0; ixi < serverCount; ++ixi) {
+        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+        const QString &address = item->text().trimmed();
+        if (address.isEmpty()) allValid = false;
+    }
+    const char *msg = nullptr;
+    if (serverCount <= 0) msg = "There are no NTP servers on the list.";
+    else if (!allValid) msg = "There are invalid entries on the NTP server list.";
+    if (msg) {
+        QMessageBox::critical(this, windowTitle(), tr(msg));
+        return false;
+    }
+    if (serverCount == 88) setWindowTitle("88 MILES PER HOUR");
+    return true;
 }
 
 void MXDateTime::on_tblServers_itemSelectionChanged()
@@ -202,24 +227,22 @@ void MXDateTime::on_btnServerAdd_clicked()
     ui->tblServers->setCurrentItem(item);
     ui->tblServers->editItem(item);
 }
-QTableWidgetItem *MXDateTime::addServerRow(bool use, const QString &type, const QString &options, const QString &address)
+QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)
 {
-    QCheckBox *itemCheckUse = new QCheckBox(ui->tblServers);
     QComboBox *itemComboType = new QComboBox(ui->tblServers);
-    QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
     QTableWidgetItem *item = new QTableWidgetItem(address);
-    itemCheckUse->setChecked(use);
+    QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
     itemComboType->addItem("Pool", QVariant("pool"));
     itemComboType->addItem("Server", QVariant("server"));
     itemComboType->addItem("Peer", QVariant("peer"));
     itemComboType->setCurrentIndex(itemComboType->findData(QVariant(type)));
-    item->setFlags(item->flags() | Qt::ItemIsEditable);
+    item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
+    item->setCheckState(enabled ? Qt::Checked : Qt::Unchecked);
     const int newRow = ui->tblServers->rowCount();
     ui->tblServers->insertRow(newRow);
-    ui->tblServers->setCellWidget(newRow, 0, itemCheckUse);
-    ui->tblServers->setCellWidget(newRow, 1, itemComboType);
+    ui->tblServers->setCellWidget(newRow, 0, itemComboType);
+    ui->tblServers->setItem(newRow, 1, item);
     ui->tblServers->setItem(newRow, 2, itemOptions);
-    ui->tblServers->setItem(newRow, 3, item);
     return item;
 }
 
@@ -257,10 +280,9 @@ void MXDateTime::moveServerRow(int movement)
         }
         row += movement;
         // Save the original row contents.
-        bool targetUse = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
-        int targetType = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 1))->currentIndex();
+        int targetType = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 0))->currentIndex();
+        QTableWidgetItem *targetItemAddress = ui->tblServers->takeItem(row, 1);
         QTableWidgetItem *targetItemOptions = ui->tblServers->takeItem(row, 2);
-        QTableWidgetItem *targetItem = ui->tblServers->takeItem(row, 3);
         // Update the list selection.
         const QTableWidgetSelectionRange targetRange(row, range.leftColumn(), end + movement, range.rightColumn());
         ui->tblServers->setCurrentItem(nullptr);
@@ -268,21 +290,18 @@ void MXDateTime::moveServerRow(int movement)
         // Move items one by one.
         do {
             row -= movement;
-            bool use = static_cast<QCheckBox *>(ui->tblServers->cellWidget(row, 0))->isChecked();
-            int type = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 1))->currentIndex();
+            int type = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 0))->currentIndex();
+            QTableWidgetItem *itemAddress = ui->tblServers->takeItem(row, 1);
             QTableWidgetItem *itemOptions = ui->tblServers->takeItem(row, 2);
-            QTableWidgetItem *item = ui->tblServers->takeItem(row, 3);
             const int step = row + movement;
-            static_cast<QCheckBox *>(ui->tblServers->cellWidget(step, 0))->setChecked(use);
-            static_cast<QComboBox *>(ui->tblServers->cellWidget(step, 1))->setCurrentIndex(type);
+            static_cast<QComboBox *>(ui->tblServers->cellWidget(step, 0))->setCurrentIndex(type);
+            ui->tblServers->setItem(step, 1, itemAddress);
             ui->tblServers->setItem(step, 2, itemOptions);
-            ui->tblServers->setItem(step, 3, item);
         } while (row != end);
         // Move the target where the range originally finished.
-        static_cast<QCheckBox *>(ui->tblServers->cellWidget(end, 0))->setChecked(targetUse);
-        static_cast<QComboBox *>(ui->tblServers->cellWidget(end, 1))->setCurrentIndex(targetType);
+        static_cast<QComboBox *>(ui->tblServers->cellWidget(end, 0))->setCurrentIndex(targetType);
+        ui->tblServers->setItem(end, 1, targetItemAddress);
         ui->tblServers->setItem(end, 2, targetItemOptions);
-        ui->tblServers->setItem(end, 3, targetItem);
     }
 }
 
@@ -295,6 +314,9 @@ void MXDateTime::on_btnClose_clicked()
 
 void MXDateTime::on_btnApply_clicked()
 {
+    // Validation
+    if (!validateServerList()) return;
+
     // Compensation for the execution time of this section.
     QDateTime calcDrift = QDateTime::currentDateTimeUtc();
 
@@ -347,15 +369,14 @@ void MXDateTime::on_btnApply_clicked()
     }
     QByteArray confServersNew;
     for (int ixi = 0; ixi < ui->tblServers->rowCount(); ++ixi) {
+        QComboBox *comboType = static_cast<QComboBox *>(ui->tblServers->cellWidget(ixi, 0));
+        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
         confServersNew.append('\n');
-        if (static_cast<QCheckBox *>(ui->tblServers->cellWidget(ixi, 0))->isChecked() == false) {
-            confServersNew.append('#');
-        }
-        QComboBox *comboType = static_cast<QComboBox *>(ui->tblServers->cellWidget(ixi, 1));
-        const QString &options = ui->tblServers->item(ixi, 2)->text().trimmed();
+        if (item->checkState() != Qt::Checked) confServersNew.append('#');
         confServersNew.append(comboType->currentData().toString());
         confServersNew.append(' ');
-        confServersNew.append(ui->tblServers->item(ixi, 3)->text().trimmed());
+        confServersNew.append(item->text().trimmed());
+        const QString &options = ui->tblServers->item(ixi, 2)->text().trimmed();
         if (!options.isEmpty()) {
             confServersNew.append(' ');
             confServersNew.append(options);
@@ -418,17 +439,17 @@ void MXDateTime::loadSysTimeConfig()
             else {
                 QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
                 QString curarg = args.at(0);
-                QString options;
-                bool use = true;
+                bool enabled = true;
                 if (curarg.startsWith('#')) {
-                    use = false;
+                    enabled = false;
                     curarg = curarg.remove(0, 1);
                 }
+                QString options;
                 for (int ixi = 2; ixi < args.count(); ++ixi) {
                     options.append(' ');
                     options.append(args.at(ixi));
                 }
-                addServerRow(use, curarg, options.trimmed(), args.at(1));
+                addServerRow(enabled, curarg, args.at(1), options.trimmed());
                 confServers.append('\n');
                 confServers.append(line);
             }

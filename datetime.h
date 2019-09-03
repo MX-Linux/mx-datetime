@@ -66,7 +66,8 @@ private:
     QByteArray confServers;
     bool enabledNTP;
     bool isHardwareUTC;
-    QTableWidgetItem *addServerRow(bool use, const QString &type, const QString &options, const QString &address);
+    bool validateServerList();
+    QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
     void moveServerRow(int movement);
     bool timeChanged = false;
     bool calChanging = false;

@@ -40,6 +40,7 @@ public:
 
 private slots:
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
+    void on_cmbTimeArea_currentIndexChanged(int index);
     void on_cmbTimeZone_currentIndexChanged(int index);
     void on_btnClose_clicked();
     void on_btnApply_clicked();

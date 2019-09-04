@@ -45,6 +45,16 @@ MXDateTime::MXDateTime(QWidget *parent) :
         ui->tabWidget->tabBar()->hide();
     }
 
+    QTimer::singleShot(0, this, &MXDateTime::startup);
+}
+
+MXDateTime::~MXDateTime()
+{
+    delete ui;
+}
+
+void MXDateTime::startup()
+{
     // Make the NTP server table columns the right proportions.
     int colSizes[3];
     addServerRow(true, QString(), QString(), QString());
@@ -55,31 +65,30 @@ MXDateTime::MXDateTime(QWidget *parent) :
     ui->tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tblServers->removeRow(0);
 
+    // Used to decide the type of commands to run on this system.
     is_systemd = (QFileInfo("/usr/bin/timedatectl").isExecutable()
                   && execute("pidof systemd"));
     is_openrc = QFileInfo::exists("/run/openrc");
 
     // Time zone areas.
-    const QList<QByteArray> &zones = QTimeZone::availableTimeZoneIds();
+    QByteArray zoneOut;
+    QString cmd(is_systemd ? "timedatectl list-timezones"
+                           : "find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n");
+    execute(cmd, &zoneOut);
+    zones = zoneOut.trimmed().split('\n');
     ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
     ui->cmbTimeArea->clear();
     for (const QByteArray &zone : zones) {
         const QString &area = QString(zone).section('/', 0, 0);
-        if (!area.startsWith("UTC") && ui->cmbTimeArea->findData(area) < 0) {
+        if (ui->cmbTimeArea->findData(area) < 0) {
             ui->cmbTimeArea->addItem(area, QVariant(area.toUtf8()));
         }
     }
     ui->cmbTimeArea->model()->sort(0);
-    ui->cmbTimeArea->addItem("Offset UTC");
 
     // load the system values into the UI
     ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
-    QTimer::singleShot(0, this, &MXDateTime::loadSysTimeConfig);
-}
-
-MXDateTime::~MXDateTime()
-{
-    delete ui;
+    loadSysTimeConfig();
 }
 
 // USER INTERFACE
@@ -108,15 +117,9 @@ void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
 {
     if (index < 0 || index >= ui->cmbTimeArea->count()) return;
     const QByteArray &area = ui->cmbTimeArea->itemData(index).toByteArray();
-    const QList<QByteArray> &zones = QTimeZone::availableTimeZoneIds();
     ui->cmbTimeZone->clear();
     for (const QByteArray &zone : zones) {
-        if (area.isEmpty()) {
-            if (zone.startsWith(QString("UTC").toUtf8())) {
-                const int start = (zone.length() > 3) ? 3 : 0;
-                ui->cmbTimeZone->addItem(QString(zone.constData() + start), QVariant(zone));
-            }
-        } else if (zone.startsWith(area)) {
+        if (zone.startsWith(area)) {
             ui->cmbTimeZone->addItem(QString(zone).section('/', 1), QVariant(zone));
         }
     }

@@ -64,16 +64,19 @@ private:
     qint64 timeDelta = 0;
     int zoneDelta = 0;
     bool is_systemd, is_openrc;
+    QList<QByteArray> zones;
     QByteArray confBaseNTP;
     QByteArray confServers;
     bool enabledNTP;
     bool isHardwareUTC;
-    bool validateServerList();
-    QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
-    void moveServerRow(int movement);
     bool timeChanged = false;
     bool calChanging = false;
     bool secUpdating = false;
+
+    void startup();
+    bool validateServerList();
+    QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
+    void moveServerRow(int movement);
     void loadSysTimeConfig();
     void saveSysTimeConfig();
     void secUpdate();

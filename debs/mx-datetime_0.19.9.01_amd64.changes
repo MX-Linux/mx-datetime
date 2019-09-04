@@ -1,0 +1,53 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Wed, 04 Sep 2019 12:50:54 -0400
+Source: mx-datetime
+Binary: mx-datetime mx-datetime-dbgsym
+Architecture: source amd64
+Version: 0.19.9.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date and Time
+Changes:
+ mx-datetime (0.19.9.01) mx; urgency=medium
+ .
+   * Changed tab order.
+   * Fixed: half the world was seemingly missing from the time zone list. Also potentially improved GUI startup feedback.
+   * Icon update.
+   * Icon darker clock face.
+   * Icon update. Also cleaned the SVG file a bit.
+Checksums-Sha1:
+ 0ca485ad5be7b4674275eece4a274162dc9acd89 1135 mx-datetime_0.19.9.01.dsc
+ b922c758fa8ea7346ed82a466651376da95666ea 20440 mx-datetime_0.19.9.01.tar.xz
+ 124350dc8714bc886d834688726dd3a74c4326e9 835784 mx-datetime-dbgsym_0.19.9.01_amd64.deb
+ 9f3675b5031ef14da6d671b8262dfdec97314dc8 10533 mx-datetime_0.19.9.01_amd64.buildinfo
+ f88607920618b8b72d995aee0bfd54ef94181373 45912 mx-datetime_0.19.9.01_amd64.deb
+Checksums-Sha256:
+ ceb916c6356404805a2ac9644d9cd4578bbfa26b5de5484d30b21d1d9c02e67d 1135 mx-datetime_0.19.9.01.dsc
+ a5efd5bea4e35530f1a99bbbf12affa740bc4674a0c386c74f7d88ae7f37ff7c 20440 mx-datetime_0.19.9.01.tar.xz
+ 5e308839c72da8ee05903d5e7ed5e70bc0c6bcd2e3d1b2334a2f0b132017ccd0 835784 mx-datetime-dbgsym_0.19.9.01_amd64.deb
+ fac6d9784a5b13cf5ccff670ba79f4607309c5247888fc1207e0dbcd84cf6027 10533 mx-datetime_0.19.9.01_amd64.buildinfo
+ 97f27ccea68fb24117764b385769c0582d08004f93dbe289c11e7aec00ced9e7 45912 mx-datetime_0.19.9.01_amd64.deb
+Files:
+ 9d9370ac027e7dbd47f2406fca2af7bb 1135 admin optional mx-datetime_0.19.9.01.dsc
+ 3e310d693eafac6099c00d66e6f213b5 20440 admin optional mx-datetime_0.19.9.01.tar.xz
+ eb79b2a07e49639b9e165a4d4c147dc0 835784 debug optional mx-datetime-dbgsym_0.19.9.01_amd64.deb
+ fcef9f2fdd1f21dca77bc30c47ae9e5c 10533 admin optional mx-datetime_0.19.9.01_amd64.buildinfo
+ 5c2aae1a83e32ab6fc1007b31e6cf00f 45912 admin optional mx-datetime_0.19.9.01_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1v690THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumPodB/9JEi52gUPRt0mQY9wfPpiMihznK9ri
+mBgC6xwlLswI99VfrQ7s1et8hwuAMBSWC0KMjHKcR4C5sDMJFabU57xB6HMcNCVh
+kWvnBlCd760PXZLV5gJlkZbxcPyl7mFSmzL3hOOBFLQ9+5B1kSpBaaWF+PJKwvrG
+zidZo39C7rvGCl3wnoJO2YbKERsjwfgXSEhVcy74Q7b9FSCUxZc782bs3OHjc7Yb
+eEqAlP9cBRSHhCvfHFp8m8Is25JFrZg5hGn4nqknclhU7zosnAoIt2vF73USVOcg
+4zhf8QG3zfp47jJmQmSLa5IMdEX7bmtgVLSXODqzg+7IwkUUFjaoLhG0
+=+6Hk
+-----END PGP SIGNATURE-----

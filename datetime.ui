@@ -550,13 +550,25 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>calendar</tabstop>
   <tabstop>timeEdit</tabstop>
+  <tabstop>cmbTimeArea</tabstop>
   <tabstop>cmbTimeZone</tabstop>
+  <tabstop>radHardwareUTC</tabstop>
+  <tabstop>radHardwareLocal</tabstop>
+  <tabstop>btnSystemToHardware</tabstop>
+  <tabstop>btnHardwareToSystem</tabstop>
+  <tabstop>btnReadHardware</tabstop>
+  <tabstop>txtHardwareClock</tabstop>
+  <tabstop>chkAutoSync</tabstop>
+  <tabstop>btnServerAdd</tabstop>
+  <tabstop>btnServerMoveUp</tabstop>
+  <tabstop>btnServerMoveDown</tabstop>
+  <tabstop>btnServerRemove</tabstop>
+  <tabstop>tblServers</tabstop>
+  <tabstop>btnSyncNow</tabstop>
   <tabstop>btnAbout</tabstop>
   <tabstop>btnHelp</tabstop>
   <tabstop>btnApply</tabstop>
   <tabstop>btnClose</tabstop>
-  <tabstop>btnReadHardware</tabstop>
-  <tabstop>txtHardwareClock</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

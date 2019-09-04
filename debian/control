@@ -9,8 +9,7 @@ Standards-Version: 3.9.8
 
 Package: mx-datetime
 Architecture: any
-Depends: gzip,
-         xdg-utils | mx-viewer,
+Depends: xdg-utils | mx-viewer,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: MX Date and Time

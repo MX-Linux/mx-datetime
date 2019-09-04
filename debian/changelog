@@ -1,7 +1,8 @@
 mx-datetime (0.19.9.01) mx; urgency=medium
 
   * Changed tab order.
-  * Fixed: half the world was seemingly missing from the time zone list. Also potentially improved GUI startup feedback.
+  * Fixed: half the world was seemingly missing from the time zone list. 
+  * Also potentially improved GUI startup feedback.
   * Icon update.
   * Icon darker clock face.
   * Icon update. Also cleaned the SVG file a bit.

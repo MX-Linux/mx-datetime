@@ -17,37 +17,38 @@ Changes:
  mx-datetime (0.19.9.01) mx; urgency=medium
  .
    * Changed tab order.
-   * Fixed: half the world was seemingly missing from the time zone list. Also potentially improved GUI startup feedback.
+   * Fixed: half the world was seemingly missing from the time zone list.
+   * Also potentially improved GUI startup feedback.
    * Icon update.
    * Icon darker clock face.
    * Icon update. Also cleaned the SVG file a bit.
 Checksums-Sha1:
- 0ca485ad5be7b4674275eece4a274162dc9acd89 1135 mx-datetime_0.19.9.01.dsc
- b922c758fa8ea7346ed82a466651376da95666ea 20440 mx-datetime_0.19.9.01.tar.xz
+ ab25b0c467ec3a5b3a716f7dc261dec3378411fa 1135 mx-datetime_0.19.9.01.dsc
+ 2bd50c460b063b91acf85cd2a1fa990951e65f96 20440 mx-datetime_0.19.9.01.tar.xz
  124350dc8714bc886d834688726dd3a74c4326e9 835784 mx-datetime-dbgsym_0.19.9.01_amd64.deb
- 9f3675b5031ef14da6d671b8262dfdec97314dc8 10533 mx-datetime_0.19.9.01_amd64.buildinfo
- f88607920618b8b72d995aee0bfd54ef94181373 45912 mx-datetime_0.19.9.01_amd64.deb
+ f762f180ca5db436e3b66134425ebe5ef5393c14 10533 mx-datetime_0.19.9.01_amd64.buildinfo
+ 38455149c97c2b253ee4679759d9a48baa64a528 45904 mx-datetime_0.19.9.01_amd64.deb
 Checksums-Sha256:
- ceb916c6356404805a2ac9644d9cd4578bbfa26b5de5484d30b21d1d9c02e67d 1135 mx-datetime_0.19.9.01.dsc
- a5efd5bea4e35530f1a99bbbf12affa740bc4674a0c386c74f7d88ae7f37ff7c 20440 mx-datetime_0.19.9.01.tar.xz
+ 453de4735a36e370eceaf0066c09d5a4e55785b30814d201020be95fcc64fc60 1135 mx-datetime_0.19.9.01.dsc
+ ace7f7c41a6442b43ef028b2f1c304bf471193946b722f4642e075a20ec4e333 20440 mx-datetime_0.19.9.01.tar.xz
  5e308839c72da8ee05903d5e7ed5e70bc0c6bcd2e3d1b2334a2f0b132017ccd0 835784 mx-datetime-dbgsym_0.19.9.01_amd64.deb
- fac6d9784a5b13cf5ccff670ba79f4607309c5247888fc1207e0dbcd84cf6027 10533 mx-datetime_0.19.9.01_amd64.buildinfo
- 97f27ccea68fb24117764b385769c0582d08004f93dbe289c11e7aec00ced9e7 45912 mx-datetime_0.19.9.01_amd64.deb
+ d029021e57c45d9d21b1fb1c7d322660348855735a244f485f87177b05de4070 10533 mx-datetime_0.19.9.01_amd64.buildinfo
+ 49c55835821745d331b4fa515da44b08466b763af1c87848f9b5712e305aa159 45904 mx-datetime_0.19.9.01_amd64.deb
 Files:
- 9d9370ac027e7dbd47f2406fca2af7bb 1135 admin optional mx-datetime_0.19.9.01.dsc
- 3e310d693eafac6099c00d66e6f213b5 20440 admin optional mx-datetime_0.19.9.01.tar.xz
+ 4f1c17ad6f2a69548a17f2a8a2c8a798 1135 admin optional mx-datetime_0.19.9.01.dsc
+ 959f59d54cdc80260f9540386546ebd5 20440 admin optional mx-datetime_0.19.9.01.tar.xz
  eb79b2a07e49639b9e165a4d4c147dc0 835784 debug optional mx-datetime-dbgsym_0.19.9.01_amd64.deb
- fcef9f2fdd1f21dca77bc30c47ae9e5c 10533 admin optional mx-datetime_0.19.9.01_amd64.buildinfo
- 5c2aae1a83e32ab6fc1007b31e6cf00f 45912 admin optional mx-datetime_0.19.9.01_amd64.deb
+ d0e2cf524335460149f5b859f285779d 10533 admin optional mx-datetime_0.19.9.01_amd64.buildinfo
+ df068f8d33faf28070c9c8c99d4dc683 45904 admin optional mx-datetime_0.19.9.01_amd64.deb
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1v690THGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumPodB/9JEi52gUPRt0mQY9wfPpiMihznK9ri
-mBgC6xwlLswI99VfrQ7s1et8hwuAMBSWC0KMjHKcR4C5sDMJFabU57xB6HMcNCVh
-kWvnBlCd760PXZLV5gJlkZbxcPyl7mFSmzL3hOOBFLQ9+5B1kSpBaaWF+PJKwvrG
-zidZo39C7rvGCl3wnoJO2YbKERsjwfgXSEhVcy74Q7b9FSCUxZc782bs3OHjc7Yb
-eEqAlP9cBRSHhCvfHFp8m8Is25JFrZg5hGn4nqknclhU7zosnAoIt2vF73USVOcg
-4zhf8QG3zfp47jJmQmSLa5IMdEX7bmtgVLSXODqzg+7IwkUUFjaoLhG0
-=+6Hk
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1v7o0THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumO60B/0duJqqGZ/9okeF1iJgMubYraJ1xRy0
+R07T8cbwNJ+E+MAOEdQ1KDntW0jtUhVj3uAQ3Xq9h6N5XyUb6BSfY8LqJs4+mMKC
+yWWRKbDswDu1e0ZNoMbUJD3TcoRfZ3hTSZLhRA4puOAZNwWZMpSNwyK/Zv8DN0/h
+LTjTg525dUkKWhPc4JY6fyQzzsHyTyjjsFFmU3ppF7S5bWrD9xXBsgdpXdFNAD1J
+KnYBVjg9cVJJuSvjQTTIqiylON3NGAmXqhNmtxhpPWXUV6G/KtUnGpjoV71cQePA
+bqBIlq/FN9aDt3+DVT3n+QtmV0Jg+SNCRVui/4FZLoicv5c90ORK/L7t
+=Aat4
 -----END PGP SIGNATURE-----

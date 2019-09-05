@@ -231,7 +231,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="628"/>
+        <location filename="../datetime.cpp" line="626"/>
         <source>MX Date \&amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>

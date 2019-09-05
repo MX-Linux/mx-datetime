@@ -63,7 +63,11 @@ private:
     bool clockLock = false;
     qint64 timeDelta = 0;
     int zoneDelta = 0;
-    bool is_systemd, is_openrc;
+    enum InitSystem {
+        SystemV,
+        OpenRC,
+        SystemD
+    } sysInit = SystemV;
     QList<QByteArray> zones;
     QByteArray confBaseNTP;
     QByteArray confServers;

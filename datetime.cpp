@@ -66,14 +66,19 @@ void MXDateTime::startup()
     ui->tblServers->removeRow(0);
 
     // Used to decide the type of commands to run on this system.
-    is_systemd = (QFileInfo("/usr/bin/timedatectl").isExecutable()
-                  && execute("pidof systemd"));
-    is_openrc = QFileInfo::exists("/run/openrc");
+    QByteArray testSystemD;
+    if (QFileInfo::exists("/run/openrc")) sysInit = OpenRC;
+    else if(QFileInfo("/usr/bin/timedatectl").isExecutable()
+            && execute("ps -hp1", &testSystemD) && testSystemD.contains("systemd")) {
+        sysInit = SystemD;
+    } else sysInit = SystemV;
+    static const char *sysInitNames[] = {"SystemV", "OpenRC", "SystemD"};
+    qDebug() << "Init system:" << sysInitNames[sysInit];
 
     // Time zone areas.
     QByteArray zoneOut;
-    QString cmd(is_systemd ? "timedatectl list-timezones"
-                           : "find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n");
+    QString cmd((sysInit == SystemD) ? "timedatectl list-timezones"
+                : "find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n");
     execute(cmd, &zoneOut);
     zones = zoneOut.trimmed().split('\n');
     ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
@@ -350,7 +355,7 @@ void MXDateTime::on_btnApply_clicked()
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
         const QString newzone(ui->cmbTimeZone->currentData().toByteArray());
-        if (is_systemd) execute("timedatectl set-timezone " + newzone);
+        if (sysInit == SystemD) execute("timedatectl set-timezone " + newzone);
         else {
             execute("ln -nfs /usr/share/zoneinfo/" + newzone + " /etc/localtime");
             QFile file("/etc/timezone");
@@ -364,7 +369,7 @@ void MXDateTime::on_btnApply_clicked()
     // Set the date and time if their controls have been altered.
     if (timeDelta) {
         QString cmd;
-        if (is_systemd) cmd = "timedatectl set-time ";
+        if (sysInit == SystemD) cmd = "timedatectl set-time ";
         else cmd = "date -s ";
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
         QDateTime newTime = ui->timeEdit->dateTime();
@@ -380,9 +385,9 @@ void MXDateTime::on_btnApply_clicked()
     // NTP settings
     const bool ntp = ui->chkAutoSync->isChecked();
     if (ntp != enabledNTP) {
-        if(is_systemd) {
+        if(sysInit == SystemD) {
             execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
-        } else if (is_openrc) {
+        } else if (sysInit == OpenRC) {
             if (QFile::exists("/etc/init.d/ntpd")) {
                 execute("rc-update " + QString(ntp?"add":"del") + " ntpd");
             }
@@ -423,9 +428,9 @@ void MXDateTime::on_btnApply_clicked()
     // RTC settings
     const bool rtcUTC = ui->radHardwareUTC->isChecked();
     if (rtcUTC != isHardwareUTC) {
-        if (is_systemd) {
+        if (sysInit == SystemD) {
             execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));
-        } else if(is_openrc) {
+        } else if(sysInit == OpenRC) {
             if(QFile::exists("/etc/conf.d/hwclock")) {
                 execute("sed -i \"s/clock=.*/clock=\\\"UTC\\\"/\" /etc/conf.d/hwclock");
             }
@@ -484,7 +489,7 @@ void MXDateTime::loadSysTimeConfig()
         confBaseNTP = conf.trimmed();
         file.close();
     }
-    if (is_systemd) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+    if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
     else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
     ui->chkAutoSync->setChecked(enabledNTP);
 

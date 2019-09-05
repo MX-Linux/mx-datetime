@@ -1,3 +1,13 @@
+mx-datetime (0.19.9.02) mx; urgency=medium
+
+  * Hardware Clock no longer read at startup or reload.
+  * Hide the buttons at the bottom in non-root mode.
+  * Fixed: apparently missing time zones on systemd.
+  * Improved detection of the init system.
+  * Fixed truncated tool tip string.
+
+ -- Adrian <adrian@mxlinux.org>  Thu, 05 Sep 2019 12:34:46 -0400
+
 mx-datetime (0.19.9.01) mx; urgency=medium
 
   * Changed tab order.

@@ -1,0 +1,50 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Thu, 05 Sep 2019 15:02:24 -0400
+Source: mx-datetime
+Binary: mx-datetime mx-datetime-dbgsym
+Architecture: source amd64
+Version: 0.19.9.03
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (0.19.9.03) mx; urgency=medium
+ .
+   * Trim some padding when run in non-root mode.
+   * Changed name "Date and Time" to "Date & Time"
+Checksums-Sha1:
+ 1eeed7c2457251e9c3969325c7addc3baebc5914 1135 mx-datetime_0.19.9.03.dsc
+ a0ff9f41442667ba53cbbc4d93db7b50354e680a 20692 mx-datetime_0.19.9.03.tar.xz
+ 751cd08fab5bb1f5056a12b25d117e7157124e99 834868 mx-datetime-dbgsym_0.19.9.03_amd64.deb
+ 1c602af447081f05fa9977ce9a71cc3d39d6085d 10533 mx-datetime_0.19.9.03_amd64.buildinfo
+ 873139a523c8d1cf8fb5010f842024465a023649 46488 mx-datetime_0.19.9.03_amd64.deb
+Checksums-Sha256:
+ 1877f86fbba28235a264029c1fa8cf021793fa5a08981e55e3f13442613af723 1135 mx-datetime_0.19.9.03.dsc
+ 95f41b6cba85111494662c403059394d747375fb600ec78ce06558ea020c25e8 20692 mx-datetime_0.19.9.03.tar.xz
+ 2a427ff9537f372b99e8103a58f85bc6bde2d31d255cc65c393172a4741d9e2b 834868 mx-datetime-dbgsym_0.19.9.03_amd64.deb
+ d5da914dcb33b3162e94823d8460c1e205e23ba037ed8000067a3672d0bb906b 10533 mx-datetime_0.19.9.03_amd64.buildinfo
+ a4304f0b511c9c2c350c4a06fb956fa42d705d1fa35426e58df7485cc642a652 46488 mx-datetime_0.19.9.03_amd64.deb
+Files:
+ d9b1ee4f83a07f8801dbda0d24af24c9 1135 admin optional mx-datetime_0.19.9.03.dsc
+ 723ef59f5b278900d174d5a1889218df 20692 admin optional mx-datetime_0.19.9.03.tar.xz
+ 97a545fbe4c34dd49bbde267cb5f72ed 834868 debug optional mx-datetime-dbgsym_0.19.9.03_amd64.deb
+ a702886ebf9f3711c94086ad66c41f6f 10533 admin optional mx-datetime_0.19.9.03_amd64.buildinfo
+ 4ff11459febe1e0ef1175ac0b2a9ace9 46488 admin optional mx-datetime_0.19.9.03_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1xZpETHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumK09B/9BZtZL1soxQKA6uptDT+E9Nr6u3Kbl
+mFjjE/xgdZGueHaTrp0rEk6NOCcmckLsc+KwlWDsL+Ad1pJsumvfz65lsLFqxeQ4
+UXC6aad9qPhxnpxz91bnImxbmwHuRzCVY1qMpuXwrQYyPwmVZIxi3rAMuNNwK62A
+CbUJfF0Ne0SscTu9T51uw3u/uZeBEVCElmCLfUL3qPo1PsRX3PkGhk7Yh10YahRx
+I2LXx/4G1TfccFgGLGTokUXqkhr3ctJ2+82sMFs5P3XwfkquGeeC6IRLgDmzxixB
+HfStUsl24+/bhyCrmH+Loy4vQhw+qBwGyzcpLt0Wx/1aLMsfwG289C31
+=HHGc
+-----END PGP SIGNATURE-----

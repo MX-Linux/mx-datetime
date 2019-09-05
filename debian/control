@@ -12,5 +12,5 @@ Architecture: any
 Depends: xdg-utils | mx-viewer,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: MX Date and Time
+Description: MX Date & Time
  Program for changing the date and time settings

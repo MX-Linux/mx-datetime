@@ -124,7 +124,7 @@
      </property>
      <widget class="QWidget" name="tabDateTime">
       <attribute name="title">
-       <string>Date and Time</string>
+       <string>Date &amp; Time</string>
       </attribute>
       <layout class="QGridLayout" name="gridDateTime">
        <item row="0" column="0" rowspan="2">

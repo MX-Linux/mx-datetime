@@ -29,11 +29,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="293"/>
-        <source>Obtain information from the Hardware Clock and present it in the box below. This button does not</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../datetime.ui" line="296"/>
         <source>Read the Hardware Clock</source>
         <translation type="unfinished"></translation>
@@ -139,6 +134,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../datetime.ui" line="293"/>
+        <source>Obtain information from the Hardware Clock and present it in the box below.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../datetime.ui" line="361"/>
         <source>UTC</source>
         <translation type="unfinished"></translation>
@@ -159,79 +159,79 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="151"/>
+        <location filename="../datetime.cpp" line="158"/>
         <source>Reading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="567"/>
+        <location filename="../datetime.cpp" line="572"/>
         <source>About MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="568"/>
+        <location filename="../datetime.cpp" line="573"/>
         <source>MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="202"/>
+        <location filename="../datetime.cpp" line="209"/>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="209"/>
+        <location filename="../datetime.cpp" line="216"/>
         <source>The system clock was updated successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="211"/>
+        <location filename="../datetime.cpp" line="218"/>
         <source>The system clock could not be updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="213"/>
+        <location filename="../datetime.cpp" line="220"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="568"/>
+        <location filename="../datetime.cpp" line="573"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="569"/>
+        <location filename="../datetime.cpp" line="574"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="571"/>
+        <location filename="../datetime.cpp" line="576"/>
         <source>Copyright (c) MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="572"/>
-        <location filename="../datetime.cpp" line="586"/>
+        <location filename="../datetime.cpp" line="577"/>
+        <location filename="../datetime.cpp" line="591"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="573"/>
+        <location filename="../datetime.cpp" line="578"/>
         <source>Changelog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="574"/>
+        <location filename="../datetime.cpp" line="579"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="600"/>
+        <location filename="../datetime.cpp" line="605"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="621"/>
+        <location filename="../datetime.cpp" line="626"/>
         <source>MX Date \&amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>

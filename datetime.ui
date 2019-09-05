@@ -290,7 +290,7 @@
           <item row="0" column="0" colspan="2">
            <widget class="QPushButton" name="btnReadHardware">
             <property name="toolTip">
-             <string>Obtain information from the Hardware Clock and present it in the box below. This button does not</string>
+             <string>Obtain information from the Hardware Clock and present it in the box below.</string>
             </property>
             <property name="text">
              <string>Read the Hardware Clock</string>

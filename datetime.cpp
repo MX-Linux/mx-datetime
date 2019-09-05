@@ -622,11 +622,9 @@ void MXDateTime::on_btnHelp_clicked()
     QByteArray user;
     execute("logname", &user);
     user = user.trimmed();
-    QString exec = "su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open";
-    if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
-        exec = "mx-viewer"; // mx-viewer drops rights, no need to run as user
-        url += " " + tr("MX Date \\& Time Help");
+    if (system("command -v mx-viewer") == 0) {
+        system ("mx-viewer " + url.toUtf8() + " " + tr("MX Date \\& Time Help").toUtf8() + "&");
+    } else {
+        system ("su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open " + url.toUtf8() + "\"&");
     }
-    QString cmd = QString(exec + " " + url + "\"&");
-    system(cmd.toUtf8());
 }

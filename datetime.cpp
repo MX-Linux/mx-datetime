@@ -41,7 +41,11 @@ MXDateTime::MXDateTime(QWidget *parent) :
 
     // Operate with reduced functionality if not running as root.
     if (getuid() != 0) {
+        ui->btnAbout->hide();
+        ui->btnHelp->hide();
+        ui->lblLogo->hide();
         ui->btnApply->hide();
+        ui->btnClose->hide();
         ui->tabWidget->tabBar()->hide();
     }
 

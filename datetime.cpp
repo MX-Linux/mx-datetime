@@ -77,9 +77,7 @@ void MXDateTime::startup()
 
     // Time zone areas.
     QByteArray zoneOut;
-    QString cmd((sysInit == SystemD) ? "timedatectl list-timezones"
-                : "find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n");
-    execute(cmd, &zoneOut);
+    execute("find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n", &zoneOut);
     zones = zoneOut.trimmed().split('\n');
     ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
     ui->cmbTimeArea->clear();

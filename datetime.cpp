@@ -502,6 +502,7 @@ void MXDateTime::loadSysTimeConfig()
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     ui->timeEdit->setDateTime(QDateTime::currentDateTime());
     timeChanged = false;
+    setClockLock(false);
     timer->start(1000 - QTime::currentTime().msec());
 }
 

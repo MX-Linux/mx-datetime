@@ -495,9 +495,6 @@ void MXDateTime::loadSysTimeConfig()
     else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
     ui->chkAutoSync->setChecked(enabledNTP);
 
-    // Hardware clock.
-    on_btnReadHardware_clicked();
-
     // Date and time.
     timer = new QTimer(this);
     timeDelta = 0;

@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>MX Date &amp; Time</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridWindow">
    <item row="1" column="6">
     <widget class="QPushButton" name="btnClose">
      <property name="text">
@@ -126,7 +126,7 @@
       <attribute name="title">
        <string>Date and Time</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
+      <layout class="QGridLayout" name="gridDateTime">
        <item row="0" column="0" rowspan="2">
         <widget class="QFrame" name="frameCalendar">
          <property name="frameShape">

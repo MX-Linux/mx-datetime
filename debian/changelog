@@ -1,3 +1,11 @@
+mx-datetime (0.19.9.05) mx; urgency=medium
+
+  * Fixed resource leaks and improved drift calculation.
+  * Curtail the jump at the start. 
+  * Bypass execution of init system and NTP code on non-root startup.
+
+ -- Adrian <adrian@mxlinux.org>  Fri, 06 Sep 2019 08:42:47 -0400
+
 mx-datetime (0.19.9.04) mx; urgency=medium
 
   * Don't bother reading NTP settings if not root.

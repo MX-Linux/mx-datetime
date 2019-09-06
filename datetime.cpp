@@ -40,7 +40,8 @@ MXDateTime::MXDateTime(QWidget *parent) :
     ui->calendar->setHeaderTextFormat(tcfmt);
 
     // Operate with reduced functionality if not running as root.
-    if (getuid() != 0) {
+    userRoot = (getuid() == 0);
+    if (!userRoot) {
         ui->btnAbout->hide();
         ui->btnHelp->hide();
         ui->lblLogo->hide();
@@ -461,41 +462,43 @@ void MXDateTime::loadSysTimeConfig()
     zoneDelta = 0;
     ui->cmbTimeZone->blockSignals(false);
 
-    // Network time.
-    QFile file("/etc/ntp.conf");
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        QByteArray conf;
-        while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
-        confServers.clear();
-        while(!file.atEnd()) {
-            const QByteArray &bline = file.readLine();
-            const QString line(bline.trimmed());
-            const QRegularExpression tregex("^#?(pool|server|peer)\\s");
-            if(!line.contains(tregex)) conf.append(bline);
-            else {
-                QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
-                QString curarg = args.at(0);
-                bool enabled = true;
-                if (curarg.startsWith('#')) {
-                    enabled = false;
-                    curarg = curarg.remove(0, 1);
+    if (userRoot) {
+        // Network time.
+        QFile file("/etc/ntp.conf");
+        if (file.open(QFile::ReadOnly | QFile::Text)) {
+            QByteArray conf;
+            while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
+            confServers.clear();
+            while(!file.atEnd()) {
+                const QByteArray &bline = file.readLine();
+                const QString line(bline.trimmed());
+                const QRegularExpression tregex("^#?(pool|server|peer)\\s");
+                if(!line.contains(tregex)) conf.append(bline);
+                else {
+                    QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
+                    QString curarg = args.at(0);
+                    bool enabled = true;
+                    if (curarg.startsWith('#')) {
+                        enabled = false;
+                        curarg = curarg.remove(0, 1);
+                    }
+                    QString options;
+                    for (int ixi = 2; ixi < args.count(); ++ixi) {
+                        options.append(' ');
+                        options.append(args.at(ixi));
+                    }
+                    addServerRow(enabled, curarg, args.at(1), options.trimmed());
+                    confServers.append('\n');
+                    confServers.append(line);
                 }
-                QString options;
-                for (int ixi = 2; ixi < args.count(); ++ixi) {
-                    options.append(' ');
-                    options.append(args.at(ixi));
-                }
-                addServerRow(enabled, curarg, args.at(1), options.trimmed());
-                confServers.append('\n');
-                confServers.append(line);
             }
+            confBaseNTP = conf.trimmed();
+            file.close();
         }
-        confBaseNTP = conf.trimmed();
-        file.close();
+        if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+        else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
+        ui->chkAutoSync->setChecked(enabledNTP);
     }
-    if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
-    else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
-    ui->chkAutoSync->setChecked(enabledNTP);
 
     // Date and time.
     timer = new QTimer(this);

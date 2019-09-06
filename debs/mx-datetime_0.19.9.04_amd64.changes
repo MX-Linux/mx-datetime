@@ -1,0 +1,52 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Thu, 05 Sep 2019 23:10:23 -0400
+Source: mx-datetime
+Binary: mx-datetime mx-datetime-dbgsym
+Architecture: source amd64
+Version: 0.19.9.04
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (0.19.9.04) mx; urgency=medium
+ .
+   * Don't bother reading NTP settings if not root.
+   * Moved escaping out of a translated string. Removed an unused variable.
+   * Fixed: incorrectly displayed "Date & Time" in the tab.
+   * Fix string quoting
+Checksums-Sha1:
+ 1bbc3c44dd8f43ac28f372ec26f8eb74f8ec0eb5 1135 mx-datetime_0.19.9.04.dsc
+ edc0ec842fd2de6e775e5dd11ba292379d634c2e 20768 mx-datetime_0.19.9.04.tar.xz
+ c4fc1114e2e704322a268bf090e380f3e06dfb35 835036 mx-datetime-dbgsym_0.19.9.04_amd64.deb
+ 4ef45c2f499fc43c0822e6ddc020102015068bc8 10529 mx-datetime_0.19.9.04_amd64.buildinfo
+ eb0d8e7df4b18fb684ba60dcf67c19afcbaa9e78 46500 mx-datetime_0.19.9.04_amd64.deb
+Checksums-Sha256:
+ 0f38bcf44bc2df4b3fc98bdf732761da381c909f62c12b1b356ac88eafd6d7ee 1135 mx-datetime_0.19.9.04.dsc
+ e951a0928a7eddc6d36a42d09a66bdebd497ce4a05c00ea3aeb17885e94e4fcc 20768 mx-datetime_0.19.9.04.tar.xz
+ e2fcf021e6e10e0c834d59184f1020ae0274b7840d5daceb4457249dabaff14c 835036 mx-datetime-dbgsym_0.19.9.04_amd64.deb
+ 9191235dabe49a44084c81489a1b7e26a5c18ea72a89654af10357e3a4d3651e 10529 mx-datetime_0.19.9.04_amd64.buildinfo
+ 464c75ff768ef15b33c9a9a49145229cb0d7139bdc51537ff2e694351192ff3f 46500 mx-datetime_0.19.9.04_amd64.deb
+Files:
+ e5ba96e4d504e705fcd08e245326ae11 1135 admin optional mx-datetime_0.19.9.04.dsc
+ e03f16619df5b1d1187e8a39f2ad77ae 20768 admin optional mx-datetime_0.19.9.04.tar.xz
+ 756d9b21b4ce8e842df810f0a5d2ccbd 835036 debug optional mx-datetime-dbgsym_0.19.9.04_amd64.deb
+ 695f0f0e68f20c6370dda655c5167b24 10529 admin optional mx-datetime_0.19.9.04_amd64.buildinfo
+ cc77c2932fc1f2a6b74f3d6078807af8 46500 admin optional mx-datetime_0.19.9.04_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1xz04THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHppCACV742SdJyp8UtvJ/ekT+sAYkJjR1eU
+2ZtNT2YW0Z2pKGRoqRw2QEENN16ZgJMTIKDvDT7Q8NmdPThtD0f8eu3w3y3pDAop
+/2hH2CEEkXM6u2DliQERfdiNgULneAQpQraIjga9vxpz3Ub09YAy9niwm/oIZmDL
+3AUXHKota8rghkeUkZrUzqRA3cV3j053OW9TkVgU3lTPoL3ZlgY9fCZJhr1sL+RH
+MeDMF5FleBdDS9lULgtPwlWENiUqJ8fiW2kAnsrae2uuQv34Ic4gtfjqXEXPzh82
+1LBP6UUzVjUbXHeiOqphNk4FR8z5s7+cRoR/6m+U3UMUGf+sXgoH100f
+=xY+F
+-----END PGP SIGNATURE-----

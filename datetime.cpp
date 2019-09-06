@@ -61,25 +61,28 @@ MXDateTime::~MXDateTime()
 
 void MXDateTime::startup()
 {
-    // Make the NTP server table columns the right proportions.
-    int colSizes[3];
-    addServerRow(true, QString(), QString(), QString());
-    ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    for (int ixi = 0; ixi < 3; ++ixi) colSizes[ixi] = ui->tblServers->columnWidth(ixi);
-    ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    for (int ixi = 0; ixi < 3; ++ixi) ui->tblServers->setColumnWidth(ixi, colSizes[ixi]);
-    ui->tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    ui->tblServers->removeRow(0);
+    ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
+    if (userRoot) {
+        // Make the NTP server table columns the right proportions.
+        int colSizes[3];
+        addServerRow(true, QString(), QString(), QString());
+        ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        for (int ixi = 0; ixi < 3; ++ixi) colSizes[ixi] = ui->tblServers->columnWidth(ixi);
+        ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+        for (int ixi = 0; ixi < 3; ++ixi) ui->tblServers->setColumnWidth(ixi, colSizes[ixi]);
+        ui->tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+        ui->tblServers->removeRow(0);
 
-    // Used to decide the type of commands to run on this system.
-    QByteArray testSystemD;
-    if (QFileInfo::exists("/run/openrc")) sysInit = OpenRC;
-    else if(QFileInfo("/usr/bin/timedatectl").isExecutable()
-            && execute("ps -hp1", &testSystemD) && testSystemD.contains("systemd")) {
-        sysInit = SystemD;
-    } else sysInit = SystemV;
-    static const char *sysInitNames[] = {"SystemV", "OpenRC", "SystemD"};
-    qDebug() << "Init system:" << sysInitNames[sysInit];
+        // Used to decide the type of commands to run on this system.
+        QByteArray testSystemD;
+        if (QFileInfo::exists("/run/openrc")) sysInit = OpenRC;
+        else if(QFileInfo("/usr/bin/timedatectl").isExecutable()
+                && execute("ps -hp1", &testSystemD) && testSystemD.contains("systemd")) {
+            sysInit = SystemD;
+        } else sysInit = SystemV;
+        static const char *sysInitNames[] = {"SystemV", "OpenRC", "SystemD"};
+        qDebug() << "Init system:" << sysInitNames[sysInit];
+    }
 
     // Time zone areas.
     QByteArray zoneOut;
@@ -96,7 +99,6 @@ void MXDateTime::startup()
     ui->cmbTimeArea->model()->sort(0);
 
     // load the system values into the UI
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
     loadSysTimeConfig();
 }
 void MXDateTime::loadSysTimeConfig()

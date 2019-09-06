@@ -569,7 +569,6 @@ void MTimeEdit::updateDateTime(const QDateTime &dateTime)
 
 void MXDateTime::on_btnAbout_clicked()
 {
-    QString url = "/usr/share/doc/mx-datetime/license.html";
     QMessageBox msgBox(QMessageBox::NoIcon,
                        tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" +
                        tr("MX Date & Time") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
@@ -623,7 +622,7 @@ void MXDateTime::on_btnHelp_clicked()
     execute("logname", &user);
     user = user.trimmed();
     if (system("command -v mx-viewer") == 0) {
-        system ("mx-viewer " + url.toUtf8() + " " + tr("MX Date \\& Time Help").toUtf8() + "&");
+        system ("mx-viewer " + url.toUtf8() + " \"" + tr("MX Date & Time Help").toUtf8() + "\"&");
     } else {
         system ("su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open " + url.toUtf8() + "\"&");
     }

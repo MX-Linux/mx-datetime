@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="577"/>
+        <location filename="../datetime.cpp" line="542"/>
         <source>MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -165,73 +165,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="161"/>
+        <location filename="../datetime.cpp" line="256"/>
         <source>Reading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="212"/>
+        <location filename="../datetime.cpp" line="305"/>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="219"/>
+        <location filename="../datetime.cpp" line="312"/>
         <source>The system clock was updated successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="221"/>
+        <location filename="../datetime.cpp" line="314"/>
         <source>The system clock could not be updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="223"/>
+        <location filename="../datetime.cpp" line="316"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="576"/>
+        <location filename="../datetime.cpp" line="541"/>
         <source>About MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="577"/>
+        <location filename="../datetime.cpp" line="542"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="578"/>
+        <location filename="../datetime.cpp" line="543"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="580"/>
+        <location filename="../datetime.cpp" line="545"/>
         <source>Copyright (c) MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="581"/>
-        <location filename="../datetime.cpp" line="595"/>
+        <location filename="../datetime.cpp" line="546"/>
+        <location filename="../datetime.cpp" line="560"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="582"/>
+        <location filename="../datetime.cpp" line="547"/>
         <source>Changelog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="583"/>
+        <location filename="../datetime.cpp" line="548"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="609"/>
+        <location filename="../datetime.cpp" line="574"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="628"/>
+        <location filename="../datetime.cpp" line="592"/>
         <source>MX Date &amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>

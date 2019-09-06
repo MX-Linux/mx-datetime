@@ -61,7 +61,7 @@ MXDateTime::~MXDateTime()
 
 void MXDateTime::startup()
 {
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
+    ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
     if (userRoot) {
         // Make the NTP server table columns the right proportions.
         int colSizes[3];
@@ -98,8 +98,12 @@ void MXDateTime::startup()
     }
     ui->cmbTimeArea->model()->sort(0);
 
-    // load the system values into the UI
+    // Load the system values into the GUI.
     loadSysTimeConfig();
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
+    setClockLock(false);
+    timer->start(1000 - QTime::currentTime().msec());
 }
 void MXDateTime::loadSysTimeConfig()
 {
@@ -153,14 +157,12 @@ void MXDateTime::loadSysTimeConfig()
     }
 
     // Date and time.
-    timer = new QTimer(this);
     timeDelta = 0;
     secUpdating = true;
-    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     ui->timeEdit->setDateTime(QDateTime::currentDateTime());
     timeChanged = false;
-    setClockLock(false);
-    timer->start(1000 - QTime::currentTime().msec());
+    // Force a second-interval update.
+    if (timer) timer->setInterval(0);
 }
 void MXDateTime::setClockLock(bool locked)
 {
@@ -433,11 +435,11 @@ bool MXDateTime::validateServerList()
 
 void MXDateTime::on_btnApply_clicked()
 {
-    // Validation
-    if (!validateServerList()) return;
-
     // Compensation for the execution time of this section.
     QDateTime calcDrift = QDateTime::currentDateTimeUtc();
+
+    if (!validateServerList()) return;
+    setClockLock(true);
 
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
@@ -525,8 +527,8 @@ void MXDateTime::on_btnApply_clicked()
         execute("/sbin/hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
     }
 
-    // Refresh the UI with newly set values
-    loadSysTimeConfig();
+    loadSysTimeConfig(); // Refresh the UI with newly set values
+    setClockLock(false);
 }
 void MXDateTime::on_btnClose_clicked()
 {

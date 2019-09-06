@@ -59,7 +59,7 @@ private slots:
 
 private:
     Ui::MXDateTime *ui;
-    QTimer *timer;
+    QTimer *timer = nullptr;
     bool clockLock = false;
     qint64 timeDelta = 0;
     int zoneDelta = 0;

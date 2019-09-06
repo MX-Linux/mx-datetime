@@ -54,7 +54,6 @@ MXDateTime::MXDateTime(QWidget *parent) :
 
     QTimer::singleShot(0, this, &MXDateTime::startup);
 }
-
 MXDateTime::~MXDateTime()
 {
     delete ui;
@@ -100,29 +99,108 @@ void MXDateTime::startup()
     ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // avoids the sudden jump
     loadSysTimeConfig();
 }
-
-// USER INTERFACE
-
-void MXDateTime::secUpdate()
+void MXDateTime::loadSysTimeConfig()
 {
+    // Time zone.
+    ui->cmbTimeZone->blockSignals(true);
+    const QByteArray &zone = QTimeZone::systemTimeZoneId();
+    int index = ui->cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
+    ui->cmbTimeArea->setCurrentIndex(index);
+    qApp->processEvents();
+    index = ui->cmbTimeZone->findData(QVariant(zone));
+    ui->cmbTimeZone->setCurrentIndex(index);
+    zoneDelta = 0;
+    ui->cmbTimeZone->blockSignals(false);
+
+    if (userRoot) {
+        // Network time.
+        QFile file("/etc/ntp.conf");
+        if (file.open(QFile::ReadOnly | QFile::Text)) {
+            QByteArray conf;
+            while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
+            confServers.clear();
+            while(!file.atEnd()) {
+                const QByteArray &bline = file.readLine();
+                const QString line(bline.trimmed());
+                const QRegularExpression tregex("^#?(pool|server|peer)\\s");
+                if(!line.contains(tregex)) conf.append(bline);
+                else {
+                    QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
+                    QString curarg = args.at(0);
+                    bool enabled = true;
+                    if (curarg.startsWith('#')) {
+                        enabled = false;
+                        curarg = curarg.remove(0, 1);
+                    }
+                    QString options;
+                    for (int ixi = 2; ixi < args.count(); ++ixi) {
+                        options.append(' ');
+                        options.append(args.at(ixi));
+                    }
+                    addServerRow(enabled, curarg, args.at(1), options.trimmed());
+                    confServers.append('\n');
+                    confServers.append(line);
+                }
+            }
+            confBaseNTP = conf.trimmed();
+            file.close();
+        }
+        if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+        else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
+        ui->chkAutoSync->setChecked(enabledNTP);
+    }
+
+    // Date and time.
+    timer = new QTimer(this);
+    timeDelta = 0;
     secUpdating = true;
-    ui->timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
-    timer->setInterval(1000 - QTime::currentTime().msec());
-    if(ui->calendar->selectedDate() != ui->timeEdit->date()) {
-        ui->calendar->setSelectedDate(ui->timeEdit->date());
-    }
-    secUpdating = false;
+    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
+    ui->timeEdit->setDateTime(QDateTime::currentDateTime());
+    timeChanged = false;
+    setClockLock(false);
+    timer->start(1000 - QTime::currentTime().msec());
 }
-
-void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
+void MXDateTime::setClockLock(bool locked)
 {
-    ui->clock->setTime(dateTime.time());
-    if (!secUpdating) {
-        timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
-        if (!calChanging) timeChanged = true;
+    if (clockLock != locked) {
+        if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
+        ui->tabDateTime->setDisabled(locked);
+        ui->tabHardware->setDisabled(locked);
+        ui->tabNetwork->setDisabled(locked);
+        ui->btnApply->setDisabled(locked);
+        ui->btnClose->setDisabled(locked);
+        if (!locked) qApp->restoreOverrideCursor();
+        clockLock = locked;
     }
 }
+bool MXDateTime::execute(const QString &cmd, QByteArray *output)
+{
+    qDebug() << "Exec:" << cmd;
+    QProcess proc(this);
+    QEventLoop eloop;
+    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), &eloop, &QEventLoop::quit);
+    proc.start(cmd);
+    if (!output) proc.closeReadChannel(QProcess::StandardOutput);
+    proc.closeWriteChannel();
+    eloop.exec();
+    disconnect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), 0, 0);
+    const QByteArray &sout = proc.readAllStandardOutput();
+    if (output) *output = sout;
+    else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
+    const QByteArray &serr = proc.readAllStandardError();
+    if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
+    qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
+    return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
+}
 
+// DATE & TIME
+
+void MXDateTime::on_calendar_clicked(const QDate &date)
+{
+    calChanging = true;
+    ui->timeEdit->updateDateTime(QDateTime(date, ui->timeEdit->time()));
+    calChanging = false;
+}
 void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
 {
     if (index < 0 || index >= ui->cmbTimeArea->count()) return;
@@ -144,12 +222,25 @@ void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
               - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
     secUpdate(); // Make the change immediately visible
 }
-
-void MXDateTime::on_calendar_clicked(const QDate &date)
+void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
-    calChanging = true;
-    ui->timeEdit->updateDateTime(QDateTime(date, ui->timeEdit->time()));
-    calChanging = false;
+    ui->clock->setTime(dateTime.time());
+    if (!secUpdating) {
+        timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
+        if (!calChanging) timeChanged = true;
+        if (abs(timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
+    }
+}
+
+void MXDateTime::secUpdate()
+{
+    secUpdating = true;
+    ui->timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
+    timer->setInterval(1000 - QTime::currentTime().msec());
+    if(ui->calendar->selectedDate() != ui->timeEdit->date()) {
+        ui->calendar->setSelectedDate(ui->timeEdit->date());
+    }
+    secUpdating = false;
 }
 
 // HARDWARE CLOCK
@@ -168,7 +259,6 @@ void MXDateTime::on_btnReadHardware_clicked()
     ui->btnReadHardware->setText(btext);
     setClockLock(false);
 }
-
 void MXDateTime::on_btnSystemToHardware_clicked()
 {
     setClockLock(true);
@@ -179,7 +269,6 @@ void MXDateTime::on_btnSystemToHardware_clicked()
     }
     setClockLock(false);
 }
-
 void MXDateTime::on_btnHardwareToSystem_clicked()
 {
     setClockLock(true);
@@ -223,26 +312,6 @@ void MXDateTime::on_btnSyncNow_clicked()
         QMessageBox::critical(this, windowTitle(), tr("None of the NTP servers on the list are currently enabled."));
     }
 }
-bool MXDateTime::validateServerList()
-{
-    bool allValid = true;
-    const int serverCount = ui->tblServers->rowCount();
-    for (int ixi = 0; ixi < serverCount; ++ixi) {
-        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
-        const QString &address = item->text().trimmed();
-        if (address.isEmpty()) allValid = false;
-    }
-    const char *msg = nullptr;
-    if (serverCount <= 0) msg = "There are no NTP servers on the list.";
-    else if (!allValid) msg = "There are invalid entries on the NTP server list.";
-    if (msg) {
-        QMessageBox::critical(this, windowTitle(), tr(msg));
-        return false;
-    }
-    if (serverCount == 88) setWindowTitle("88 MILES PER HOUR");
-    return true;
-}
-
 void MXDateTime::on_tblServers_itemSelectionChanged()
 {
     const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
@@ -257,13 +326,31 @@ void MXDateTime::on_tblServers_itemSelectionChanged()
     ui->btnServerMoveUp->setEnabled(up);
     ui->btnServerMoveDown->setEnabled(down);
 }
-
 void MXDateTime::on_btnServerAdd_clicked()
 {
     QTableWidgetItem *item = addServerRow(true, "server", QString(), QString());
     ui->tblServers->setCurrentItem(item);
     ui->tblServers->editItem(item);
 }
+void MXDateTime::on_btnServerRemove_clicked()
+{
+    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    for (int ixi = ranges.count() - 1; ixi >= 0; --ixi) {
+        const int top = ranges.at(ixi).topRow();
+        for (int row = ranges.at(ixi).bottomRow(); row >= top; --row) {
+            ui->tblServers->removeRow(row);
+        }
+    }
+}
+void MXDateTime::on_btnServerMoveUp_clicked()
+{
+    moveServerRow(-1);
+}
+void MXDateTime::on_btnServerMoveDown_clicked()
+{
+    moveServerRow(1);
+}
+
 QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)
 {
     QComboBox *itemComboType = new QComboBox(ui->tblServers);
@@ -281,26 +368,6 @@ QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, co
     ui->tblServers->setItem(newRow, 1, item);
     ui->tblServers->setItem(newRow, 2, itemOptions);
     return item;
-}
-
-void MXDateTime::on_btnServerRemove_clicked()
-{
-    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
-    for (int ixi = ranges.count() - 1; ixi >= 0; --ixi) {
-        const int top = ranges.at(ixi).topRow();
-        for (int row = ranges.at(ixi).bottomRow(); row >= top; --row) {
-            ui->tblServers->removeRow(row);
-        }
-    }
-}
-
-void MXDateTime::on_btnServerMoveUp_clicked()
-{
-    moveServerRow(-1);
-}
-void MXDateTime::on_btnServerMoveDown_clicked()
-{
-    moveServerRow(1);
 }
 void MXDateTime::moveServerRow(int movement)
 {
@@ -341,13 +408,26 @@ void MXDateTime::moveServerRow(int movement)
         ui->tblServers->setItem(end, 2, targetItemOptions);
     }
 }
-
-// OTHER
-
-void MXDateTime::on_btnClose_clicked()
+bool MXDateTime::validateServerList()
 {
-    qApp->exit(0);
+    bool allValid = true;
+    const int serverCount = ui->tblServers->rowCount();
+    for (int ixi = 0; ixi < serverCount; ++ixi) {
+        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+        const QString &address = item->text().trimmed();
+        if (address.isEmpty()) allValid = false;
+    }
+    const char *msg = nullptr;
+    if (serverCount <= 0) msg = "There are no NTP servers on the list.";
+    else if (!allValid) msg = "There are invalid entries on the NTP server list.";
+    if (msg) {
+        QMessageBox::critical(this, windowTitle(), tr(msg));
+        return false;
+    }
+    return true;
 }
+
+// ACTION BUTTONS
 
 void MXDateTime::on_btnApply_clicked()
 {
@@ -446,130 +526,11 @@ void MXDateTime::on_btnApply_clicked()
     // Refresh the UI with newly set values
     loadSysTimeConfig();
 }
-
-// HELPER FUNCTIONS
-
-void MXDateTime::loadSysTimeConfig()
+void MXDateTime::on_btnClose_clicked()
 {
-    // Time zone.
-    ui->cmbTimeZone->blockSignals(true);
-    const QByteArray &zone = QTimeZone::systemTimeZoneId();
-    int index = ui->cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
-    ui->cmbTimeArea->setCurrentIndex(index);
-    qApp->processEvents();
-    index = ui->cmbTimeZone->findData(QVariant(zone));
-    ui->cmbTimeZone->setCurrentIndex(index);
-    zoneDelta = 0;
-    ui->cmbTimeZone->blockSignals(false);
-
-    if (userRoot) {
-        // Network time.
-        QFile file("/etc/ntp.conf");
-        if (file.open(QFile::ReadOnly | QFile::Text)) {
-            QByteArray conf;
-            while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
-            confServers.clear();
-            while(!file.atEnd()) {
-                const QByteArray &bline = file.readLine();
-                const QString line(bline.trimmed());
-                const QRegularExpression tregex("^#?(pool|server|peer)\\s");
-                if(!line.contains(tregex)) conf.append(bline);
-                else {
-                    QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
-                    QString curarg = args.at(0);
-                    bool enabled = true;
-                    if (curarg.startsWith('#')) {
-                        enabled = false;
-                        curarg = curarg.remove(0, 1);
-                    }
-                    QString options;
-                    for (int ixi = 2; ixi < args.count(); ++ixi) {
-                        options.append(' ');
-                        options.append(args.at(ixi));
-                    }
-                    addServerRow(enabled, curarg, args.at(1), options.trimmed());
-                    confServers.append('\n');
-                    confServers.append(line);
-                }
-            }
-            confBaseNTP = conf.trimmed();
-            file.close();
-        }
-        if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
-        else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
-        ui->chkAutoSync->setChecked(enabledNTP);
-    }
-
-    // Date and time.
-    timer = new QTimer(this);
-    timeDelta = 0;
-    secUpdating = true;
-    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime());
-    timeChanged = false;
-    setClockLock(false);
-    timer->start(1000 - QTime::currentTime().msec());
+    qApp->exit(0);
 }
-
-void MXDateTime::setClockLock(bool locked)
-{
-    if (clockLock != locked) {
-        if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
-        ui->tabDateTime->setDisabled(locked);
-        ui->tabHardware->setDisabled(locked);
-        ui->tabNetwork->setDisabled(locked);
-        ui->btnApply->setDisabled(locked);
-        ui->btnClose->setDisabled(locked);
-        if (!locked) qApp->restoreOverrideCursor();
-        clockLock = locked;
-    }
-}
-
-bool MXDateTime::execute(const QString &cmd, QByteArray *output)
-{
-    qDebug() << "Exec:" << cmd;
-    QProcess proc(this);
-    QEventLoop eloop;
-    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), &eloop, &QEventLoop::quit);
-    proc.start(cmd);
-    if (!output) proc.closeReadChannel(QProcess::StandardOutput);
-    proc.closeWriteChannel();
-    eloop.exec();
-    disconnect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), 0, 0);
-    const QByteArray &sout = proc.readAllStandardOutput();
-    if (output) *output = sout;
-    else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
-    const QByteArray &serr = proc.readAllStandardError();
-    if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
-    qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
-    return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
-}
-
-// SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND
-
-MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
-{
-}
-void MTimeEdit::updateDateTime(const QDateTime &dateTime)
-{
-    QLineEdit *ledit = lineEdit();
-    // Original cursor position and selections
-    int select = ledit->selectionStart();
-    int cursor = ledit->cursorPosition();
-    // Calculation for backward selections.
-    if (select >= 0 && select >= cursor) {
-        const int cslength = ledit->selectedText().length();
-        if (cslength > 0) select = cursor + cslength;
-    }
-    // Set the date/time as normal.
-    setDateTime(dateTime);
-    // Restore cursor and selection.
-    if (select >= 0) ledit->setSelection(select, cursor - select);
-    else ledit->setCursorPosition(cursor);
-}
-
-// MX STANDARD USER INTERFACE
-
+// MX Standard User Interface
 void MXDateTime::on_btnAbout_clicked()
 {
     QMessageBox msgBox(QMessageBox::NoIcon,
@@ -617,7 +578,6 @@ void MXDateTime::on_btnAbout_clicked()
         changelog->exec();
     }
 }
-
 void MXDateTime::on_btnHelp_clicked()
 {
     QString url = "/usr/share/doc/mx-datetime/help/mx-datetime.html";
@@ -629,4 +589,27 @@ void MXDateTime::on_btnHelp_clicked()
     } else {
         system ("su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open " + url.toUtf8() + "\"&");
     }
+}
+
+// SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND
+
+MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
+{
+}
+void MTimeEdit::updateDateTime(const QDateTime &dateTime)
+{
+    QLineEdit *ledit = lineEdit();
+    // Original cursor position and selections
+    int select = ledit->selectionStart();
+    int cursor = ledit->cursorPosition();
+    // Calculation for backward selections.
+    if (select >= 0 && select >= cursor) {
+        const int cslength = ledit->selectedText().length();
+        if (cslength > 0) select = cursor + cslength;
+    }
+    // Set the date/time as normal.
+    setDateTime(dateTime);
+    // Restore cursor and selection.
+    if (select >= 0) ledit->setSelection(select, cursor - select);
+    else ledit->setCursorPosition(cursor);
 }

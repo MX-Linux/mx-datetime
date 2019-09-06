@@ -39,12 +39,10 @@ public:
     ~MXDateTime();
 
 private slots:
-    void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
     void on_cmbTimeArea_currentIndexChanged(int index);
     void on_cmbTimeZone_currentIndexChanged(int index);
-    void on_btnClose_clicked();
-    void on_btnApply_clicked();
     void on_calendar_clicked(const QDate &date);
+    void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
     void on_btnReadHardware_clicked();
     void on_btnSystemToHardware_clicked();
     void on_btnHardwareToSystem_clicked();
@@ -54,6 +52,8 @@ private slots:
     void on_btnServerRemove_clicked();
     void on_btnServerMoveUp_clicked();
     void on_btnServerMoveDown_clicked();
+    void on_btnApply_clicked();
+    void on_btnClose_clicked();
     void on_btnAbout_clicked();
     void on_btnHelp_clicked();
 
@@ -79,14 +79,13 @@ private:
     bool secUpdating = false;
 
     void startup();
-    bool validateServerList();
-    QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
-    void moveServerRow(int movement);
     void loadSysTimeConfig();
-    void saveSysTimeConfig();
-    void secUpdate();
     void setClockLock(bool locked);
     bool execute(const QString &cmd, QByteArray *output = nullptr);
+    void secUpdate();
+    QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
+    void moveServerRow(int movement);
+    bool validateServerList();
 };
 
 // QTimeEdit subclassing just to stop the cursor and selection jumping every second.

@@ -68,6 +68,7 @@ private:
         OpenRC,
         SystemD
     } sysInit = SystemV;
+    bool userRoot = false;
     QList<QByteArray> zones;
     QByteArray confBaseNTP;
     QByteArray confServers;

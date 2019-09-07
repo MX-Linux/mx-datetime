@@ -601,6 +601,10 @@ void MXDateTime::on_btnHelp_clicked()
 
 MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
 {
+    // Ensure the widget is not too wide.
+    QString fmt(displayFormat());
+    if (fmt.section(':', 0, 0).length() < 2) fmt.insert(0, QChar('X'));
+    setMaximumWidth(fontMetrics().width(fmt) + (width() - lineEdit()->width()));
 }
 void MTimeEdit::updateDateTime(const QDateTime &dateTime)
 {

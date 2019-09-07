@@ -41,7 +41,7 @@ public:
 private slots:
     void on_cmbTimeArea_currentIndexChanged(int index);
     void on_cmbTimeZone_currentIndexChanged(int index);
-    void on_calendar_clicked(const QDate &date);
+    void on_calendar_selectionChanged();
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
     void on_btnReadHardware_clicked();
     void on_btnSystemToHardware_clicked();
@@ -61,6 +61,7 @@ private:
     Ui::MXDateTime *ui;
     QTimer *timer = nullptr;
     bool clockLock = false;
+    int dateDelta = 0;
     qint64 timeDelta = 0;
     int zoneDelta = 0;
     enum InitSystem {
@@ -74,8 +75,6 @@ private:
     QByteArray confServers;
     bool enabledNTP;
     bool isHardwareUTC;
-    bool timeChanged = false;
-    bool calChanging = false;
     bool secUpdating = false;
 
     void startup();

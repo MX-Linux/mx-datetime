@@ -26,11 +26,18 @@
 #include <QTimeEdit>
 #include <QTableWidgetItem>
 
-namespace Ui {
-class MXDateTime;
-}
+// QTimeEdit subclassing just to stop the cursor and selection jumping every second.
+class MTimeEdit : public QTimeEdit
+{
+public:
+    MTimeEdit(QWidget *parent = 0);
+    void updateDateTime(const QDateTime &dateTime);
+};
 
-class MXDateTime : public QDialog
+// This #include must come after the MTimeEdit class.
+#include "ui_datetime.h"
+
+class MXDateTime : public QDialog, private Ui::MXDateTime
 {
     Q_OBJECT
 
@@ -58,7 +65,6 @@ private slots:
     void on_btnHelp_clicked();
 
 private:
-    Ui::MXDateTime *ui;
     QTimer *timer = nullptr;
     bool clockLock = false;
     int dateDelta = 0;
@@ -85,14 +91,6 @@ private:
     QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
     void moveServerRow(int movement);
     bool validateServerList();
-};
-
-// QTimeEdit subclassing just to stop the cursor and selection jumping every second.
-class MTimeEdit : public QTimeEdit
-{
-public:
-    MTimeEdit(QWidget *parent = 0);
-    void updateDateTime(const QDateTime &dateTime);
 };
 
 #endif // DATETIME_H

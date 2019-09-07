@@ -25,55 +25,52 @@
 #include <QMessageBox>
 #include <QLineEdit>
 #include "datetime.h"
-#include "ui_datetime.h"
 #include "version.h"
 
 MXDateTime::MXDateTime(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::MXDateTime)
+    QDialog(parent)
 {
-    ui->setupUi(this);
+    setupUi(this);
     setClockLock(true);
     setWindowFlags(Qt::Window); // for the close, min and max buttons
     QTextCharFormat tcfmt;
-    tcfmt.setFontPointSize(ui->calendar->font().pointSizeF() * 0.75);
-    ui->calendar->setHeaderTextFormat(tcfmt);
+    tcfmt.setFontPointSize(calendar->font().pointSizeF() * 0.75);
+    calendar->setHeaderTextFormat(tcfmt);
 
     // Operate with reduced functionality if not running as root.
     userRoot = (getuid() == 0);
     if (!userRoot) {
-        ui->btnAbout->hide();
-        ui->btnHelp->hide();
-        ui->lblLogo->hide();
-        ui->btnApply->hide();
-        ui->btnClose->hide();
-        ui->tabWidget->tabBar()->hide();
-        ui->tabWidget->setDocumentMode(true);
-        ui->gridWindow->setMargin(0);
-        ui->gridDateTime->setMargin(0);
-        ui->gridDateTime->setSpacing(1);
+        btnAbout->hide();
+        btnHelp->hide();
+        lblLogo->hide();
+        btnApply->hide();
+        btnClose->hide();
+        tabWidget->tabBar()->hide();
+        tabWidget->setDocumentMode(true);
+        gridWindow->setMargin(0);
+        gridDateTime->setMargin(0);
+        gridDateTime->setSpacing(1);
     }
 
     QTimer::singleShot(0, this, &MXDateTime::startup);
 }
 MXDateTime::~MXDateTime()
 {
-    delete ui;
 }
 
 void MXDateTime::startup()
 {
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
+    timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
     if (userRoot) {
         // Make the NTP server table columns the right proportions.
         int colSizes[3];
         addServerRow(true, QString(), QString(), QString());
-        ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        for (int ixi = 0; ixi < 3; ++ixi) colSizes[ixi] = ui->tblServers->columnWidth(ixi);
-        ui->tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-        for (int ixi = 0; ixi < 3; ++ixi) ui->tblServers->setColumnWidth(ixi, colSizes[ixi]);
-        ui->tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-        ui->tblServers->removeRow(0);
+        tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        for (int ixi = 0; ixi < 3; ++ixi) colSizes[ixi] = tblServers->columnWidth(ixi);
+        tblServers->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+        for (int ixi = 0; ixi < 3; ++ixi) tblServers->setColumnWidth(ixi, colSizes[ixi]);
+        tblServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+        tblServers->removeRow(0);
 
         // Used to decide the type of commands to run on this system.
         QByteArray testSystemD;
@@ -90,46 +87,46 @@ void MXDateTime::startup()
     QByteArray zoneOut;
     execute("find -L /usr/share/zoneinfo/posix -mindepth 2 -type f -printf %P\\n", &zoneOut);
     zones = zoneOut.trimmed().split('\n');
-    ui->cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
-    ui->cmbTimeArea->clear();
+    cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
+    cmbTimeArea->clear();
     for (const QByteArray &zone : zones) {
         const QString &area = QString(zone).section('/', 0, 0);
-        if (ui->cmbTimeArea->findData(area) < 0) {
+        if (cmbTimeArea->findData(area) < 0) {
             QString text(area);
             if (area == "Indian" || area == "Pacific"
                 || area == "Atlantic" || area == "Arctic") text.append(" Ocean");
-            ui->cmbTimeArea->addItem(text, QVariant(area.toUtf8()));
+            cmbTimeArea->addItem(text, QVariant(area.toUtf8()));
         }
     }
-    ui->cmbTimeArea->model()->sort(0);
+    cmbTimeArea->model()->sort(0);
 
     // Load the system values into the GUI.
     loadSysTimeConfig();
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     setClockLock(false);
-    if (!userRoot) ui->calendar->setFocus();
+    if (!userRoot) calendar->setFocus();
     timer->start(1000 - QTime::currentTime().msec());
 }
 void MXDateTime::loadSysTimeConfig()
 {
     // Time zone.
-    ui->cmbTimeZone->blockSignals(true);
+    cmbTimeZone->blockSignals(true);
     const QByteArray &zone = QTimeZone::systemTimeZoneId();
-    int index = ui->cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
-    ui->cmbTimeArea->setCurrentIndex(index);
+    int index = cmbTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
+    cmbTimeArea->setCurrentIndex(index);
     qApp->processEvents();
-    index = ui->cmbTimeZone->findData(QVariant(zone));
-    ui->cmbTimeZone->setCurrentIndex(index);
+    index = cmbTimeZone->findData(QVariant(zone));
+    cmbTimeZone->setCurrentIndex(index);
     zoneDelta = 0;
-    ui->cmbTimeZone->blockSignals(false);
+    cmbTimeZone->blockSignals(false);
 
     if (userRoot) {
         // Network time.
         QFile file("/etc/ntp.conf");
         if (file.open(QFile::ReadOnly | QFile::Text)) {
             QByteArray conf;
-            while(ui->tblServers->rowCount() > 0) ui->tblServers->removeRow(0);
+            while(tblServers->rowCount() > 0) tblServers->removeRow(0);
             confServers.clear();
             while(!file.atEnd()) {
                 const QByteArray &bline = file.readLine();
@@ -159,13 +156,13 @@ void MXDateTime::loadSysTimeConfig()
         }
         if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
         else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
-        ui->chkAutoSync->setChecked(enabledNTP);
+        chkAutoSync->setChecked(enabledNTP);
     }
 
     // Date and time.
     timeDelta = 0;
     secUpdating = true;
-    ui->timeEdit->setDateTime(QDateTime::currentDateTime());
+    timeEdit->setDateTime(QDateTime::currentDateTime());
     // Force a second-interval update.
     if (timer) timer->setInterval(0);
 }
@@ -173,11 +170,11 @@ void MXDateTime::setClockLock(bool locked)
 {
     if (clockLock != locked) {
         if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
-        ui->tabDateTime->setDisabled(locked);
-        ui->tabHardware->setDisabled(locked);
-        ui->tabNetwork->setDisabled(locked);
-        ui->btnApply->setDisabled(locked);
-        ui->btnClose->setDisabled(locked);
+        tabDateTime->setDisabled(locked);
+        tabHardware->setDisabled(locked);
+        tabNetwork->setDisabled(locked);
+        btnApply->setDisabled(locked);
+        btnClose->setDisabled(locked);
         if (!locked) qApp->restoreOverrideCursor();
         clockLock = locked;
     }
@@ -204,36 +201,36 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 
 // DATE & TIME
 
-void MXDateTime::on_calendar_selectionChanged()
-{
-    dateDelta = ui->timeEdit->date().daysTo(ui->calendar->selectedDate());
-}
 void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
 {
-    if (index < 0 || index >= ui->cmbTimeArea->count()) return;
-    const QByteArray &area = ui->cmbTimeArea->itemData(index).toByteArray();
-    ui->cmbTimeZone->clear();
+    if (index < 0 || index >= cmbTimeArea->count()) return;
+    const QByteArray &area = cmbTimeArea->itemData(index).toByteArray();
+    cmbTimeZone->clear();
     for (const QByteArray &zone : zones) {
         if (zone.startsWith(area)) {
             QString text(QString(zone).section('/', 1));
             text.replace('_', ' ');
-            ui->cmbTimeZone->addItem(text, QVariant(zone));
+            cmbTimeZone->addItem(text, QVariant(zone));
         }
     }
-    ui->cmbTimeZone->model()->sort(0);
+    cmbTimeZone->model()->sort(0);
 }
 void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
 {
-    if (index < 0 || index >= ui->cmbTimeZone->count()) return;
+    if (index < 0 || index >= cmbTimeZone->count()) return;
     // Calculate and store the difference between current and newly selected time zones.
     const QDateTime &current = QDateTime::currentDateTime();
-    zoneDelta = QTimeZone(ui->cmbTimeZone->itemData(index).toByteArray()).offsetFromUtc(current)
+    zoneDelta = QTimeZone(cmbTimeZone->itemData(index).toByteArray()).offsetFromUtc(current)
               - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
     secUpdate(); // Make the change immediately visible
 }
+void MXDateTime::on_calendar_selectionChanged()
+{
+    dateDelta = timeEdit->date().daysTo(calendar->selectedDate());
+}
 void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
-    ui->clock->setTime(dateTime.time());
+    clock->setTime(dateTime.time());
     if (!secUpdating) {
         timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
         if (abs(dateDelta*86400 + timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
@@ -243,10 +240,10 @@ void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 void MXDateTime::secUpdate()
 {
     secUpdating = true;
-    ui->timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
+    timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
     timer->setInterval(1000 - QTime::currentTime().msec());
-    if(ui->timeEdit->date().daysTo(ui->calendar->selectedDate()) != dateDelta) {
-        ui->calendar->setSelectedDate(ui->timeEdit->date().addDays(dateDelta));
+    if(timeEdit->date().daysTo(calendar->selectedDate()) != dateDelta) {
+        calendar->setSelectedDate(timeEdit->date().addDays(dateDelta));
     }
     secUpdating = false;
 }
@@ -256,15 +253,15 @@ void MXDateTime::secUpdate()
 void MXDateTime::on_btnReadHardware_clicked()
 {
     setClockLock(true);
-    const QString btext = ui->btnReadHardware->text();
-    ui->btnReadHardware->setText(tr("Reading..."));
+    const QString btext = btnReadHardware->text();
+    btnReadHardware->setText(tr("Reading..."));
     QByteArray rtcout;
     execute("/sbin/hwclock --verbose", &rtcout);
     isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
-    if (isHardwareUTC) ui->radHardwareUTC->setChecked(true);
-    else ui->radHardwareLocal->setChecked(true);
-    ui->txtHardwareClock->setPlainText(QString(rtcout.trimmed()));
-    ui->btnReadHardware->setText(btext);
+    if (isHardwareUTC) radHardwareUTC->setChecked(true);
+    else radHardwareLocal->setChecked(true);
+    txtHardwareClock->setPlainText(QString(rtcout.trimmed()));
+    btnReadHardware->setText(btext);
     setClockLock(false);
 }
 void MXDateTime::on_btnSystemToHardware_clicked()
@@ -295,20 +292,20 @@ void MXDateTime::on_btnSyncNow_clicked()
     if (!validateServerList()) return;
     setClockLock(true);
     // Command preparation.
-    const int serverCount = ui->tblServers->rowCount();
+    const int serverCount = tblServers->rowCount();
     QString args;
     for (int ixi = 0; ixi < serverCount; ++ixi) {
-        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+        QTableWidgetItem *item = tblServers->item(ixi, 1);
         const QString &address = item->text().trimmed();
         if (item->checkState() == Qt::Checked) args += " " + address;
     }
     // Command execution.
     bool rexit = false;
     if (!args.isEmpty()) {
-        QString btext = ui->btnSyncNow->text();
-        ui->btnSyncNow->setText(tr("Updating..."));
+        QString btext = btnSyncNow->text();
+        btnSyncNow->setText(tr("Updating..."));
         rexit = execute("/usr/sbin/ntpdate -u" + args);
-        ui->btnSyncNow->setText(btext);
+        btnSyncNow->setText(btext);
     }
     // Finishing touches.
     setClockLock(false);
@@ -322,31 +319,31 @@ void MXDateTime::on_btnSyncNow_clicked()
 }
 void MXDateTime::on_tblServers_itemSelectionChanged()
 {
-    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    const QList<QTableWidgetSelectionRange> &ranges = tblServers->selectedRanges();
     bool remove = false, up = false, down = false;
     if (ranges.count() == 1) {
         const QTableWidgetSelectionRange &range = ranges.at(0);
         remove = true;
         if (range.topRow() > 0) up = true;
-        if (range.bottomRow() < (ui->tblServers->rowCount() - 1)) down = true;
+        if (range.bottomRow() < (tblServers->rowCount() - 1)) down = true;
     }
-    ui->btnServerRemove->setEnabled(remove);
-    ui->btnServerMoveUp->setEnabled(up);
-    ui->btnServerMoveDown->setEnabled(down);
+    btnServerRemove->setEnabled(remove);
+    btnServerMoveUp->setEnabled(up);
+    btnServerMoveDown->setEnabled(down);
 }
 void MXDateTime::on_btnServerAdd_clicked()
 {
     QTableWidgetItem *item = addServerRow(true, "server", QString(), QString());
-    ui->tblServers->setCurrentItem(item);
-    ui->tblServers->editItem(item);
+    tblServers->setCurrentItem(item);
+    tblServers->editItem(item);
 }
 void MXDateTime::on_btnServerRemove_clicked()
 {
-    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    const QList<QTableWidgetSelectionRange> &ranges = tblServers->selectedRanges();
     for (int ixi = ranges.count() - 1; ixi >= 0; --ixi) {
         const int top = ranges.at(ixi).topRow();
         for (int row = ranges.at(ixi).bottomRow(); row >= top; --row) {
-            ui->tblServers->removeRow(row);
+            tblServers->removeRow(row);
         }
     }
 }
@@ -361,7 +358,7 @@ void MXDateTime::on_btnServerMoveDown_clicked()
 
 QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)
 {
-    QComboBox *itemComboType = new QComboBox(ui->tblServers);
+    QComboBox *itemComboType = new QComboBox(tblServers);
     QTableWidgetItem *item = new QTableWidgetItem(address);
     QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
     itemComboType->addItem("Pool", QVariant("pool"));
@@ -370,16 +367,16 @@ QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, co
     itemComboType->setCurrentIndex(itemComboType->findData(QVariant(type)));
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
     item->setCheckState(enabled ? Qt::Checked : Qt::Unchecked);
-    const int newRow = ui->tblServers->rowCount();
-    ui->tblServers->insertRow(newRow);
-    ui->tblServers->setCellWidget(newRow, 0, itemComboType);
-    ui->tblServers->setItem(newRow, 1, item);
-    ui->tblServers->setItem(newRow, 2, itemOptions);
+    const int newRow = tblServers->rowCount();
+    tblServers->insertRow(newRow);
+    tblServers->setCellWidget(newRow, 0, itemComboType);
+    tblServers->setItem(newRow, 1, item);
+    tblServers->setItem(newRow, 2, itemOptions);
     return item;
 }
 void MXDateTime::moveServerRow(int movement)
 {
-    const QList<QTableWidgetSelectionRange> &ranges = ui->tblServers->selectedRanges();
+    const QList<QTableWidgetSelectionRange> &ranges = tblServers->selectedRanges();
     if (ranges.count() == 1) {
         const QTableWidgetSelectionRange &range = ranges.at(0);
         int end, row;
@@ -392,36 +389,36 @@ void MXDateTime::moveServerRow(int movement)
         }
         row += movement;
         // Save the original row contents.
-        int targetType = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 0))->currentIndex();
-        QTableWidgetItem *targetItemAddress = ui->tblServers->takeItem(row, 1);
-        QTableWidgetItem *targetItemOptions = ui->tblServers->takeItem(row, 2);
+        int targetType = static_cast<QComboBox *>(tblServers->cellWidget(row, 0))->currentIndex();
+        QTableWidgetItem *targetItemAddress = tblServers->takeItem(row, 1);
+        QTableWidgetItem *targetItemOptions = tblServers->takeItem(row, 2);
         // Update the list selection.
         const QTableWidgetSelectionRange targetRange(row, range.leftColumn(), end + movement, range.rightColumn());
-        ui->tblServers->setCurrentItem(nullptr);
-        ui->tblServers->setRangeSelected(targetRange, true);
+        tblServers->setCurrentItem(nullptr);
+        tblServers->setRangeSelected(targetRange, true);
         // Move items one by one.
         do {
             row -= movement;
-            int type = static_cast<QComboBox *>(ui->tblServers->cellWidget(row, 0))->currentIndex();
-            QTableWidgetItem *itemAddress = ui->tblServers->takeItem(row, 1);
-            QTableWidgetItem *itemOptions = ui->tblServers->takeItem(row, 2);
+            int type = static_cast<QComboBox *>(tblServers->cellWidget(row, 0))->currentIndex();
+            QTableWidgetItem *itemAddress = tblServers->takeItem(row, 1);
+            QTableWidgetItem *itemOptions = tblServers->takeItem(row, 2);
             const int step = row + movement;
-            static_cast<QComboBox *>(ui->tblServers->cellWidget(step, 0))->setCurrentIndex(type);
-            ui->tblServers->setItem(step, 1, itemAddress);
-            ui->tblServers->setItem(step, 2, itemOptions);
+            static_cast<QComboBox *>(tblServers->cellWidget(step, 0))->setCurrentIndex(type);
+            tblServers->setItem(step, 1, itemAddress);
+            tblServers->setItem(step, 2, itemOptions);
         } while (row != end);
         // Move the target where the range originally finished.
-        static_cast<QComboBox *>(ui->tblServers->cellWidget(end, 0))->setCurrentIndex(targetType);
-        ui->tblServers->setItem(end, 1, targetItemAddress);
-        ui->tblServers->setItem(end, 2, targetItemOptions);
+        static_cast<QComboBox *>(tblServers->cellWidget(end, 0))->setCurrentIndex(targetType);
+        tblServers->setItem(end, 1, targetItemAddress);
+        tblServers->setItem(end, 2, targetItemOptions);
     }
 }
 bool MXDateTime::validateServerList()
 {
     bool allValid = true;
-    const int serverCount = ui->tblServers->rowCount();
+    const int serverCount = tblServers->rowCount();
     for (int ixi = 0; ixi < serverCount; ++ixi) {
-        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+        QTableWidgetItem *item = tblServers->item(ixi, 1);
         const QString &address = item->text().trimmed();
         if (address.isEmpty()) allValid = false;
     }
@@ -447,7 +444,7 @@ void MXDateTime::on_btnApply_clicked()
 
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
-        const QString newzone(ui->cmbTimeZone->currentData().toByteArray());
+        const QString newzone(cmbTimeZone->currentData().toByteArray());
         if (sysInit == SystemD) execute("timedatectl set-timezone " + newzone);
         else {
             execute("ln -nfs /usr/share/zoneinfo/" + newzone + " /etc/localtime");
@@ -465,8 +462,8 @@ void MXDateTime::on_btnApply_clicked()
         if (sysInit == SystemD) cmd = "timedatectl set-time ";
         else cmd = "date -s ";
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
-        QDateTime newTime(ui->calendar->selectedDate(),
-                          ui->timeEdit->time());
+        QDateTime newTime(calendar->selectedDate(),
+                          timeEdit->time());
         if (timeDelta) {
             const qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
             execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
@@ -477,7 +474,7 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // NTP settings
-    const bool ntp = ui->chkAutoSync->isChecked();
+    const bool ntp = chkAutoSync->isChecked();
     if (ntp != enabledNTP) {
         if(sysInit == SystemD) {
             execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
@@ -494,15 +491,15 @@ void MXDateTime::on_btnApply_clicked()
         }
     }
     QByteArray confServersNew;
-    for (int ixi = 0; ixi < ui->tblServers->rowCount(); ++ixi) {
-        QComboBox *comboType = static_cast<QComboBox *>(ui->tblServers->cellWidget(ixi, 0));
-        QTableWidgetItem *item = ui->tblServers->item(ixi, 1);
+    for (int ixi = 0; ixi < tblServers->rowCount(); ++ixi) {
+        QComboBox *comboType = static_cast<QComboBox *>(tblServers->cellWidget(ixi, 0));
+        QTableWidgetItem *item = tblServers->item(ixi, 1);
         confServersNew.append('\n');
         if (item->checkState() != Qt::Checked) confServersNew.append('#');
         confServersNew.append(comboType->currentData().toString());
         confServersNew.append(' ');
         confServersNew.append(item->text().trimmed());
-        const QString &options = ui->tblServers->item(ixi, 2)->text().trimmed();
+        const QString &options = tblServers->item(ixi, 2)->text().trimmed();
         if (!options.isEmpty()) {
             confServersNew.append(' ');
             confServersNew.append(options);
@@ -520,7 +517,7 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // RTC settings
-    const bool rtcUTC = ui->radHardwareUTC->isChecked();
+    const bool rtcUTC = radHardwareUTC->isChecked();
     if (rtcUTC != isHardwareUTC) {
         if (sysInit == SystemD) {
             execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));

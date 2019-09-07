@@ -1,0 +1,122 @@
+ dpkg-buildpackage -rfakeroot -us -uc -B
+dpkg-buildpackage: info: source package mx-datetime
+dpkg-buildpackage: info: source version 0.19.9.06
+dpkg-buildpackage: info: source distribution mx
+dpkg-buildpackage: info: source changed by Dolphin Oracle <dolphinoracle@gmail.com>
+ dpkg-source --before-build mx-datetime
+dpkg-buildpackage: info: host architecture i386
+ fakeroot debian/rules clean
+dh clean --parallel 
+   debian/rules override_dh_auto_clean
+make[1]: Entering directory '/media/demo/dataext/development/working/32/mx-datetime'
+dh_auto_clean
+rm -f src/translations/*.qm
+make[1]: Leaving directory '/media/demo/dataext/development/working/32/mx-datetime'
+   dh_clean -O--parallel
+ debian/rules build-arch
+dh build-arch --parallel 
+   dh_update_autotools_config -a -O--parallel
+   dh_auto_configure -a -O--parallel
+	qmake -makefile "QMAKE_CFLAGS_RELEASE=-g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2" "QMAKE_CFLAGS_DEBUG=-g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2" "QMAKE_CXXFLAGS_RELEASE=-g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2" "QMAKE_CXXFLAGS_DEBUG=-g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2" QMAKE_LFLAGS_RELEASE=-Wl,-z,relro QMAKE_LFLAGS_DEBUG=-Wl,-z,relro QMAKE_STRIP=: PREFIX=/usr
+Info: creating stash file /media/demo/dataext/development/working/32/mx-datetime/.qmake.stash
+   debian/rules override_dh_auto_build
+make[1]: Entering directory '/media/demo/dataext/development/working/32/mx-datetime'
+lrelease mx-datetime.pro
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_ca.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_de.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_el.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_es.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_fr.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_it.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_ja.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_nl.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_ro.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+Updating '/media/demo/dataext/development/working/32/mx-datetime/translations/mx-datetime_sv.qm'...
+    Generated 0 translation(s) (0 finished and 0 unfinished)
+    Ignored 46 untranslated source text(s)
+head -n1 debian/changelog | sed -e "s/.*(\([^(]*\)).*/#define VERSION \"\1\"/" > version.h
+dh_auto_build
+	make -j4
+make[2]: Entering directory '/media/demo/dataext/development/working/32/mx-datetime'
+/usr/lib/i386-linux-gnu/qt5/bin/uic datetime.ui -o ui_datetime.h
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o clockface.o clockface.cpp
+/usr/lib/i386-linux-gnu/qt5/bin/rcc -name images images.qrc -o qrc_images.cpp
+/usr/lib/i386-linux-gnu/qt5/bin/moc -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/media/demo/dataext/development/working/32/mx-datetime -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/i386-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/i686-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/6/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include clockface.h -o moc_clockface.cpp
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o main.o main.cpp
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o datetime.o datetime.cpp
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o qrc_images.o qrc_images.cpp
+/usr/lib/i386-linux-gnu/qt5/bin/moc -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I/media/demo/dataext/development/working/32/mx-datetime -I/usr/include/i386-linux-gnu/qt5 -I/usr/include/i386-linux-gnu/qt5/QtWidgets -I/usr/include/i386-linux-gnu/qt5/QtGui -I/usr/include/i386-linux-gnu/qt5/QtCore -I/usr/include/c++/6 -I/usr/include/i386-linux-gnu/c++/6 -I/usr/include/c++/6/backward -I/usr/lib/gcc/i686-linux-gnu/6/include -I/usr/local/include -I/usr/lib/gcc/i686-linux-gnu/6/include-fixed -I/usr/include/i386-linux-gnu -I/usr/include datetime.h -o moc_datetime.cpp
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o moc_clockface.o moc_clockface.cpp
+g++ -c -pipe -g -O2 -fdebug-prefix-map=/media/demo/dataext/development/working/32/mx-datetime=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wall -W -D_REENTRANT -fPIC -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I. -isystem /usr/include/i386-linux-gnu/qt5 -isystem /usr/include/i386-linux-gnu/qt5/QtWidgets -isystem /usr/include/i386-linux-gnu/qt5/QtGui -isystem /usr/include/i386-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -o moc_datetime.o moc_datetime.cpp
+datetime.cpp: In member function ‘void MXDateTime::on_btnAbout_clicked()’:
+datetime.cpp:562:85: warning: ignoring return value of ‘int system(const char*)’, declared with attribute warn_unused_result [-Wunused-result]
+             system("mx-viewer " + url.toUtf8() + " " + tr("License").toUtf8() + "&");
+                                                                                     ^
+datetime.cpp:564:74: warning: ignoring return value of ‘int system(const char*)’, declared with attribute warn_unused_result [-Wunused-result]
+             system(env_run.toUtf8() + "xdg-open " + url.toUtf8() + "\"&");
+                                                                          ^
+datetime.cpp: In member function ‘void MXDateTime::on_btnHelp_clicked()’:
+datetime.cpp:594:98: warning: ignoring return value of ‘int system(const char*)’, declared with attribute warn_unused_result [-Wunused-result]
+         system ("mx-viewer " + url.toUtf8() + " \"" + tr("MX Date & Time Help").toUtf8() + "\"&");
+                                                                                                  ^
+datetime.cpp:596:125: warning: ignoring return value of ‘int system(const char*)’, declared with attribute warn_unused_result [-Wunused-result]
+         system ("su " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") xdg-open " + url.toUtf8() + "\"&");
+                                                                                                                             ^
+g++ -Wl,-z,relro -o mx-datetime main.o datetime.o clockface.o qrc_images.o moc_datetime.o moc_clockface.o   -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+make[2]: Leaving directory '/media/demo/dataext/development/working/32/mx-datetime'
+make[1]: Leaving directory '/media/demo/dataext/development/working/32/mx-datetime'
+   dh_auto_test -a -O--parallel
+ fakeroot debian/rules binary-arch
+dh binary-arch --parallel 
+   dh_testroot -a -O--parallel
+   dh_prep -a -O--parallel
+   dh_auto_install -a -O--parallel
+   dh_install -a -O--parallel
+   dh_installdocs -a -O--parallel
+   dh_installchangelogs -a -O--parallel
+   dh_installinit -a -O--parallel
+   dh_icons -a -O--parallel
+   dh_perl -a -O--parallel
+   dh_link -a -O--parallel
+   dh_strip_nondeterminism -a -O--parallel
+   dh_compress -a -O--parallel
+   dh_fixperms -a -O--parallel
+   dh_missing -a -O--parallel
+   dh_strip -a -O--parallel
+   dh_makeshlibs -a -O--parallel
+   debian/rules override_dh_shlibdeps
+make[1]: Entering directory '/media/demo/dataext/development/working/32/mx-datetime'
+dh_shlibdeps -- -xvirtualbox-guest-x11 --ignore-missing-info
+dpkg-shlibdeps: warning: package could avoid a useless dependency if debian/mx-datetime/usr/bin/mx-datetime was not linked against libGL.so.1 (it uses none of the library's symbols)
+make[1]: Leaving directory '/media/demo/dataext/development/working/32/mx-datetime'
+   dh_installdeb -a -O--parallel
+   dh_gencontrol -a -O--parallel
+   dh_md5sums -a -O--parallel
+   dh_builddeb -a -O--parallel
+dpkg-deb: building package 'mx-datetime-dbgsym' in '../mx-datetime-dbgsym_0.19.9.06_i386.deb'.
+dpkg-deb: building package 'mx-datetime' in '../mx-datetime_0.19.9.06_i386.deb'.
+ dpkg-genbuildinfo --build=any
+ dpkg-genchanges --build=any >../mx-datetime_0.19.9.06_i386.changes
+dpkg-genchanges: info: binary-only arch-specific upload (source code and arch-indep packages not included)
+ dpkg-source --after-build mx-datetime
+dpkg-buildpackage: info: binary-only upload (no source included)
+Now signing dsc file...
+debsign: Can't find or can't read dsc file mx-datetime_0.19.9.06.dsc!

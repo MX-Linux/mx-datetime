@@ -1,0 +1,30 @@
+Format: 1.8
+Date: Sat, 07 Sep 2019 12:23:08 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 0.19.9.06
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (0.19.9.06) mx; urgency=medium
+ .
+   *  UI changes
+   *  convert to multiple inheritance arch
+   *  fix keyboard selection reset
+Checksums-Sha1:
+ 927e6c22d42538623541c90f4d0452d4bec3ef9a 713530 mx-datetime-dbgsym_0.19.9.06_i386.deb
+ 3c905fe0b557ecd38a648f4d48d048cf7a9418c8 10581 mx-datetime_0.19.9.06_i386.buildinfo
+ cc9c2f217efad014e0721fdfdd90dbf3827e0f8f 49280 mx-datetime_0.19.9.06_i386.deb
+Checksums-Sha256:
+ a1761a287da11a05f3b3be7b593fec2f362237b092b157b6a79c20440c3fa68d 713530 mx-datetime-dbgsym_0.19.9.06_i386.deb
+ 2850829b66995d99e93fc3f867d459a1dcc2f5943729a12a7fe385b6496e8b4d 10581 mx-datetime_0.19.9.06_i386.buildinfo
+ 3e2da8c76f7eb17e164499ecd5cfcc42b7720129ac9beab4a4b0ff6b673cc584 49280 mx-datetime_0.19.9.06_i386.deb
+Files:
+ b8ce65d87557e9bc6eed82862fcb5264 713530 debug optional mx-datetime-dbgsym_0.19.9.06_i386.deb
+ 6f1bced69b258972ced7f77274e14265 10581 admin optional mx-datetime_0.19.9.06_i386.buildinfo
+ 097c6be2604ca1ea2dd3e4558373115b 49280 admin optional mx-datetime_0.19.9.06_i386.deb

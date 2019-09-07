@@ -1,3 +1,11 @@
+mx-datetime (0.19.9.06) mx; urgency=medium
+
+  *  UI changes
+  *  convert to multiple inheritance arch
+  *  fix keyboard selection reset
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 07 Sep 2019 12:23:08 -0400
+
 mx-datetime (0.19.9.05) mx; urgency=medium
 
   * Fixed resource leaks and improved drift calculation.

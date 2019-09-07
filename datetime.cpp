@@ -48,6 +48,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
         ui->btnApply->hide();
         ui->btnClose->hide();
         ui->tabWidget->tabBar()->hide();
+        ui->tabWidget->setDocumentMode(true);
         ui->gridWindow->setMargin(0);
         ui->gridDateTime->setMargin(ui->gridDateTime->spacing());
     }
@@ -93,7 +94,10 @@ void MXDateTime::startup()
     for (const QByteArray &zone : zones) {
         const QString &area = QString(zone).section('/', 0, 0);
         if (ui->cmbTimeArea->findData(area) < 0) {
-            ui->cmbTimeArea->addItem(area, QVariant(area.toUtf8()));
+            QString text(area);
+            if (area == "Indian" || area == "Pacific"
+                || area == "Atlantic" || area == "Arctic") text.append(" Ocean");
+            ui->cmbTimeArea->addItem(text, QVariant(area.toUtf8()));
         }
     }
     ui->cmbTimeArea->model()->sort(0);
@@ -212,7 +216,9 @@ void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
     ui->cmbTimeZone->clear();
     for (const QByteArray &zone : zones) {
         if (zone.startsWith(area)) {
-            ui->cmbTimeZone->addItem(QString(zone).section('/', 1), QVariant(zone));
+            QString text(QString(zone).section('/', 1));
+            text.replace('_', ' ');
+            ui->cmbTimeZone->addItem(text, QVariant(zone));
         }
     }
     ui->cmbTimeZone->model()->sort(0);

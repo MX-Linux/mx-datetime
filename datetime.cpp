@@ -108,6 +108,7 @@ void MXDateTime::startup()
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     setClockLock(false);
+    if (!userRoot) ui->calendar->setFocus();
     timer->start(1000 - QTime::currentTime().msec());
 }
 void MXDateTime::loadSysTimeConfig()
@@ -165,7 +166,6 @@ void MXDateTime::loadSysTimeConfig()
     timeDelta = 0;
     secUpdating = true;
     ui->timeEdit->setDateTime(QDateTime::currentDateTime());
-    timeChanged = false;
     // Force a second-interval update.
     if (timer) timer->setInterval(0);
 }
@@ -204,11 +204,9 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
 
 // DATE & TIME
 
-void MXDateTime::on_calendar_clicked(const QDate &date)
+void MXDateTime::on_calendar_selectionChanged()
 {
-    calChanging = true;
-    ui->timeEdit->updateDateTime(QDateTime(date, ui->timeEdit->time()));
-    calChanging = false;
+    dateDelta = ui->timeEdit->date().daysTo(ui->calendar->selectedDate());
 }
 void MXDateTime::on_cmbTimeArea_currentIndexChanged(int index)
 {
@@ -238,8 +236,7 @@ void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
     ui->clock->setTime(dateTime.time());
     if (!secUpdating) {
         timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
-        if (!calChanging) timeChanged = true;
-        if (abs(timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
+        if (abs(dateDelta*86400 + timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
     }
 }
 
@@ -248,8 +245,8 @@ void MXDateTime::secUpdate()
     secUpdating = true;
     ui->timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
     timer->setInterval(1000 - QTime::currentTime().msec());
-    if(ui->calendar->selectedDate() != ui->timeEdit->date()) {
-        ui->calendar->setSelectedDate(ui->timeEdit->date());
+    if(ui->timeEdit->date().daysTo(ui->calendar->selectedDate()) != dateDelta) {
+        ui->calendar->setSelectedDate(ui->timeEdit->date().addDays(dateDelta));
     }
     secUpdating = false;
 }
@@ -463,14 +460,15 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // Set the date and time if their controls have been altered.
-    if (timeDelta) {
+    if (dateDelta || timeDelta) {
         QString cmd;
         if (sysInit == SystemD) cmd = "timedatectl set-time ";
         else cmd = "date -s ";
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
-        QDateTime newTime = ui->timeEdit->dateTime();
-        if (timeChanged) {
-            qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
+        QDateTime newTime(ui->calendar->selectedDate(),
+                          ui->timeEdit->time());
+        if (timeDelta) {
+            const qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
             execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
         } else {
             newTime.setTime(QTime::currentTime());

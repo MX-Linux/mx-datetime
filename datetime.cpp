@@ -50,7 +50,8 @@ MXDateTime::MXDateTime(QWidget *parent) :
         ui->tabWidget->tabBar()->hide();
         ui->tabWidget->setDocumentMode(true);
         ui->gridWindow->setMargin(0);
-        ui->gridDateTime->setMargin(ui->gridDateTime->spacing());
+        ui->gridDateTime->setMargin(0);
+        ui->gridDateTime->setSpacing(1);
     }
 
     QTimer::singleShot(0, this, &MXDateTime::startup);

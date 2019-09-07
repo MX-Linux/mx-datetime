@@ -201,7 +201,7 @@
          <item>
           <widget class="QComboBox" name="cmbTimeArea">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
+            <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

@@ -102,11 +102,13 @@ void MXDateTime::startup()
 
     // Load the system values into the GUI.
     loadSysTimeConfig();
+
+    // Setup the display update timer.
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     setClockLock(false);
     if (!userRoot) calendar->setFocus();
-    timer->start(1000 - QTime::currentTime().msec());
+    timer->start(0);
 }
 void MXDateTime::loadSysTimeConfig()
 {
@@ -158,13 +160,6 @@ void MXDateTime::loadSysTimeConfig()
         else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
         chkAutoSync->setChecked(enabledNTP);
     }
-
-    // Date and time.
-    timeDelta = 0;
-    secUpdating = true;
-    timeEdit->setDateTime(QDateTime::currentDateTime());
-    // Force a second-interval update.
-    if (timer) timer->setInterval(0);
 }
 void MXDateTime::setClockLock(bool locked)
 {
@@ -309,6 +304,9 @@ void MXDateTime::on_btnSyncNow_clicked()
     }
     // Finishing touches.
     setClockLock(false);
+    dateDelta = 0;
+    timeDelta = 0;
+    timer->setInterval(0);
     if (rexit) {
         QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
     } else if (!args.isEmpty()) {
@@ -442,6 +440,9 @@ void MXDateTime::on_btnApply_clicked()
     if (!validateServerList()) return;
     setClockLock(true);
 
+    // Stop display updates while setting the system clock.
+    if (zoneDelta || dateDelta || timeDelta) timer->stop();
+
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
         const QString newzone(cmbTimeZone->currentData().toByteArray());
@@ -454,6 +455,7 @@ void MXDateTime::on_btnApply_clicked()
                 file.close();
             }
         }
+        zoneDelta = 0;
     }
 
     // Set the date and time if their controls have been altered.
@@ -464,6 +466,7 @@ void MXDateTime::on_btnApply_clicked()
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
         QDateTime newTime(calendar->selectedDate(),
                           timeEdit->time());
+        timer->stop();
         if (timeDelta) {
             const qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
             execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
@@ -471,7 +474,12 @@ void MXDateTime::on_btnApply_clicked()
             newTime.setTime(QTime::currentTime());
             execute(cmd + newTime.toString(dtFormat));
         }
+        dateDelta = 0;
+        timeDelta = 0;
     }
+
+    // Kick the display timer back in action.
+    if (!(timer->isActive())) timer->start(0);
 
     // NTP settings
     const bool ntp = chkAutoSync->isChecked();

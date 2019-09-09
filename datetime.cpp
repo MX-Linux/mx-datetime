@@ -28,7 +28,7 @@
 #include "version.h"
 
 MXDateTime::MXDateTime(QWidget *parent) :
-    QDialog(parent)
+    QDialog(parent), updater(this)
 {
     setupUi(this);
     setClockLock(true);
@@ -36,7 +36,6 @@ MXDateTime::MXDateTime(QWidget *parent) :
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(calendar->font().pointSizeF() * 0.75);
     calendar->setHeaderTextFormat(tcfmt);
-
     // Operate with reduced functionality if not running as root.
     userRoot = (getuid() == 0);
     if (!userRoot) {
@@ -51,13 +50,12 @@ MXDateTime::MXDateTime(QWidget *parent) :
         gridDateTime->setMargin(0);
         gridDateTime->setSpacing(1);
     }
-
+    // This runs the slow startup tasks after the GUI is displayed.
     QTimer::singleShot(0, this, &MXDateTime::startup);
 }
 MXDateTime::~MXDateTime()
 {
 }
-
 void MXDateTime::startup()
 {
     timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
@@ -100,15 +98,13 @@ void MXDateTime::startup()
     }
     cmbTimeArea->model()->sort(0);
 
-    // Load the system values into the GUI.
+    // Prepare the GUI.
     loadSysTimeConfig();
-
-    // Setup the display update timer.
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::secUpdate));
     setClockLock(false);
     if (!userRoot) calendar->setFocus();
-    timer->start(0);
+    // Setup the display update timer.
+    connect(&updater, &QTimer::timeout, this, QOverload<>::of(&MXDateTime::update));
+    updater.start(0);
 }
 void MXDateTime::loadSysTimeConfig()
 {
@@ -217,7 +213,7 @@ void MXDateTime::on_cmbTimeZone_currentIndexChanged(int index)
     const QDateTime &current = QDateTime::currentDateTime();
     zoneDelta = QTimeZone(cmbTimeZone->itemData(index).toByteArray()).offsetFromUtc(current)
               - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
-    secUpdate(); // Make the change immediately visible
+    update(); // Make the change immediately visible
 }
 void MXDateTime::on_calendar_selectionChanged()
 {
@@ -226,21 +222,21 @@ void MXDateTime::on_calendar_selectionChanged()
 void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
     clock->setTime(dateTime.time());
-    if (!secUpdating) {
+    if (!updating) {
         timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
         if (abs(dateDelta*86400 + timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
     }
 }
 
-void MXDateTime::secUpdate()
+void MXDateTime::update()
 {
-    secUpdating = true;
+    updating = true;
     timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
-    timer->setInterval(1000 - QTime::currentTime().msec());
+    updater.setInterval(1000 - QTime::currentTime().msec());
     if(timeEdit->date().daysTo(calendar->selectedDate()) != dateDelta) {
         calendar->setSelectedDate(timeEdit->date().addDays(dateDelta));
     }
-    secUpdating = false;
+    updating = false;
 }
 
 // HARDWARE CLOCK
@@ -306,7 +302,7 @@ void MXDateTime::on_btnSyncNow_clicked()
     setClockLock(false);
     dateDelta = 0;
     timeDelta = 0;
-    timer->setInterval(0);
+    updater.setInterval(0);
     if (rexit) {
         QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
     } else if (!args.isEmpty()) {
@@ -441,7 +437,7 @@ void MXDateTime::on_btnApply_clicked()
     setClockLock(true);
 
     // Stop display updates while setting the system clock.
-    if (zoneDelta || dateDelta || timeDelta) timer->stop();
+    if (zoneDelta || dateDelta || timeDelta) updater.stop();
 
     // Set the time zone (if changed) before setting the time.
     if (zoneDelta) {
@@ -466,7 +462,7 @@ void MXDateTime::on_btnApply_clicked()
         static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
         QDateTime newTime(calendar->selectedDate(),
                           timeEdit->time());
-        timer->stop();
+        updater.stop();
         if (timeDelta) {
             const qint64 drift = calcDrift.msecsTo(QDateTime::currentDateTimeUtc());
             execute(cmd + newTime.addMSecs(drift).toString(dtFormat));
@@ -479,7 +475,7 @@ void MXDateTime::on_btnApply_clicked()
     }
 
     // Kick the display timer back in action.
-    if (!(timer->isActive())) timer->start(0);
+    if (!updater.isActive()) updater.start(0);
 
     // NTP settings
     const bool ntp = chkAutoSync->isChecked();

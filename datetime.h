@@ -65,7 +65,7 @@ private slots:
     void on_btnHelp_clicked();
 
 private:
-    QTimer *timer = nullptr;
+    QTimer updater;
     bool clockLock = false;
     int dateDelta = 0;
     qint64 timeDelta = 0;
@@ -81,13 +81,13 @@ private:
     QByteArray confServers;
     bool enabledNTP;
     bool isHardwareUTC;
-    bool secUpdating = false;
+    bool updating = false;
 
     void startup();
     void loadSysTimeConfig();
     void setClockLock(bool locked);
     bool execute(const QString &cmd, QByteArray *output = nullptr);
-    void secUpdate();
+    void update();
     QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
     void moveServerRow(int movement);
     bool validateServerList();

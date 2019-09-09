@@ -46,6 +46,7 @@ public:
     ~MXDateTime();
 
 private slots:
+    void on_tabWidget_currentChanged(int index);
     void on_cmbTimeArea_currentIndexChanged(int index);
     void on_cmbTimeZone_currentIndexChanged(int index);
     void on_calendar_selectionChanged();
@@ -67,6 +68,7 @@ private slots:
 private:
     QTimer updater;
     bool clockLock = false;
+    unsigned int loadedTabs = 0;
     int dateDelta = 0;
     qint64 timeDelta = 0;
     int zoneDelta = 0;

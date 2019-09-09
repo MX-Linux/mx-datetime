@@ -118,56 +118,20 @@ void MXDateTime::loadSysTimeConfig()
     cmbTimeZone->setCurrentIndex(index);
     zoneDelta = 0;
     cmbTimeZone->blockSignals(false);
-
-    if (userRoot) {
-        // Network time.
-        QFile file("/etc/ntp.conf");
-        if (file.open(QFile::ReadOnly | QFile::Text)) {
-            QByteArray conf;
-            while(tblServers->rowCount() > 0) tblServers->removeRow(0);
-            confServers.clear();
-            while(!file.atEnd()) {
-                const QByteArray &bline = file.readLine();
-                const QString line(bline.trimmed());
-                const QRegularExpression tregex("^#?(pool|server|peer)\\s");
-                if(!line.contains(tregex)) conf.append(bline);
-                else {
-                    QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
-                    QString curarg = args.at(0);
-                    bool enabled = true;
-                    if (curarg.startsWith('#')) {
-                        enabled = false;
-                        curarg = curarg.remove(0, 1);
-                    }
-                    QString options;
-                    for (int ixi = 2; ixi < args.count(); ++ixi) {
-                        options.append(' ');
-                        options.append(args.at(ixi));
-                    }
-                    addServerRow(enabled, curarg, args.at(1), options.trimmed());
-                    confServers.append('\n');
-                    confServers.append(line);
-                }
-            }
-            confBaseNTP = conf.trimmed();
-            file.close();
-        }
-        if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
-        else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
-        chkAutoSync->setChecked(enabledNTP);
-    }
 }
 void MXDateTime::setClockLock(bool locked)
 {
     if (clockLock != locked) {
+        clockLock = locked;
         if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
+        else on_tabWidget_currentChanged(tabWidget->currentIndex());
+        tabWidget->blockSignals(locked);
         tabDateTime->setDisabled(locked);
         tabHardware->setDisabled(locked);
         tabNetwork->setDisabled(locked);
         btnApply->setDisabled(locked);
         btnClose->setDisabled(locked);
         if (!locked) qApp->restoreOverrideCursor();
-        clockLock = locked;
     }
 }
 bool MXDateTime::execute(const QString &cmd, QByteArray *output)
@@ -188,6 +152,57 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
     qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
+}
+
+void MXDateTime::on_tabWidget_currentChanged(int index)
+{
+    const unsigned int loaded = 1 << index;
+    if ((loadedTabs & loaded) == 0) {
+        loadedTabs |= loaded;
+        setClockLock(true);
+        switch(index) {
+        case 0: break; // Date & Time.
+        case 1: on_btnReadHardware_clicked(); break; // Hardware Clock.
+        case 2:
+            // Network Time.
+            QFile file("/etc/ntp.conf");
+            if (file.open(QFile::ReadOnly | QFile::Text)) {
+                QByteArray conf;
+                while(tblServers->rowCount() > 0) tblServers->removeRow(0);
+                confServers.clear();
+                while(!file.atEnd()) {
+                    const QByteArray &bline = file.readLine();
+                    const QString line(bline.trimmed());
+                    const QRegularExpression tregex("^#?(pool|server|peer)\\s");
+                    if(!line.contains(tregex)) conf.append(bline);
+                    else {
+                        QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
+                        QString curarg = args.at(0);
+                        bool enabled = true;
+                        if (curarg.startsWith('#')) {
+                            enabled = false;
+                            curarg = curarg.remove(0, 1);
+                        }
+                        QString options;
+                        for (int ixi = 2; ixi < args.count(); ++ixi) {
+                            options.append(' ');
+                            options.append(args.at(ixi));
+                        }
+                        addServerRow(enabled, curarg, args.at(1), options.trimmed());
+                        confServers.append('\n');
+                        confServers.append(line);
+                    }
+                }
+                confBaseNTP = conf.trimmed();
+                file.close();
+            }
+            if (sysInit == SystemD) enabledNTP = execute("bash -c \"timedatectl | grep NTP | grep yes\"");
+            else enabledNTP = execute("bash -c \"ls /etc/rc*.d | grep ntp | grep '^S'");
+            chkAutoSync->setChecked(enabledNTP);
+            break;
+        }
+        setClockLock(false);
+    }
 }
 
 // DATE & TIME
@@ -433,7 +448,7 @@ void MXDateTime::on_btnApply_clicked()
     // Compensation for the execution time of this section.
     QDateTime calcDrift = QDateTime::currentDateTimeUtc();
 
-    if (!validateServerList()) return;
+    if ((loadedTabs & 4) && !validateServerList()) return;
     setClockLock(true);
 
     // Stop display updates while setting the system clock.
@@ -477,63 +492,69 @@ void MXDateTime::on_btnApply_clicked()
     // Kick the display timer back in action.
     if (!updater.isActive()) updater.start(0);
 
-    // NTP settings
-    const bool ntp = chkAutoSync->isChecked();
-    if (ntp != enabledNTP) {
-        if(sysInit == SystemD) {
-            execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
-        } else if (sysInit == OpenRC) {
-            if (QFile::exists("/etc/init.d/ntpd")) {
-                execute("rc-update " + QString(ntp?"add":"del") + " ntpd");
+    // Hardware Clock settings.
+    if (loadedTabs & 2) {
+        const bool rtcUTC = radHardwareUTC->isChecked();
+        if (rtcUTC != isHardwareUTC) {
+            if (sysInit == SystemD) {
+                execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));
+            } else if(sysInit == OpenRC) {
+                if(QFile::exists("/etc/conf.d/hwclock")) {
+                    execute("sed -i \"s/clock=.*/clock=\\\"UTC\\\"/\" /etc/conf.d/hwclock");
+                }
             }
-        } else if (ntp){
-            execute("update-rc.d ntp enable");
-            execute("service ntp start");
-        } else {
-            execute("service ntp stop");
-            execute("update-rc.d ntp disable");
+            execute("/sbin/hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
         }
     }
-    QByteArray confServersNew;
-    for (int ixi = 0; ixi < tblServers->rowCount(); ++ixi) {
-        QComboBox *comboType = static_cast<QComboBox *>(tblServers->cellWidget(ixi, 0));
-        QTableWidgetItem *item = tblServers->item(ixi, 1);
-        confServersNew.append('\n');
-        if (item->checkState() != Qt::Checked) confServersNew.append('#');
-        confServersNew.append(comboType->currentData().toString());
-        confServersNew.append(' ');
-        confServersNew.append(item->text().trimmed());
-        const QString &options = tblServers->item(ixi, 2)->text().trimmed();
-        if (!options.isEmpty()) {
+
+    // Network Time settings.
+    if (loadedTabs & 4) {
+        const bool ntp = chkAutoSync->isChecked();
+        if (ntp != enabledNTP) {
+            if(sysInit == SystemD) {
+                execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
+            } else if (sysInit == OpenRC) {
+                if (QFile::exists("/etc/init.d/ntpd")) {
+                    execute("rc-update " + QString(ntp?"add":"del") + " ntpd");
+                }
+            } else if (ntp){
+                execute("update-rc.d ntp enable");
+                execute("service ntp start");
+            } else {
+                execute("service ntp stop");
+                execute("update-rc.d ntp disable");
+            }
+        }
+        QByteArray confServersNew;
+        for (int ixi = 0; ixi < tblServers->rowCount(); ++ixi) {
+            QComboBox *comboType = static_cast<QComboBox *>(tblServers->cellWidget(ixi, 0));
+            QTableWidgetItem *item = tblServers->item(ixi, 1);
+            confServersNew.append('\n');
+            if (item->checkState() != Qt::Checked) confServersNew.append('#');
+            confServersNew.append(comboType->currentData().toString());
             confServersNew.append(' ');
-            confServersNew.append(options);
-        }
-    }
-    if (confServersNew != confServers) {
-        if (!QFile::exists("/etc/ntp.conf.bak")) QFile::copy("/etc/ntp.conf", "/etc/ntp.conf.bak");
-        QFile file("/etc/ntp.conf");
-        if (file.open(QFile::WriteOnly | QFile::Text)){
-            file.write(confBaseNTP);
-            file.write("\n\n# Generated by MX Date & Time");
-            file.write(confServersNew);
-            file.close();
-        }
-    }
-
-    // RTC settings
-    const bool rtcUTC = radHardwareUTC->isChecked();
-    if (rtcUTC != isHardwareUTC) {
-        if (sysInit == SystemD) {
-            execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));
-        } else if(sysInit == OpenRC) {
-            if(QFile::exists("/etc/conf.d/hwclock")) {
-                execute("sed -i \"s/clock=.*/clock=\\\"UTC\\\"/\" /etc/conf.d/hwclock");
+            confServersNew.append(item->text().trimmed());
+            const QString &options = tblServers->item(ixi, 2)->text().trimmed();
+            if (!options.isEmpty()) {
+                confServersNew.append(' ');
+                confServersNew.append(options);
             }
         }
-        execute("/sbin/hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
+        if (confServersNew != confServers) {
+            if (!QFile::exists("/etc/ntp.conf.bak")) QFile::copy("/etc/ntp.conf", "/etc/ntp.conf.bak");
+            QFile file("/etc/ntp.conf");
+            if (file.open(QFile::WriteOnly | QFile::Text)){
+                file.write(confBaseNTP);
+                file.write("\n\n# Generated by MX Date & Time");
+                file.write(confServersNew);
+                file.close();
+            }
+        }
     }
 
-    loadSysTimeConfig(); // Refresh the UI with newly set values
+    // Refresh the UI (especially the current tab) with newly set values.
+    loadSysTimeConfig();
+    loadedTabs = 0;
     setClockLock(false);
 }
 void MXDateTime::on_btnClose_clicked()

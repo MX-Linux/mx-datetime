@@ -91,6 +91,7 @@ private:
     void update();
     void loadDateTime();
     void saveDateTime(const QDateTime &driftStart);
+    void transferTime(const QString &cmd, const QString &from, const QString &to);
     void saveHardwareClock();
     QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
     void moveServerRow(int movement);

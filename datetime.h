@@ -86,13 +86,17 @@ private:
     bool updating = false;
 
     void startup();
-    void loadSysTimeConfig();
     void setClockLock(bool locked);
     bool execute(const QString &cmd, QByteArray *output = nullptr);
     void update();
+    void loadDateTime();
+    void saveDateTime(const QDateTime &driftStart);
+    void saveHardwareClock();
     QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);
     void moveServerRow(int movement);
     bool validateServerList();
+    void loadNetworkTime();
+    void saveNetworkTime();
 };
 
 #endif // DATETIME_H

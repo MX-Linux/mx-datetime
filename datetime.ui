@@ -344,6 +344,9 @@
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="2">
            <widget class="QRadioButton" name="radHardwareLocal">
+            <property name="toolTip">
+             <string>Local time</string>
+            </property>
             <property name="text">
              <string>Local</string>
             </property>

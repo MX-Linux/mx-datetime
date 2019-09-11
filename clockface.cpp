@@ -72,7 +72,7 @@ void ClockFace::paintEvent(QPaintEvent *)
     painter.setBrush(colNumbers);
     for (int ixi = 0; ixi < 12; ++ixi) {
         static const char *numerals[] = {
-            "I", "II", "III", "IV", "V", "VI",
+            "I", "II", "III", "IIII", "V", "VI",
             "VII", "VIII", "IX", "X", "XI", "XII"
         };
         painter.rotate(30.0);

@@ -279,21 +279,21 @@ void MXDateTime::on_btnReadHardware_clicked()
 }
 void MXDateTime::on_btnSystemToHardware_clicked()
 {
-    setClockLock(true);
-    if (execute("/sbin/hwclock --systohc")) {
-        QMessageBox::information(this, windowTitle(), "Success.");
-    } else {
-        QMessageBox::warning(this, windowTitle(), "Failure.");
-    }
-    setClockLock(false);
+    transferTime("/sbin/hwclock --systohc", tr("System Clock"), tr("Hardware Clock"));
 }
 void MXDateTime::on_btnHardwareToSystem_clicked()
 {
+    transferTime("/sbin/hwclock --hctosys", tr("Hardware Clock"), tr("System Clock"));
+}
+void MXDateTime::transferTime(const QString &cmd, const QString &from, const QString &to)
+{
     setClockLock(true);
-    if (execute("/sbin/hwclock -hctosys")) {
-        QMessageBox::information(this, windowTitle(), "Success.");
+    if (execute(cmd)) {
+        const QString &msg = tr("The %1 time was transferred to the %2.");
+        QMessageBox::information(this, windowTitle(), msg.arg(from, to));
     } else {
-        QMessageBox::warning(this, windowTitle(), "Failure.");
+        const QString &msg = tr("The %1 time could not be transferred to the %2.");
+        QMessageBox::warning(this, windowTitle(), msg.arg(from, to));
     }
     setClockLock(false);
 }

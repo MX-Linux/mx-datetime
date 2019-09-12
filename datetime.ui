@@ -349,7 +349,7 @@
              <string>Update the drift factor for the Hardware Clock when it is being set.</string>
             </property>
             <property name="text">
-             <string>Drift Update</string>
+             <string>Update the drift</string>
             </property>
            </widget>
           </item>

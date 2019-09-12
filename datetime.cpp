@@ -277,6 +277,17 @@ void MXDateTime::on_btnReadHardware_clicked()
     btnReadHardware->setText(btext);
     setClockLock(false);
 }
+void MXDateTime::on_btnHardwareAdjust_clicked()
+{
+    setClockLock(true);
+    const QString btext = btnHardwareAdjust->text();
+    btnHardwareAdjust->setText(tr("Adjusting..."));
+    QByteArray rtcout;
+    execute("/sbin/hwclock --adjust", &rtcout);
+    txtHardwareClock->setPlainText(QString(rtcout.trimmed()));
+    btnHardwareAdjust->setText(btext);
+    setClockLock(false);
+}
 void MXDateTime::on_btnSystemToHardware_clicked()
 {
     transferTime("/sbin/hwclock --systohc", tr("System Clock"), tr("Hardware Clock"));

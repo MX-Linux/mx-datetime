@@ -52,6 +52,7 @@ private slots:
     void on_calendar_selectionChanged();
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
     void on_btnReadHardware_clicked();
+    void on_btnHardwareAdjust_clicked();
     void on_btnSystemToHardware_clicked();
     void on_btnHardwareToSystem_clicked();
     void on_btnSyncNow_clicked();

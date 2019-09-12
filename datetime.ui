@@ -322,8 +322,18 @@
          <property name="title">
           <string>Time transfer</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="btnHardwareToSystem">
+            <property name="toolTip">
+             <string>Immediately set the System Clock to match the current time registered by the Hardware Clock.</string>
+            </property>
+            <property name="text">
+             <string>Hardware Clock to System Clock</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
            <widget class="QPushButton" name="btnSystemToHardware">
             <property name="toolTip">
              <string>Immediately set the Hardware Clock to match the current time registered by the System Clock.</string>
@@ -333,13 +343,13 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="btnHardwareToSystem">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="chkDriftUpdate">
             <property name="toolTip">
-             <string>Immediately set the System Clock to match the current time registered by the Hardware Clock.</string>
+             <string>Update the drift factor for the Hardware Clock when it is being set.</string>
             </property>
             <property name="text">
-             <string>Hardware Clock to System Clock</string>
+             <string>Drift Update</string>
             </property>
            </widget>
           </item>

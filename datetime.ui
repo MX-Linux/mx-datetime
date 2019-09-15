@@ -292,6 +292,9 @@
             <property name="text">
              <string>Read the Hardware Clock</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -301,6 +304,9 @@
             </property>
             <property name="text">
              <string>Drift Adjust</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -331,6 +337,9 @@
             <property name="text">
              <string>Hardware Clock to System Clock</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item row="0" column="0">
@@ -340,6 +349,9 @@
             </property>
             <property name="text">
              <string>System Clock to Hardware Clock</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -494,6 +506,9 @@
            </property>
            <property name="text">
             <string>Update Now</string>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

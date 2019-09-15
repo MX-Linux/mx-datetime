@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="580"/>
+        <location filename="../datetime.cpp" line="596"/>
         <source>MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="278"/>
-        <location filename="../datetime.cpp" line="282"/>
-        <location filename="../datetime.cpp" line="286"/>
+        <location filename="../datetime.cpp" line="296"/>
+        <location filename="../datetime.cpp" line="303"/>
         <source>Hardware Clock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -62,112 +62,132 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="313"/>
+        <location filename="../datetime.ui" line="329"/>
         <source>Time transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="319"/>
+        <location filename="../datetime.ui" line="348"/>
         <source>Immediately set the Hardware Clock to match the current time registered by the System Clock.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="322"/>
+        <location filename="../datetime.ui" line="351"/>
         <source>System Clock to Hardware Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="329"/>
+        <location filename="../datetime.ui" line="335"/>
         <source>Immediately set the System Clock to match the current time registered by the Hardware Clock.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="332"/>
+        <location filename="../datetime.ui" line="303"/>
+        <source>Apply systematic drift corrections to the Hardware Clock.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.ui" line="306"/>
+        <source>Drift Adjust</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.ui" line="338"/>
         <source>Hardware Clock to System Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="342"/>
+        <location filename="../datetime.ui" line="361"/>
+        <source>Update the drift factor for the Hardware Clock when it is being set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.ui" line="364"/>
+        <source>Update the drift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.ui" line="374"/>
         <source>Time zone for the Hardware Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="348"/>
+        <location filename="../datetime.ui" line="380"/>
         <source>Local time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="351"/>
+        <location filename="../datetime.ui" line="383"/>
         <source>Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="358"/>
+        <location filename="../datetime.ui" line="390"/>
         <source>Universally Coordinated Time (or Greenwich Meridian Time)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="361"/>
+        <location filename="../datetime.ui" line="393"/>
         <source>UTC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="401"/>
+        <location filename="../datetime.ui" line="433"/>
         <source>Network Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="407"/>
+        <location filename="../datetime.ui" line="439"/>
         <source>Move the selected item down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="418"/>
+        <location filename="../datetime.ui" line="450"/>
         <source>Move the selected item up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="429"/>
+        <location filename="../datetime.ui" line="461"/>
         <source>Remove the current item from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="440"/>
+        <location filename="../datetime.ui" line="472"/>
         <source>Add an item to the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="466"/>
+        <location filename="../datetime.ui" line="498"/>
         <source>Automatically update the System Clock with NTP servers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="473"/>
+        <location filename="../datetime.ui" line="505"/>
         <source>Immediately update the system clock with NTP servers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="476"/>
+        <location filename="../datetime.ui" line="508"/>
         <source>Update Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="485"/>
+        <location filename="../datetime.ui" line="520"/>
         <source>List of NTP servers to use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="501"/>
+        <location filename="../datetime.ui" line="536"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="506"/>
+        <location filename="../datetime.ui" line="541"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="511"/>
+        <location filename="../datetime.ui" line="546"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,84 +197,89 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="282"/>
-        <location filename="../datetime.cpp" line="286"/>
+        <location filename="../datetime.cpp" line="284"/>
+        <source>Adjusting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="296"/>
+        <location filename="../datetime.cpp" line="303"/>
         <source>System Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="292"/>
+        <location filename="../datetime.cpp" line="309"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="295"/>
+        <location filename="../datetime.cpp" line="312"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="334"/>
+        <location filename="../datetime.cpp" line="350"/>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="344"/>
+        <location filename="../datetime.cpp" line="360"/>
         <source>The system clock was updated successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="346"/>
+        <location filename="../datetime.cpp" line="362"/>
         <source>The system clock could not be updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="348"/>
+        <location filename="../datetime.cpp" line="364"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="579"/>
+        <location filename="../datetime.cpp" line="595"/>
         <source>About MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="580"/>
+        <location filename="../datetime.cpp" line="596"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="581"/>
+        <location filename="../datetime.cpp" line="597"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="583"/>
+        <location filename="../datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="584"/>
-        <location filename="../datetime.cpp" line="598"/>
+        <location filename="../datetime.cpp" line="600"/>
+        <location filename="../datetime.cpp" line="614"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="585"/>
+        <location filename="../datetime.cpp" line="601"/>
         <source>Changelog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="586"/>
+        <location filename="../datetime.cpp" line="602"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="612"/>
+        <location filename="../datetime.cpp" line="628"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="630"/>
+        <location filename="../datetime.cpp" line="646"/>
         <source>MX Date &amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>

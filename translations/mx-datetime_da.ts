@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -10,22 +10,22 @@
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Hjælp</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Anvend</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="datetime.ui" line="368"/>
         <source>Local time</source>
-        <translation type="unfinished"/>
+        <translation>Lokal tid</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="371"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="datetime.ui" line="381"/>
         <source>UTC</source>
-        <translation type="unfinished"/>
+        <translation>UTC</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="421"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Valgmuligheder</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
@@ -253,28 +253,28 @@
     <message>
         <location filename="datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation>Ophavsret (c) MX Linux</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>Ændringslog</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Luk</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

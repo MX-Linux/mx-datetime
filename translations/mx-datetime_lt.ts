@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
         <location filename="datetime.ui" line="20"/>
         <location filename="datetime.cpp" line="596"/>
         <source>MX Date &amp; Time</source>
-        <translation type="unfinished"/>
+        <translation>MX data ir laikas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Užverti</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Žinynas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Taikyti</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Apie...</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
         <source>Date &amp;&amp; Time</source>
-        <translation type="unfinished"/>
+        <translation>Data ir laikas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="192"/>
@@ -42,12 +42,12 @@
         <location filename="datetime.cpp" line="296"/>
         <location filename="datetime.cpp" line="303"/>
         <source>Hardware Clock</source>
-        <translation type="unfinished"/>
+        <translation>Aparatinės įrangos laikrodis</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="284"/>
         <source>Hardware Clock tools</source>
-        <translation type="unfinished"/>
+        <translation>Aparatinės įrangos laikrodžio įrankiai</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="290"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="datetime.ui" line="368"/>
         <source>Local time</source>
-        <translation type="unfinished"/>
+        <translation>Vietinis laikas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="371"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="datetime.ui" line="496"/>
         <source>Update Now</source>
-        <translation type="unfinished"/>
+        <translation>Atnaujinti dabar</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="505"/>
@@ -177,22 +177,22 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation>Tipas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adresas</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Parametrai</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
         <source>Reading...</source>
-        <translation type="unfinished"/>
+        <translation>Skaitoma...</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="284"/>
@@ -218,17 +218,17 @@
     <message>
         <location filename="datetime.cpp" line="350"/>
         <source>Updating...</source>
-        <translation type="unfinished"/>
+        <translation>Atnaujinama...</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="360"/>
         <source>The system clock was updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Sistemos laikrodis buvo sėkmingai atnaujintas.</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="362"/>
         <source>The system clock could not be updated.</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko atnaujinti sistemos laikrodžio.</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="364"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>Versija: </translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -253,28 +253,28 @@
     <message>
         <location filename="datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation>Autorių teisės (c) MX Linux</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>Licencija</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>Keitinių žurnalas</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Užverti</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

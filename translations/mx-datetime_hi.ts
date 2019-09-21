@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hi" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -10,22 +10,22 @@
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>बंद करें</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>सहायता</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>लागू करें</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>बारे में...</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation>प्रकार</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>विकल्प</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>संस्करण :</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -253,28 +253,28 @@
     <message>
         <location filename="datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation>प्रतिलिप्याधिकार (c) MX Linux</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>लाइसेंस</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>परिवर्तन सूची</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;बंद करें</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

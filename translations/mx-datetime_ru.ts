@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -10,22 +10,22 @@
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>O...</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="datetime.ui" line="368"/>
         <source>Local time</source>
-        <translation type="unfinished"/>
+        <translation>Местное время</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="371"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="datetime.ui" line="381"/>
         <source>UTC</source>
-        <translation type="unfinished"/>
+        <translation>UTC</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="421"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>Версия: </translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -259,22 +259,22 @@
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>Лицензия</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>Список изменений</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Закрыть</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

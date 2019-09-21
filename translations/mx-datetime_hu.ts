@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -10,22 +10,22 @@
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Alkamaz</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>Verzió:</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -259,22 +259,22 @@
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>Liszensz</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>Változásbejegyzés</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Bezár</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

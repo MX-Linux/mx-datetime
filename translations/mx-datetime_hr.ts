@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hr" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
         <location filename="datetime.ui" line="20"/>
         <location filename="datetime.cpp" line="596"/>
         <source>MX Date &amp; Time</source>
-        <translation type="unfinished"/>
+        <translation>MX datum &amp; vrijeme</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Pomoć</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="73"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Primjeni</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>O programu...</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
         <source>Date &amp;&amp; Time</source>
-        <translation type="unfinished"/>
+        <translation>Datum &amp; vrijeme</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="192"/>
@@ -42,12 +42,12 @@
         <location filename="datetime.cpp" line="296"/>
         <location filename="datetime.cpp" line="303"/>
         <source>Hardware Clock</source>
-        <translation type="unfinished"/>
+        <translation>Sat sklopovlja</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="284"/>
         <source>Hardware Clock tools</source>
-        <translation type="unfinished"/>
+        <translation>Alati sata sklopovlja</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="290"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="datetime.ui" line="368"/>
         <source>Local time</source>
-        <translation type="unfinished"/>
+        <translation>Lokalno vrijeme</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="371"/>
@@ -127,67 +127,67 @@
     <message>
         <location filename="datetime.ui" line="381"/>
         <source>UTC</source>
-        <translation type="unfinished"/>
+        <translation>UTC</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="421"/>
         <source>Network Time</source>
-        <translation type="unfinished"/>
+        <translation>Mrežno vrijeme</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="427"/>
         <source>Move the selected item down</source>
-        <translation type="unfinished"/>
+        <translation>Pomaknite odabranu stavku dolje</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="438"/>
         <source>Move the selected item up</source>
-        <translation type="unfinished"/>
+        <translation>Pomaknite odabranu stavku gore</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="449"/>
         <source>Remove the current item from the list</source>
-        <translation type="unfinished"/>
+        <translation>Uklonite trenutnu stavku sa liste</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="460"/>
         <source>Add an item to the list</source>
-        <translation type="unfinished"/>
+        <translation>Dodajte stavku na listu</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="486"/>
         <source>Automatically update the System Clock with NTP servers:</source>
-        <translation type="unfinished"/>
+        <translation>Automatski ažurirajte sat sustava sa NTP poslužiteljima:</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="493"/>
         <source>Immediately update the system clock with NTP servers.</source>
-        <translation type="unfinished"/>
+        <translation>Odmah ažurirajte sat sustava sa NTP poslužiteljima.</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="496"/>
         <source>Update Now</source>
-        <translation type="unfinished"/>
+        <translation>Ažurirajte sada</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="505"/>
         <source>List of NTP servers to use.</source>
-        <translation type="unfinished"/>
+        <translation>Lista NTP poslužitelja za uporabu.</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation>Vrsta</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adresa</translation>
     </message>
     <message>
         <location filename="datetime.ui" line="531"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Opcije</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="270"/>
@@ -218,32 +218,32 @@
     <message>
         <location filename="datetime.cpp" line="350"/>
         <source>Updating...</source>
-        <translation type="unfinished"/>
+        <translation>Ažuriram...</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="360"/>
         <source>The system clock was updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Sat sustava uspješno je ažuriran.</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="362"/>
         <source>The system clock could not be updated.</source>
-        <translation type="unfinished"/>
+        <translation>Sat sustava ne može se ažurirati.</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="364"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Nijedan od NTP poslužitelja sa liste trenutno nije omogućen.</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="595"/>
         <source>About MX Date &amp; Time</source>
-        <translation type="unfinished"/>
+        <translation>O MX datumu i vremenu</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>Inačica:</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -253,13 +253,13 @@
     <message>
         <location filename="datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation>Autorska prava (c) MX Linux</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="600"/>
         <location filename="datetime.cpp" line="614"/>
         <source>License</source>
-        <translation>ライセンス</translation>
+        <translation>Licenca</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="601"/>
@@ -269,12 +269,12 @@
     <message>
         <location filename="datetime.cpp" line="602"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Otkaži</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Zatvori</translation>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

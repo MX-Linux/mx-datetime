@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja_JP" version="2.1">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -10,7 +10,7 @@
     <message>
         <location filename="datetime.ui" line="26"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.ui" line="40"/>
@@ -25,7 +25,7 @@
     <message>
         <location filename="datetime.ui" line="100"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.ui" line="124"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="datetime.ui" line="521"/>
         <source>Type</source>
-        <translation>種類</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.ui" line="526"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="datetime.cpp" line="596"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.cpp" line="597"/>
@@ -253,7 +253,7 @@
     <message>
         <location filename="datetime.cpp" line="599"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.cpp" line="600"/>
@@ -274,7 +274,7 @@
     <message>
         <location filename="datetime.cpp" line="628"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="datetime.cpp" line="646"/>

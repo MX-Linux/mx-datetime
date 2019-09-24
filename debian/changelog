@@ -1,3 +1,9 @@
+mx-datetime (19.9.2) mx; urgency=medium
+
+  * Updated translations
+
+ -- Adrian <adrian@mxlinux.org>  Tue, 24 Sep 2019 09:18:59 -0400
+
 mx-datetime (19.9.1) mx; urgency=medium
   
   * Added Help file

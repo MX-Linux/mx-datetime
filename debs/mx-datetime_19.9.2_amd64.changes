@@ -1,0 +1,49 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Tue, 24 Sep 2019 09:18:59 -0400
+Source: mx-datetime
+Binary: mx-datetime mx-datetime-dbgsym
+Architecture: source amd64
+Version: 19.9.2
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (19.9.2) mx; urgency=medium
+ .
+   * Updated translations
+Checksums-Sha1:
+ 80443e991deb97dec94b97e2ce5dd12d01fc0681 1126 mx-datetime_19.9.2.dsc
+ 40b2615c312de4500c4f0c30670c30a4fc1f9534 103128 mx-datetime_19.9.2.tar.xz
+ 3e425547e41608155cb023571fe84f15e7ceaf0f 846316 mx-datetime-dbgsym_19.9.2_amd64.deb
+ f8545452bd12aba8c3523e0581094276cba8afe1 10503 mx-datetime_19.9.2_amd64.buildinfo
+ c558d61aebae6e05fa5bcc95f32b1751b5ab4ed4 131956 mx-datetime_19.9.2_amd64.deb
+Checksums-Sha256:
+ 12f854c8d01bdfe6eb9526520478abfa41f9e16ee6a163a5ffe96a46f05cbf3b 1126 mx-datetime_19.9.2.dsc
+ 6ac9a60e417d6d82e2704976f6430db74174981204ded5c6b45c3833f02d3cab 103128 mx-datetime_19.9.2.tar.xz
+ 5fa61cac535d91aca1554494c2f5bc1ea8d572bde5351d20d2bed51dbf383ea5 846316 mx-datetime-dbgsym_19.9.2_amd64.deb
+ e0d1b8940824a7395508a666f51b7e165fb64fec6673c70ab72486222b743cb0 10503 mx-datetime_19.9.2_amd64.buildinfo
+ 6be2db19bec0d7734e549f6b693b124f37a8709094489dcde296e51e1d0edfa9 131956 mx-datetime_19.9.2_amd64.deb
+Files:
+ 4bddb008de6835f2e82808dcb2d4fe1c 1126 admin optional mx-datetime_19.9.2.dsc
+ 64fa659fc7e9d666faa0e0ae91bede11 103128 admin optional mx-datetime_19.9.2.tar.xz
+ 2a70baf53669db68a20018552ca48cbb 846316 debug optional mx-datetime-dbgsym_19.9.2_amd64.deb
+ d95865f8da81cd5e7eabfd0c5e5f7d63 10503 admin optional mx-datetime_19.9.2_amd64.buildinfo
+ 6473656891bfe49b4dfcc4987a21d086 131956 admin optional mx-datetime_19.9.2_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl2KF/8THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumNuOB/9mCbW5C/BsU9I2rx/3uy8w6MHXqwl1
+EVlSBFvYlRJWmVasI8IV+/hv4D2SQV4eCaHSJD9UjF4HpmpZTjI/dNfzu81nbBPD
+1+rxtFEEMsi18bQ7sHJROD5Z64hUsrJwnkPhLLAVZtYvkEKX/HFb7H9JCG+5mXZH
+JFT2hqcsXgIStiA1/9mPvsT5pzE46SZPUw6rktsIOPBFH++S6MuAyge11NlCuTwQ
+oCVtvnlSaFf2ar1Paqhxn6xrzOlz5iM58l4GtrVcuQpbQQTyShqQXWiQMm6+c0aL
+hYlgqQX6++cY43oTyAfRYBj+I5XIS38jse0dTGwpCNO4i0Im7AOFiiKK
+=+Hf1
+-----END PGP SIGNATURE-----

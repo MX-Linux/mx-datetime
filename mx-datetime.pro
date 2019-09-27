@@ -44,6 +44,7 @@ TRANSLATIONS += translations/mx-datetime_am.ts \
                 translations/mx-datetime_ko.ts \
                 translations/mx-datetime_lt.ts \
                 translations/mx-datetime_mk.ts \
+                translations/mx-datetime_mr.ts \
                 translations/mx-datetime_nb.ts \
                 translations/mx-datetime_nl.ts \
                 translations/mx-datetime_pl.ts \

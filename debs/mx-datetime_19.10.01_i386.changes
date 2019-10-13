@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sat, 12 Oct 2019 20:03:40 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 19.10.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (19.10.01) mx; urgency=medium
+ .
+   * new icon
+Checksums-Sha1:
+ 96d9d4dc1d2d775716b73534771775a7ea93811a 714986 mx-datetime-dbgsym_19.10.01_i386.deb
+ 600dfae26a246bfb21825d8fdf5e9977c1c66c3e 10577 mx-datetime_19.10.01_i386.buildinfo
+ 07fb819152109d903be8323ee50498e85b576025 134768 mx-datetime_19.10.01_i386.deb
+Checksums-Sha256:
+ 7db6732a3aa0cfc7e0c00ee3eb23d64709ce71122b8452c1781708a341627960 714986 mx-datetime-dbgsym_19.10.01_i386.deb
+ 71210e989f7ff6992a5375b515ca684946dedbb362e2f5194d3aab3fc5ba7310 10577 mx-datetime_19.10.01_i386.buildinfo
+ 38baad68efe91ce087608d7f8d5b2341fca3dc05ce79922f2042534dbd68d7dc 134768 mx-datetime_19.10.01_i386.deb
+Files:
+ 94a3d67d98a6f988b8a636a66930926b 714986 debug optional mx-datetime-dbgsym_19.10.01_i386.deb
+ 7429ee538d7bc9257cb7d528f3f77a74 10577 admin optional mx-datetime_19.10.01_i386.buildinfo
+ 4dbd5782b07ad6e0d44d489b592f0687 134768 admin optional mx-datetime_19.10.01_i386.deb

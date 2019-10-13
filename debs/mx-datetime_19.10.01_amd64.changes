@@ -1,0 +1,34 @@
+Format: 1.8
+Date: Sat, 12 Oct 2019 20:03:40 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 19.10.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (19.10.01) mx; urgency=medium
+ .
+   * new icon
+Checksums-Sha1:
+ c6d596599babb144185253a99002830a6353d7d6 572 mx-datetime_19.10.01.dsc
+ 4bcc2e795f43c047a704e48df51f59290d9a0a16 479264 mx-datetime_19.10.01.tar.xz
+ 3a8ce76c42613686d163e9758a2f514e8dedb6d9 729656 mx-datetime-dbgsym_19.10.01_amd64.deb
+ f4625ed087343d2c0ad57c6c139d11bdec36bd78 10883 mx-datetime_19.10.01_amd64.buildinfo
+ c6eaa1ca08ac987cef02f08de892c3453379e402 132204 mx-datetime_19.10.01_amd64.deb
+Checksums-Sha256:
+ 4f1b4281d4bf1566dbed1f06d73e28f858c198b8509980b9a8056cb29cd0ed6b 572 mx-datetime_19.10.01.dsc
+ 5adf020318ac1d4a460cedbce20d4bb4fa3da1afc7975005f7113d15612fc615 479264 mx-datetime_19.10.01.tar.xz
+ 729e5da578fc5d6d4121deb5cff3f3bf71d89968d07f6ab2d1b2e55efe0fcd7a 729656 mx-datetime-dbgsym_19.10.01_amd64.deb
+ b9dfeafef9bf73ee1de0aaa49e603ab7ba024be8babc04fd571c578a6fb727a3 10883 mx-datetime_19.10.01_amd64.buildinfo
+ 87ac01a5426dfb5278d026d0ba472f8bbef50e76fe4026b4022157876cb133bf 132204 mx-datetime_19.10.01_amd64.deb
+Files:
+ f7aa6be372dab1b9b347ebff117730d4 572 admin optional mx-datetime_19.10.01.dsc
+ c54564dcda2323c6fea0ccf9dc725bbd 479264 admin optional mx-datetime_19.10.01.tar.xz
+ 585c9f2e3e133f5aa69f93dcf0a0ee3d 729656 debug optional mx-datetime-dbgsym_19.10.01_amd64.deb
+ f4557ee7ecaca35bc15004c178a24ca9 10883 admin optional mx-datetime_19.10.01_amd64.buildinfo
+ a77fd80be2d8d0167a6b9d476dde6370 132204 admin optional mx-datetime_19.10.01_amd64.deb

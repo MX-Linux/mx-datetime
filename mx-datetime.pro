@@ -39,7 +39,6 @@ TRANSLATIONS += translations/mx-datetime_am.ts \
                 translations/mx-datetime_is.ts \
                 translations/mx-datetime_it.ts \
                 translations/mx-datetime_ja.ts \
-                translations/mx-datetime_ja_JP.ts \
                 translations/mx-datetime_kk.ts \
                 translations/mx-datetime_ko.ts \
                 translations/mx-datetime_lt.ts \

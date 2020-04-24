@@ -30,7 +30,7 @@
 class MTimeEdit : public QTimeEdit
 {
 public:
-    MTimeEdit(QWidget *parent = 0);
+    MTimeEdit(QWidget *parent = nullptr);
     void updateDateTime(const QDateTime &dateTime);
 };
 
@@ -42,7 +42,7 @@ class MXDateTime : public QDialog, private Ui::MXDateTime
     Q_OBJECT
 
 public:
-    explicit MXDateTime(QWidget *parent = 0);
+    explicit MXDateTime(QWidget *parent = nullptr);
     ~MXDateTime();
 
 private slots:

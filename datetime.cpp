@@ -83,7 +83,7 @@ void MXDateTime::startup()
 
     // Time zone areas.
     QByteArray zoneOut;
-    execute("find -L /usr/share/zoneinfo -mindepth 2 ! -path '*/posix/*' ! -path '*/right/*' -type f -printf %P\\n", &zoneOut);
+    execute("find -L /usr/share/zoneinfo -mindepth 2 ! -path */posix/* ! -path */right/* -type f -printf %P\\n", &zoneOut);
     zones = zoneOut.trimmed().split('\n');
     cmbTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
     cmbTimeArea->clear();

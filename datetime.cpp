@@ -638,7 +638,7 @@ void MXDateTime::on_btnAbout_clicked()
 }
 void MXDateTime::on_btnHelp_clicked()
 {
-    QString url = "/usr/share/doc/mx-datetime/help/mx-datetime.html";
+    QString url = "/usr/share/doc/mx-datetime/mx-datetime.html";
     QByteArray user;
     execute("logname", &user);
     user = user.trimmed();

@@ -1,4 +1,4 @@
-help			usr/share/doc/mx-datetime
+help/*			usr/share/doc/mx-datetime
 mx-datetime		usr/bin
 mx-datetime.desktop	usr/share/applications
 images/mx-datetime.svg	usr/share/icons/hicolor/scalable/apps

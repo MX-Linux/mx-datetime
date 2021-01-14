@@ -1,0 +1,49 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 14 Jan 2021 14:47:55 -0500
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 21.1.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.1.01) mx; urgency=medium
+ .
+   * add ntpdate dependency
+Checksums-Sha1:
+ 919e496ad6304fd89a480e9bf20a290fdbecb742 1130 mx-datetime_21.1.01.dsc
+ a2243a6d9ce4c49e3f86da32443479c9a615fd08 104480 mx-datetime_21.1.01.tar.xz
+ 255db5ba5289e11636878e26d68c8ca804273847 729458 mx-datetime-dbgsym_21.1.01_amd64.deb
+ 52d08fcf3081a15ed36482bea2a32957db812bc4 10718 mx-datetime_21.1.01_amd64.buildinfo
+ 1b2c02c957dbbff0006d329e666526653067da41 132176 mx-datetime_21.1.01_amd64.deb
+Checksums-Sha256:
+ 2becf3095bab14048a3e1ddb8fd7192464dccac2ddd1dd40f42a6f660045fc49 1130 mx-datetime_21.1.01.dsc
+ eb636147ca4f6673de9708328551c95cc621b96f31c52db2e0784cfca948319a 104480 mx-datetime_21.1.01.tar.xz
+ 8e304f6b197dd0ee17ffdade066354585abff0b63500b85d854be59c69acb0c6 729458 mx-datetime-dbgsym_21.1.01_amd64.deb
+ e8934f06f5d5dff2dcf617c2c1910831948482d34de80c990f5d4b66b7e108fe 10718 mx-datetime_21.1.01_amd64.buildinfo
+ b11e003ff09ea6b87d60bc110740af1244868ed191f78b77baf41b557655f94a 132176 mx-datetime_21.1.01_amd64.deb
+Files:
+ 255c7be24045a2a00191e55717fe6965 1130 admin optional mx-datetime_21.1.01.dsc
+ 54defee052a1510bba191cea9b5d6dfc 104480 admin optional mx-datetime_21.1.01.tar.xz
+ c5ed2354181110fbea29f67486657d4d 729458 debug extra mx-datetime-dbgsym_21.1.01_amd64.deb
+ 19a4db614b28bc4c22637adc63543186 10718 admin optional mx-datetime_21.1.01_amd64.buildinfo
+ 22ea77f06b37f140b951e10fa2ebd96c 132176 admin optional mx-datetime_21.1.01_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmAAoHsTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHsOCAC81UpiQe6p0/ytOAqgxg8FGI+QaNFJ
+kOyRqC2z/srVva8aJC0fvkQ+mv/6yNdDV5mhxxsf+DBKuqFx1ogFCAmcVWiOL6t+
+Hl2SaEroOB3yKlbDelyW9IbqRr9yA9CxkuHDK5zZiENa0+UgZrJL4CtmaaldDkVw
+83cIGpyuAodTvsZvk8RH24HPxDIneQwODLGfRcXgMdfbtIV3QFcr8YqZXwpIUvtB
+cE8/KwgjKPtg4a4yAGFQ+noWIPXQnk7PpnwX2wKbn8uTAmTcScP7HibcorbZ89YT
+Vuih2Tcxi+7jWNZSCWTHHWBiYsC93o18FpoiwJhhRfZ4wRpHkMAApkAN
+=sa1a
+-----END PGP SIGNATURE-----

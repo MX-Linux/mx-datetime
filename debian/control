@@ -9,8 +9,9 @@ Standards-Version: 3.9.8
 
 Package: mx-datetime
 Architecture: any
-Depends: xdg-utils | mx-viewer,
-         ${misc:Depends},
-         ${shlibs:Depends}
+Depends: ntpdate,
+	xdg-utils | mx-viewer,
+        ${misc:Depends},
+        ${shlibs:Depends}
 Description: MX Date & Time
  Program for changing the date and time settings

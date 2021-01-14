@@ -1,3 +1,9 @@
+mx-datetime (21.1.01) mx; urgency=medium
+
+  * add ntpdate dependency
+
+ -- Adrian <adrian@mxlinux.org>  Thu, 14 Jan 2021 14:47:55 -0500
+
 mx-datetime (21.1) mx; urgency=medium
 
   * various fixes

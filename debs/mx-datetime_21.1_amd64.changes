@@ -1,0 +1,34 @@
+Format: 1.8
+Date: Thu, 14 Jan 2021 08:33:48 -0500
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 21.1
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.1) mx; urgency=medium
+ .
+   * various fixes
+Checksums-Sha1:
+ 586a8c196fcba2dffd33e6b515bcc2c272df1b73 556 mx-datetime_21.1.dsc
+ 155a41caf46effca8339c0b04ec5ba40dd57b14a 104460 mx-datetime_21.1.tar.xz
+ 0d1cc2a80f2ffe11dd3d753959f7acb0b97fa80e 729490 mx-datetime-dbgsym_21.1_amd64.deb
+ 0ccebbad3c09a49a7759231171198b75b2cc4099 10120 mx-datetime_21.1_amd64.buildinfo
+ 6c4234854bf6dee1a6b853f8fcc8f4e73107d2d1 131922 mx-datetime_21.1_amd64.deb
+Checksums-Sha256:
+ eb24a1e591ea7d8fb6e56fb33dc8ef7315eec700494a237fc799e4b04f5542e1 556 mx-datetime_21.1.dsc
+ eea5b47e1667655248df962a72fb9a9fb4799234a0a36c3211fa2a399c0f5fe1 104460 mx-datetime_21.1.tar.xz
+ 65840b288a264afd79ea742fa3182191350da772d645deedd85b6d72f81de4b9 729490 mx-datetime-dbgsym_21.1_amd64.deb
+ 912826b430d0b0d985034278c64d2a0d0fc13fc9f6b5e0c4820ce74b09e3fb05 10120 mx-datetime_21.1_amd64.buildinfo
+ 1d5f0269cd39ae4d64acd71a046540a6254d387cdca8d75914698216479b5602 131922 mx-datetime_21.1_amd64.deb
+Files:
+ c84a8b9c8eaa72bec504e2426cc50e26 556 admin optional mx-datetime_21.1.dsc
+ a773ad5e91db95df0821eded7224b4a4 104460 admin optional mx-datetime_21.1.tar.xz
+ 3fe0c731ce82cbbcb42010ec73cb77e5 729490 debug extra mx-datetime-dbgsym_21.1_amd64.deb
+ 860f2952d499549ed4cb1d01959bcc22 10120 admin optional mx-datetime_21.1_amd64.buildinfo
+ aa580a8f1bb3d349f0646d7a06437593 131922 admin optional mx-datetime_21.1_amd64.deb

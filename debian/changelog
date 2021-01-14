@@ -1,3 +1,9 @@
+mx-datetime (21.1) mx; urgency=medium
+
+  * various fixes
+
+ -- Adrian <adrian@mxlinux.org>  Thu, 14 Jan 2021 08:33:48 -0500
+
 mx-datetime (19.10.01) mx; urgency=medium
 
   * new icon 

@@ -9,7 +9,7 @@ Standards-Version: 3.9.8
 
 Package: mx-datetime
 Architecture: any
-Depends: ntpdate,
+Depends: ntpdate | ntpsec-ntpdate,
 	xdg-utils | mx-viewer,
         ${misc:Depends},
         ${shlibs:Depends}

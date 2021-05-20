@@ -484,9 +484,9 @@ void MXDateTime::loadNetworkTime()
     QFile file("/etc/ntp.conf");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QByteArray conf;
-        while(tblServers->rowCount() > 0) tblServers->removeRow(0);
+        while (tblServers->rowCount() > 0) tblServers->removeRow(0);
         confServers.clear();
-        while(!file.atEnd()) {
+        while (!file.atEnd()) {
             const QByteArray &bline = file.readLine();
             const QString line(bline.trimmed());
             const QRegularExpression tregex("^#?(pool|server|peer)\\s");

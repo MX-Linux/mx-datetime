@@ -73,7 +73,7 @@ void MXDateTime::startup()
         // Used to decide the type of commands to run on this system.
         QByteArray testSystemD;
         if (QFileInfo::exists("/run/openrc")) sysInit = OpenRC;
-        else if(QFileInfo("/usr/bin/timedatectl").isExecutable()
+        else if (QFileInfo("/usr/bin/timedatectl").isExecutable()
                 && execute("ps -hp1", &testSystemD) && testSystemD.contains("systemd")) {
             sysInit = SystemD;
         } else sysInit = SystemV;
@@ -198,7 +198,7 @@ void MXDateTime::update()
     updating = true;
     timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta + zoneDelta));
     updater.setInterval(1000 - QTime::currentTime().msec());
-    if(timeEdit->date().daysTo(calendar->selectedDate()) != dateDelta) {
+    if (timeEdit->date().daysTo(calendar->selectedDate()) != dateDelta) {
         calendar->setSelectedDate(timeEdit->date().addDays(dateDelta));
     }
     updating = false;
@@ -320,8 +320,8 @@ void MXDateTime::saveHardwareClock()
     if (rtcUTC != isHardwareUTC) {
         if (sysInit == SystemD) {
             execute("timedatectl set-local-rtc " + QString(rtcUTC?"0":"1"));
-        } else if(sysInit == OpenRC) {
-            if(QFile::exists("/etc/conf.d/hwclock")) {
+        } else if (sysInit == OpenRC) {
+            if (QFile::exists("/etc/conf.d/hwclock")) {
                 execute("sed -i \"s/clock=.*/clock=\\\"UTC\\\"/\" /etc/conf.d/hwclock");
             }
         }
@@ -490,7 +490,7 @@ void MXDateTime::loadNetworkTime()
             const QByteArray &bline = file.readLine();
             const QString line(bline.trimmed());
             const QRegularExpression tregex("^#?(pool|server|peer)\\s");
-            if(!line.contains(tregex)) conf.append(bline);
+            if (!line.contains(tregex)) conf.append(bline);
             else {
                 QStringList args = line.split(QRegularExpression("\\s"), QString::SkipEmptyParts);
                 QString curarg = args.at(0);
@@ -520,7 +520,7 @@ void MXDateTime::saveNetworkTime()
 {
     const bool ntp = chkAutoSync->isChecked();
     if (ntp != enabledNTP) {
-        if(sysInit == SystemD) {
+        if (sysInit == SystemD) {
             execute("timedatectl set-ntp " + QString(ntp?"1":"0"));
         } else if (sysInit == OpenRC) {
             if (QFile::exists("/etc/init.d/ntpd")) {

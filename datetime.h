@@ -46,25 +46,25 @@ public:
     ~MXDateTime();
 
 private slots:
-    void on_tabWidget_currentChanged(int index);
-    void on_cmbTimeArea_currentIndexChanged(int index);
-    void on_cmbTimeZone_currentIndexChanged(int index);
+    void on_tabsDateTime_currentChanged(int index);
+    void on_comboTimeArea_currentIndexChanged(int index);
+    void on_comboTimeZone_currentIndexChanged(int index);
     void on_calendar_selectionChanged();
     void on_timeEdit_dateTimeChanged(const QDateTime &dateTime);
-    void on_btnReadHardware_clicked();
-    void on_btnHardwareAdjust_clicked();
-    void on_btnSystemToHardware_clicked();
-    void on_btnHardwareToSystem_clicked();
-    void on_btnSyncNow_clicked();
-    void on_tblServers_itemSelectionChanged();
-    void on_btnServerAdd_clicked();
-    void on_btnServerRemove_clicked();
-    void on_btnServerMoveUp_clicked();
-    void on_btnServerMoveDown_clicked();
-    void on_btnApply_clicked();
-    void on_btnClose_clicked();
-    void on_btnAbout_clicked();
-    void on_btnHelp_clicked();
+    void on_pushReadHardware_clicked();
+    void on_pushHardwareAdjust_clicked();
+    void on_pushSystemToHardware_clicked();
+    void on_pushHardwareToSystem_clicked();
+    void on_pushSyncNow_clicked();
+    void on_tableServers_itemSelectionChanged();
+    void on_pushServerAdd_clicked();
+    void on_pushServerRemove_clicked();
+    void on_pushServerMoveUp_clicked();
+    void on_pushServerMoveDown_clicked();
+    void on_pushApply_clicked();
+    void on_pushClose_clicked();
+    void on_pushAbout_clicked();
+    void on_pushHelp_clicked();
 
 private:
     QTimer updater;

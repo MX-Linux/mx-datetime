@@ -125,12 +125,12 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     qDebug() << "Exec:" << cmd;
     QProcess proc(this);
     QEventLoop eloop;
-    connect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), &eloop, &QEventLoop::quit);
+    connect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &eloop, &QEventLoop::quit);
     proc.start(cmd);
     if (!output) proc.closeReadChannel(QProcess::StandardOutput);
     proc.closeWriteChannel();
     eloop.exec();
-    disconnect(&proc, static_cast<void (QProcess::*)(int)>(&QProcess::finished), 0, 0);
+    disconnect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), 0, 0);
     const QByteArray &sout = proc.readAllStandardOutput();
     if (output) *output = sout;
     else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
@@ -657,7 +657,7 @@ MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
     // Ensure the widget is not too wide.
     QString fmt(displayFormat());
     if (fmt.section(':', 0, 0).length() < 2) fmt.insert(0, QChar('X'));
-    setMaximumWidth(fontMetrics().width(fmt) + (width() - lineEdit()->width()));
+    setMaximumWidth(fontMetrics().boundingRect(fmt).width() + (width() - lineEdit()->width()));
 }
 void MTimeEdit::updateDateTime(const QDateTime &dateTime)
 {

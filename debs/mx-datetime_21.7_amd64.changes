@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 29 Jul 2021 16:07:00 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 21.7
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.7) mx; urgency=medium
+ .
+   * Fix: read ntpsec/ntp.conf file if available`
+Checksums-Sha1:
+ 4a854709825c3b7be7a73965bb7b0cedba4c4e9f 1117 mx-datetime_21.7.dsc
+ 252554a0f894e7f93a0c88be650f9804218dc416 104612 mx-datetime_21.7.tar.xz
+ 2c847534f63be71daf61e77a4b1bd495604d724b 10420 mx-datetime_21.7_amd64.buildinfo
+ 4ae9288e9fbf3c9c8daebac2230bd2352ae19500 132620 mx-datetime_21.7_amd64.deb
+Checksums-Sha256:
+ 94dff6616aa6a1073c85d4d0ef9e8fb07f9db7bfda98df34e244cb095032cabe 1117 mx-datetime_21.7.dsc
+ 934cfc2792bef7a4585f3dc08957e132684ab32d999f733a170d5e28b29eb733 104612 mx-datetime_21.7.tar.xz
+ f583b20459945b9f27754159711177550e98a83861ed33445632dc29b211c7f4 10420 mx-datetime_21.7_amd64.buildinfo
+ 8a7f4ae86dfef6fef914c478231e73de56261e37bf0fab256abce241224473a2 132620 mx-datetime_21.7_amd64.deb
+Files:
+ 6ed99d7fa60b1cf0989ea1c47d96ac13 1117 admin optional mx-datetime_21.7.dsc
+ fe8ec89411a1bc8c1766617fd380d4be 104612 admin optional mx-datetime_21.7.tar.xz
+ f9999280adfbd4a9765b078f12b1a32f 10420 admin optional mx-datetime_21.7_amd64.buildinfo
+ e2fc2d80ec360eed8731bfbd70e390af 132620 admin optional mx-datetime_21.7_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEDCuYTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumCj7CAC5H977v3mXyA0FxjiP75Tfhd5mcFXJ
+DS4Mq0yRe7XiTawuPg7iR0C7zPQ5UaYjs0c5aKlgTUoVQwnSxaOKo7e1UVwRP9PE
+mH8cKTZatsf08gRsdJ1/2QLEVTeU1EnrpWbuVI/4RDhBlXC7E4Yl9gUxi4VdJRVr
+3SPFDvb4ELXRIDGW0N/yRBP1wRanAdOnzXCopxrh6XQQwN5Zy+wbwuqf3erGBbmy
+m4RfqrqVTUGgDQoioBOKUBJZVjmSfbyP+cffgjBgkjQD4L6x+vBMTU6X3giLIJwB
+ecUcNjMKa9X3wPAM+41wJH4vHy0pYrxqwt9DIfgS/zCo9+9oOcLqbczo
+=2UIz
+-----END PGP SIGNATURE-----

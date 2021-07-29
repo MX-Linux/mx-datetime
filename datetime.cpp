@@ -484,6 +484,9 @@ bool MXDateTime::validateServerList()
 void MXDateTime::loadNetworkTime()
 {
     QFile file("/etc/ntp.conf");
+    if (QFileInfo::exists("/etc/ntpsec/ntp.conf"))
+        file.setFileName("/etc/ntpsec/ntp.conf");
+
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QByteArray conf;
         while (tableServers->rowCount() > 0) tableServers->removeRow(0);

@@ -132,7 +132,7 @@ bool MXDateTime::execute(const QString &cmd, QByteArray *output)
     if (!output) proc.closeReadChannel(QProcess::StandardOutput);
     proc.closeWriteChannel();
     eloop.exec();
-    disconnect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), 0, 0);
+    disconnect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), nullptr, nullptr);
     const QByteArray &sout = proc.readAllStandardOutput();
     if (output) *output = sout;
     else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
@@ -184,7 +184,7 @@ void MXDateTime::on_comboTimeZone_currentIndexChanged(int index)
 }
 void MXDateTime::on_calendar_selectionChanged()
 {
-    dateDelta = timeEdit->date().daysTo(calendar->selectedDate());
+    dateDelta = static_cast<int>(timeEdit->date().daysTo(calendar->selectedDate()));
 }
 void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
@@ -271,7 +271,7 @@ void MXDateTime::on_pushReadHardware_clicked()
     const QString btext = pushReadHardware->text();
     pushReadHardware->setText(tr("Reading..."));
     QByteArray rtcout;
-    execute("/sbin/hwclock --verbose", &rtcout);
+    execute("hwclock --verbose", &rtcout);
     isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
     if (isHardwareUTC) radioHardwareUTC->setChecked(true);
     else radioHardwareLocal->setChecked(true);
@@ -285,7 +285,7 @@ void MXDateTime::on_pushHardwareAdjust_clicked()
     const QString btext = pushHardwareAdjust->text();
     pushHardwareAdjust->setText(tr("Adjusting..."));
     QByteArray rtcout;
-    execute("/sbin/hwclock --adjust", &rtcout);
+    execute("hwclock --adjust", &rtcout);
     textHardwareClock->setPlainText(QString(rtcout.trimmed()));
     pushHardwareAdjust->setText(btext);
     setClockLock(false);
@@ -293,7 +293,7 @@ void MXDateTime::on_pushHardwareAdjust_clicked()
 void MXDateTime::on_pushSystemToHardware_clicked()
 {
     setClockLock(true);
-    QString cmd("/sbin/hwclock --systohc");
+    QString cmd("hwclock --systohc");
     if (checkDriftUpdate->isChecked()) cmd.append(" --update-drift");
     transferTime(cmd, tr("System Clock"), tr("Hardware Clock"));
     checkDriftUpdate->setCheckState(Qt::Unchecked);
@@ -302,7 +302,7 @@ void MXDateTime::on_pushSystemToHardware_clicked()
 void MXDateTime::on_pushHardwareToSystem_clicked()
 {
     setClockLock(true);
-    transferTime("/sbin/hwclock --hctosys", tr("Hardware Clock"), tr("System Clock"));
+    transferTime("hwclock --hctosys", tr("Hardware Clock"), tr("System Clock"));
     setClockLock(false);
 }
 void MXDateTime::transferTime(const QString &cmd, const QString &from, const QString &to)
@@ -327,7 +327,7 @@ void MXDateTime::saveHardwareClock()
                 execute("sed -i \"s/clock=.*/clock=\\\"UTC\\\"/\" /etc/conf.d/hwclock");
             }
         }
-        execute("/sbin/hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
+        execute("hwclock --systohc --" + QString(rtcUTC?"utc":"localtime"));
     }
 }
 
@@ -350,7 +350,7 @@ void MXDateTime::on_pushSyncNow_clicked()
     if (!args.isEmpty()) {
         QString btext = pushSyncNow->text();
         pushSyncNow->setText(tr("Updating..."));
-        rexit = execute("/usr/sbin/ntpdate -u" + args);
+        rexit = execute("ntpdate -u" + args);
         pushSyncNow->setText(btext);
     }
     // Finishing touches.

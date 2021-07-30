@@ -337,22 +337,26 @@ void MXDateTime::on_pushSyncNow_clicked()
 {
     if (!validateServerList()) return;
     setClockLock(true);
+
     // Command preparation.
     const int serverCount = tableServers->rowCount();
-    QString args;
+    bool checked = false;
+    bool rexit = false;
+
+    // Run ntpdate one server at a time and break at first succesful update
     for (int ixi = 0; ixi < serverCount; ++ixi) {
         QTableWidgetItem *item = tableServers->item(ixi, 1);
         const QString &address = item->text().trimmed();
-        if (item->checkState() == Qt::Checked) args += " " + address;
+        if (item->checkState() == Qt::Checked) {
+            checked = true;
+            QString btext = pushSyncNow->text();
+            pushSyncNow->setText(tr("Updating..."));
+            rexit = execute("ntpdate -u " + address);
+            pushSyncNow->setText(btext);
+        }
+        if (rexit) break;
     }
-    // Command execution.
-    bool rexit = false;
-    if (!args.isEmpty()) {
-        QString btext = pushSyncNow->text();
-        pushSyncNow->setText(tr("Updating..."));
-        rexit = execute("ntpdate -u" + args);
-        pushSyncNow->setText(btext);
-    }
+
     // Finishing touches.
     setClockLock(false);
     dateDelta = 0;
@@ -360,7 +364,7 @@ void MXDateTime::on_pushSyncNow_clicked()
     updater.setInterval(0);
     if (rexit) {
         QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
-    } else if (!args.isEmpty()) {
+    } else if (checked) {
         QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
     } else {
         QMessageBox::critical(this, windowTitle(), tr("None of the NTP servers on the list are currently enabled."));

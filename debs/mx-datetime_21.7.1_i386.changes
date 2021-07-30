@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 30 Jul 2021 13:21:54 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 21.7.1
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.7.1) mx; urgency=medium
+ .
+   * Improvement: sync from one pool at a time
+Checksums-Sha1:
+ d91b2fb1ad2cc595c0703cc4021bea5e634eaec9 10136 mx-datetime_21.7.1_i386.buildinfo
+ fec883a74ca196888d841008f9760eb5115ab021 135446 mx-datetime_21.7.1_i386.deb
+Checksums-Sha256:
+ 959c886a53e5e4025cf5ea8ed886b70dffe1cf45a8263c17b711fb2c3425d04e 10136 mx-datetime_21.7.1_i386.buildinfo
+ 1dfac9a1cae67843b0c47ec0308b9b70c996fa04572f243c7e49a2cead3eab11 135446 mx-datetime_21.7.1_i386.deb
+Files:
+ d4650aadd2fc56b6393706338f8389be 10136 admin optional mx-datetime_21.7.1_i386.buildinfo
+ 637b558cc42c2c9efb351d7040cc9166 135446 admin optional mx-datetime_21.7.1_i386.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEENaUTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumPoYB/4nTm4Atn0BZo8KBRjOuuTAZuZeoKkf
+EkZ3Hb1ouhUDh2X0YV48Qgmh/NXeL7C46qgeEdBpXwf8cXskmwhudOlsvSUktHE4
+PDCxOuAniF0zuSLTiBfFCNu38t16901oqAN/DHbKbm5P1yHn2Xz2j9NuCndWyhKZ
+OQTbfkf6T5wUfYAwhup+Q+N5TzS8o297w/Z7Hp+s1JhSPUREk0tbPTMSYLnARgaO
+68RNwB2mHMfzk4Xpb4OOJSNiUFwopS2/M2NvX2cxYWzWJpgeC9gUbtdBNr+TZW8i
+uzZXuGOilQzTSzI168EA/xa11rq893DBVhSif0MZDKr/VLzpfR2/CM7Z
+=MCdC
+-----END PGP SIGNATURE-----

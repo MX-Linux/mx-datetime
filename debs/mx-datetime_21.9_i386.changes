@@ -17,24 +17,25 @@ Changes:
  mx-datetime (21.9) mx; urgency=medium
  .
    * Fixed: wrong NTP configuration file updated for ntpsec.
+   * Use ntpdig if it exists.
 Checksums-Sha1:
- a0b0f4f31094d2b026d0f1d23d3deb454c9d9970 10126 mx-datetime_21.9_i386.buildinfo
- 9b0e04645dc17a123b6d7cedf02f8a382e60a311 135450 mx-datetime_21.9_i386.deb
+ 851149957b86cb3dd097d05c5995e36e85787a77 10077 mx-datetime_21.9_i386.buildinfo
+ b169425158f1afe49fa004f2a2acdb28df065639 135502 mx-datetime_21.9_i386.deb
 Checksums-Sha256:
- 2f5db9c8fe2d64bb3387929e39f6b4fcdfcd2c6e046eb47b1c506e33ff74f844 10126 mx-datetime_21.9_i386.buildinfo
- 4bef43170eadb83b3762c6babd46d0d4d121cf653ef4c0fe08295ef795372855 135450 mx-datetime_21.9_i386.deb
+ e6d95bc0502a97502ad8a0ddf8557cdf7a4e0eb4b0d814bfa8978fa13702286d 10077 mx-datetime_21.9_i386.buildinfo
+ fc168825ef33397e09db7d404cd422c5d7e7a584b7b9a775055d79e872827e40 135502 mx-datetime_21.9_i386.deb
 Files:
- 2c6872e4c92afcac749b90a0b4e08452 10126 admin optional mx-datetime_21.9_i386.buildinfo
- 341e69c3c1f0b4d511593bbeb7c676d7 135450 admin optional mx-datetime_21.9_i386.deb
+ 186840dac5f148628c592b17e021ead5 10077 admin optional mx-datetime_21.9_i386.buildinfo
+ a109fad8d1e9b8160a8e63ea4dad8b2d 135502 admin optional mx-datetime_21.9_i386.deb
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEwx0ETHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumDs2B/oCvIkR4vTLycopwQjmUQQk+gd4rs1n
-wKvE7GtbmDuSqtD4nuD6MSbeKwvRzLF9y1ZCCr/wX5fCXmXE61gP/S41+ZdUVEyz
-SlRrl3w4fVDpaZvhDsTRAUCzBKhxkBl1Oocz32X7pSyADoayShQF2M89FGvu9RvN
-Uh9EiH4Z4bsW5VrWEUKrl2Bp95smrEg8/XGBi5YvPukCePytgLhd3KxUkTbE34E8
-8/1sUoHirLSHdA8H7h9vX7WPjHusttLzte9kK7srNfVI7rItEqu+7THb+l+jMIjJ
-UMjsg4DArOc60SH4CmqBG94bAEAwGdgS98QNU6SHyf9UD+sJ0hUusZku
-=ncIp
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEw0OoTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumC0ZCADB1Aumt4tMDwQhs1s3otyWAuW2Uu7H
+ArmBkVkR+605QhE19h24d/apknUX0NWrqOGxvmqTZEvvscLWlf14bRdq2jnILHU3
+AHmOU0OudtYZkSjjtRF5p665IJj3Tyr2/EU3P7rMc9IdDUq8JNBVn5Ua6ZRTNBbV
+QVJ8NX6Cu+GQj8mNEhvOgY7lXZikRapszZirnqwV9ptup1MIwHj8nkz/3NAAX4fu
+wcAnr7hcMhbAxku+OPMOOW6pPsfryW3FHZ3GQetCZix9GPC/MxXTLJdItmwvw1tv
+sj5Yll03ytg9hVT0BnqXoT251NiBhuCi5DOs+cJAy8uE/PxU3NHKJugw
+=nyPa
 -----END PGP SIGNATURE-----

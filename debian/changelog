@@ -1,6 +1,7 @@
 mx-datetime (21.9) mx; urgency=medium
 
   * Fixed: wrong NTP configuration file updated for ntpsec.
+  * Use ntpdig if it exists.
 
  -- Adrian <adrian@mxlinux.org>  Thu, 02 Sep 2021 08:43:13 -0400
 

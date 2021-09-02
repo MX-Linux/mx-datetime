@@ -17,27 +17,28 @@ Changes:
  mx-datetime (21.9) mx; urgency=medium
  .
    * Fixed: wrong NTP configuration file updated for ntpsec.
+   * Use ntpdig if it exists.
 Checksums-Sha1:
- 01fbd3b65de4f6c651af63b42c1cd6cb3cbc297a 555 mx-datetime_21.9.dsc
- 155235792bd5e97bf7b1e8bb8519b9c7b3e456a6 104720 mx-datetime_21.9.tar.xz
- a0b0f4f31094d2b026d0f1d23d3deb454c9d9970 10126 mx-datetime_21.9_i386.buildinfo
+ 156c7aba4e9a2ebdccb287a1e0fabd0c68fee7bc 555 mx-datetime_21.9.dsc
+ 39876558ec44877736a864a59e56638a1d8e93b2 104776 mx-datetime_21.9.tar.xz
+ 851149957b86cb3dd097d05c5995e36e85787a77 10077 mx-datetime_21.9_i386.buildinfo
 Checksums-Sha256:
- 1e908c64ee2bc8f4bc7dc789a5d43536b49c29565c2c1967cc9f5ad4eebb710b 555 mx-datetime_21.9.dsc
- a4741fac1a76ab6b5778ae786c5969709bdc68f0e43ea0efe96704091511783d 104720 mx-datetime_21.9.tar.xz
- 2f5db9c8fe2d64bb3387929e39f6b4fcdfcd2c6e046eb47b1c506e33ff74f844 10126 mx-datetime_21.9_i386.buildinfo
+ d43e3d08446639f4217eb95406a5e0f37c028b05c933b83581d40de438e3a711 555 mx-datetime_21.9.dsc
+ 928d2ff474792b06b17eb95e70a8868a90efe9a6d3cff61d027acb1c6a371a0a 104776 mx-datetime_21.9.tar.xz
+ e6d95bc0502a97502ad8a0ddf8557cdf7a4e0eb4b0d814bfa8978fa13702286d 10077 mx-datetime_21.9_i386.buildinfo
 Files:
- f92cfc911d5551e76b560bf4a0ebfec6 555 admin optional mx-datetime_21.9.dsc
- 3229fc68bc233480b39ecb32ef3d27cb 104720 admin optional mx-datetime_21.9.tar.xz
- 2c6872e4c92afcac749b90a0b4e08452 10126 admin optional mx-datetime_21.9_i386.buildinfo
+ 1c03de16c78e6a7037b1ed13af097064 555 admin optional mx-datetime_21.9.dsc
+ d4bac4897348232a2bfe1a7409062472 104776 admin optional mx-datetime_21.9.tar.xz
+ 186840dac5f148628c592b17e021ead5 10077 admin optional mx-datetime_21.9_i386.buildinfo
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEwx0ITHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumILjCADS5PzBvIEGMmhEQarjWmKGTi6LXZ5r
-xnyos4egtFOA3ycFSzXU/9VxbVeWJgf9KSSbmx5ThZ/t4N3fc1lW4JwazbuTL9s5
-+U5EIeDQ9FjtfHsFHX+ndG8DQuPXRU8CZBEHBZ3M7YO0b8UlCp7SyDFNVIRbHJD4
-SsveIq/iyBWFlUwF/3tbFdUc2IimaEjWy05dQw0m8XSe/36neFOayFP80cnssmIa
-2BO0OKb+r5RXv3uLXZ5b/RQVbQm4VAgl1WGKcaCkkcOX8jaqpGLnOonEP2XyV2Vm
-7CouCivOw+0GXuAcpkesIKlCGhnOOGTDevCyMssfBPfuEn8CM0HD0EdX
-=warI
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEw0OsTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumMwLCACalHeAXqu3dlJwusz9JRCEZAlS8P3t
+5w0lp88SE0fZYTlOj26r8rWmyVi88PeRAc3q9PfYMvdn5R9jEeSIbv4ux6fCnz0c
+tC/ZKnOFuc5nhYYRnouoJKwIVoAEW/F9koLT/mgOskbGZXZ3D9YlTDFIRyN6HIcv
+mOXICXGdCCfp5fCc6gHkueW4COtmk+f6laKzYZ2tGL+bF9NamN0HL8hdbifdVQ33
+fSNfw2NbaAGiEBrmYOebDOHcWSspqq0NGieLYdeBpgV1JIN1F7YiENqTAkEOzcRm
+XqnmVQmnIDJa7NpqH2msPOQt9E7T1vgFMlq5yn6AxtPtrhy8DGq8F5v0
+=PUI0
 -----END PGP SIGNATURE-----

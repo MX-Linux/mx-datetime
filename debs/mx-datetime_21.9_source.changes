@@ -1,0 +1,43 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 02 Sep 2021 08:43:13 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source
+Version: 21.9
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.9) mx; urgency=medium
+ .
+   * Fixed: wrong NTP configuration file updated for ntpsec.
+Checksums-Sha1:
+ 01fbd3b65de4f6c651af63b42c1cd6cb3cbc297a 555 mx-datetime_21.9.dsc
+ 155235792bd5e97bf7b1e8bb8519b9c7b3e456a6 104720 mx-datetime_21.9.tar.xz
+ a0b0f4f31094d2b026d0f1d23d3deb454c9d9970 10126 mx-datetime_21.9_i386.buildinfo
+Checksums-Sha256:
+ 1e908c64ee2bc8f4bc7dc789a5d43536b49c29565c2c1967cc9f5ad4eebb710b 555 mx-datetime_21.9.dsc
+ a4741fac1a76ab6b5778ae786c5969709bdc68f0e43ea0efe96704091511783d 104720 mx-datetime_21.9.tar.xz
+ 2f5db9c8fe2d64bb3387929e39f6b4fcdfcd2c6e046eb47b1c506e33ff74f844 10126 mx-datetime_21.9_i386.buildinfo
+Files:
+ f92cfc911d5551e76b560bf4a0ebfec6 555 admin optional mx-datetime_21.9.dsc
+ 3229fc68bc233480b39ecb32ef3d27cb 104720 admin optional mx-datetime_21.9.tar.xz
+ 2c6872e4c92afcac749b90a0b4e08452 10126 admin optional mx-datetime_21.9_i386.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEwx0ITHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumILjCADS5PzBvIEGMmhEQarjWmKGTi6LXZ5r
+xnyos4egtFOA3ycFSzXU/9VxbVeWJgf9KSSbmx5ThZ/t4N3fc1lW4JwazbuTL9s5
++U5EIeDQ9FjtfHsFHX+ndG8DQuPXRU8CZBEHBZ3M7YO0b8UlCp7SyDFNVIRbHJD4
+SsveIq/iyBWFlUwF/3tbFdUc2IimaEjWy05dQw0m8XSe/36neFOayFP80cnssmIa
+2BO0OKb+r5RXv3uLXZ5b/RQVbQm4VAgl1WGKcaCkkcOX8jaqpGLnOonEP2XyV2Vm
+7CouCivOw+0GXuAcpkesIKlCGhnOOGTDevCyMssfBPfuEn8CM0HD0EdX
+=warI
+-----END PGP SIGNATURE-----

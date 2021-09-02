@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 02 Sep 2021 08:43:13 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 21.9
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.9) mx; urgency=medium
+ .
+   * Fixed: wrong NTP configuration file updated for ntpsec.
+Checksums-Sha1:
+ a92cb6728f30a82ad7465c92a98071af6880eb01 1117 mx-datetime_21.9.dsc
+ a7f9bdd985e1ab10ee4b71e0949c0c66f1e892cf 104712 mx-datetime_21.9.tar.xz
+ f7ef877154d57324c2abbf09c26182cd1d422592 10420 mx-datetime_21.9_amd64.buildinfo
+ 8c124d5962a6acf8dc81d9aebd587cea8c786c6d 132698 mx-datetime_21.9_amd64.deb
+Checksums-Sha256:
+ 376af5e6bbe40d2f7cf3d6d8b0afead850fa55e40092ee06297f3dc78bc846af 1117 mx-datetime_21.9.dsc
+ 738f2c6276cade43c624109f30a17f66e59656abddf2feb8cbe09b6cf2314867 104712 mx-datetime_21.9.tar.xz
+ 15c04f2f2d48088a554f35dc0ce2b8c68e80fdccc774aa93bc461927ddb13de0 10420 mx-datetime_21.9_amd64.buildinfo
+ 7015b0a5405cb00439105281eb9d9849b743811a66ada36a1304c4819a103d22 132698 mx-datetime_21.9_amd64.deb
+Files:
+ adbde7701792e1b4051ba57e06cc5817 1117 admin optional mx-datetime_21.9.dsc
+ a68636c67efca41c9631c9578e089708 104712 admin optional mx-datetime_21.9.tar.xz
+ fd1d6019687149fd32dfc043a3929b6d 10420 admin optional mx-datetime_21.9_amd64.buildinfo
+ dd10ba06046f6c7372a413df2a944aaa 132698 admin optional mx-datetime_21.9_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmEwxzcTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHzOB/9Fahm1wQVSDa3yR8Mm5IikEl+ID3pP
+A1/QBE2nKA1eH3/MZagzZ09OhAHM3w1CWAnGv+v1OYkSPPJ5cuR8GODhcK6N/Ll0
+YeqXtaIB7Fc8oeYCtxQVtd6VaAifcxutI9NTnqzxD8R4jjrEqyiRb7Vfly2PQHxs
+VngRF0rqwWqYJr53suzAwChcppz3UBMLpzvLAysIgxnPf32epIJNiasNCdu03cj6
+hDKN+ZFCokZERVhqPJdUwqb2tbpfO6D1wDwpmvQs5zpeOvMUOV69dtz0E0XatF0X
+QEYdgMBDEzZS3a3KZC3po01PgEqcN/Oi/EJLIo0HYHodqV3jfc/O5/A+
+=/8Lv
+-----END PGP SIGNATURE-----

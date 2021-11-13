@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Fri, 12 Nov 2021 12:02:09 -0500
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 21.11
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: fehlix <fehlix@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.11) mx; urgency=medium
+ .
+   * translation refresh
+Checksums-Sha1:
+ 7505e7da3c17c428697c3ae525f566697944fded 9974 mx-datetime_21.11_i386.buildinfo
+ 902a8f4f616b5738ec0127a32f2cae1a77dce0d1 141692 mx-datetime_21.11_i386.deb
+Checksums-Sha256:
+ a67c7502b64ef05d8a58e7e0cced6a96b2a84e69803e0c35b80bccac8b5631ef 9974 mx-datetime_21.11_i386.buildinfo
+ 03003beb07268f946b16f5b16c8102360f41b591c196ead049fdbd1b1e3c632d 141692 mx-datetime_21.11_i386.deb
+Files:
+ 6de3f96dcde20c607dda6050d82064a0 9974 admin optional mx-datetime_21.11_i386.buildinfo
+ 1ccd7ffbcebd1d2bf6b8256c4f6baa68 141692 admin optional mx-datetime_21.11_i386.deb

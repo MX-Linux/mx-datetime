@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Fri, 12 Nov 2021 12:02:09 -0500
+Source: mx-datetime
+Architecture: source
+Version: 21.11
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: fehlix <fehlix@mxlinux.org>
+Changes:
+ mx-datetime (21.11) mx; urgency=medium
+ .
+   * translation refresh
+Checksums-Sha1:
+ 78236fa08a6245908f48eceba9e20a83dd9c613d 559 mx-datetime_21.11.dsc
+ 2e4c8b5954c2c1833baa21d5809474cfb13130c2 110316 mx-datetime_21.11.tar.xz
+ 7505e7da3c17c428697c3ae525f566697944fded 9974 mx-datetime_21.11_i386.buildinfo
+Checksums-Sha256:
+ 10f3b92bec5cd98b3e264aebead7b82d758f10e3ad16d19de9415137445d1ee9 559 mx-datetime_21.11.dsc
+ 38238f49ae769763038f74b3f01b8a7fc1264b7d9bc8f3294b8d8a9a3269d6d3 110316 mx-datetime_21.11.tar.xz
+ a67c7502b64ef05d8a58e7e0cced6a96b2a84e69803e0c35b80bccac8b5631ef 9974 mx-datetime_21.11_i386.buildinfo
+Files:
+ fd5649c1fede5607e20f1d0c8554efad 559 admin optional mx-datetime_21.11.dsc
+ 9da6ab921bae4824c124789c1cfb586c 110316 admin optional mx-datetime_21.11.tar.xz
+ 6de3f96dcde20c607dda6050d82064a0 9974 admin optional mx-datetime_21.11_i386.buildinfo

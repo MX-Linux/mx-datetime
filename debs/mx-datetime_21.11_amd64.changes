@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 12 Nov 2021 12:02:09 -0500
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 21.11
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: fehlix <fehlix@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (21.11) mx; urgency=medium
+ .
+   * translation refresh
+Checksums-Sha1:
+ f2fcba95fba75370d5c1311921ac5360c4c23a2a 1121 mx-datetime_21.11.dsc
+ 4793e69d51e5c7d7ee1d2f4c9f8bf28f68e55a44 110312 mx-datetime_21.11.tar.xz
+ 9d103bca38582775a0c41ab139eb3fd75fe4e4b3 10739 mx-datetime_21.11_amd64.buildinfo
+ a7b18e6cb36f4bcd026e0f4e766be94b9d2ca0b3 139360 mx-datetime_21.11_amd64.deb
+Checksums-Sha256:
+ f4bb11e21eb0ddb8f9d66da8c7c26c455c571ef138b1456866ffb1051f5c8481 1121 mx-datetime_21.11.dsc
+ 29dd49c2ad9181cd02866bc6751babbfbe37f4730cf15982737418be8326f5e9 110312 mx-datetime_21.11.tar.xz
+ fdad7913b4a67110f84dfe267b0754ebcef320c042b7acc5e459e482028e4574 10739 mx-datetime_21.11_amd64.buildinfo
+ f8b165e70401c79844555f6902629266c5a9fe6c42b69062ca275dc88c420829 139360 mx-datetime_21.11_amd64.deb
+Files:
+ c31789730f43074733851964632c0dbf 1121 admin optional mx-datetime_21.11.dsc
+ f0b90b76f2c1c139ba117740a7d489fe 110312 admin optional mx-datetime_21.11.tar.xz
+ b9cb1434acb4ed810a15df2fb97b6e31 10739 admin optional mx-datetime_21.11_amd64.buildinfo
+ 287fdc03c282c7d879e8514f18e0a29b 139360 admin optional mx-datetime_21.11_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmGPw0cTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumOA6CACa8WmIrlyuVrz/oH10EKnG5f75kZ0T
+PpYWo8hAgiIs9r1KNlwZexu0lA0yCfbeyJVmPCsECQVUrYkRY8/CnNf0zcXMgF1a
+n5J3wl+ObWuPIoyOluEc3ZbizY71IKyHW7kaq0YEl+8/PK4t+bKYcl3iM7CHq9Wr
+0UNEDckvmBwEtu6Eg5CtqUeIgSpDF0SxTBVjUpkWSO/wATSWXuBe4o+fX32d6lvG
+5yldBSyeRr/bER2tb54bKpjTBeXHsAZ7/4NyD14rF24doJIQ+AZfaq+FaML8ERMx
+8kdZ2/KuVDK60ROsXJt+mkrXu7KfLAf8OGfWECaIirUXh9Z2foqkV5bK
+=9SQe
+-----END PGP SIGNATURE-----

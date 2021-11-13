@@ -1,3 +1,9 @@
+mx-datetime (21.11) mx; urgency=medium
+
+  * translation refresh
+
+ -- fehlix <fehlix@mxlinux.org>  Fri, 12 Nov 2021 12:02:09 -0500
+
 mx-datetime (21.9) mx; urgency=medium
 
   * Fixed: wrong NTP configuration file updated for ntpsec.

@@ -619,7 +619,7 @@ void MXDateTime::on_pushAbout_clicked()
         QByteArray user;
         execute("logname", &user);
         user = user.trimmed();
-        QString env_run = userRoot ? "runuser -l " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
+        QString env_run = userRoot ? "runuser  " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
         if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
             system("mx-viewer " + url.toUtf8() + " " + tr("License").toUtf8() + "&");
         } else {
@@ -655,7 +655,7 @@ void MXDateTime::on_pushHelp_clicked()
     if (system("command -v mx-viewer") == 0) {
         system ("mx-viewer " + url.toUtf8() + " \"" + tr("MX Date & Time Help").toUtf8() + "\"&");
     } else {
-        QString env_run = userRoot ? "runuser -l " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
+        QString env_run = userRoot ? "runuser  " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
         system(env_run.toUtf8() + "xdg-open " + url.toUtf8() + "\"&");
     }
 }

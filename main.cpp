@@ -21,10 +21,16 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QTranslator>
+
 #include "datetime.h"
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
+    if (getuid() == 0) {
+        qputenv("XDG_RUNTIME_DIR", "/run/user/0");
+        qputenv("HOME", "/root");
+    }
     QApplication a(argc, argv);
     a.setWindowIcon(QIcon::fromTheme("mx-datetime"));
 

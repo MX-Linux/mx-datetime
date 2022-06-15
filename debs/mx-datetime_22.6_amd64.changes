@@ -1,0 +1,47 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Wed, 15 Jun 2022 17:28:58 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 22.6
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.6) mx; urgency=medium
+ .
+   * Preserve user theme when launching program as root
+   * Make sure HOME and XDG_RUNTIME_DIR are correct when launching as root
+Checksums-Sha1:
+ 0a3f591b5a067ec40c8aab83942346efceda8fdc 1117 mx-datetime_22.6.dsc
+ 2814f3fa3e7830451361ec07cb8065f4e34942b8 111656 mx-datetime_22.6.tar.xz
+ cfbb66c35e84b262526c7ecebc4448c0fec510b6 10731 mx-datetime_22.6_amd64.buildinfo
+ e803d8873ce58c65d7437a98b8ac7a5340939c73 140816 mx-datetime_22.6_amd64.deb
+Checksums-Sha256:
+ 79bccf0439db0b58859c067f9bb9243d418fbb3c713f7167d39665d25cce252e 1117 mx-datetime_22.6.dsc
+ 2a90c99feabaaf2d23bd43a86ff0015eede41a325be5f64ef2d324c500d25676 111656 mx-datetime_22.6.tar.xz
+ c5cefbc59a9489db5e7f4ccc5f74266f9a7a3cfa945842f10f982c7f16692590 10731 mx-datetime_22.6_amd64.buildinfo
+ e46c69efe1034382d83757f3d466c63c0b96a63cc054afdc922464dd53d20dac 140816 mx-datetime_22.6_amd64.deb
+Files:
+ f5fd83d5acc7dfe5dc9ae9aaa8f84bdc 1117 admin optional mx-datetime_22.6.dsc
+ 7c59eae52fc0c7ad64ed9268edc0975a 111656 admin optional mx-datetime_22.6.tar.xz
+ 165efc5640989fcaa0d31b1d0320b9d9 10731 admin optional mx-datetime_22.6_amd64.buildinfo
+ 18252e245fb6881dcb65b8b73be19ca1 140816 admin optional mx-datetime_22.6_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmKqUIkTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumKyPB/42pvB4Q6Qxe9a0dvyFoJUMv/zBnmLt
+X+K/To0u7FwiLe7CAPw5wgjx4jopkjm3BrVEUcErb94LFh7BD9Ja3n1iHIPN1rkD
+rZ/u96PcipvaEcgk4pav9frFhcVKk9dspe4Tv23kdyOzC1nRxnmjnHJKK0ZN89oO
+2NSxYmCo56TWkOE95y24Q9DR3amuhZjiejElpGjxQaBfuZQgSh1JrPWQ24NSwVJA
+T4z8JP4nJ7dw59euYJjQq/ssZiyNqLls4QNmk870ThqjB9nhNVDftLKcueNk/5Am
+6dRVaY40jZQXUbxMeWquBSKdF79iuKOVC2Hi8JkDaSAK2+3dcGg1zgNY
+=0qAI
+-----END PGP SIGNATURE-----

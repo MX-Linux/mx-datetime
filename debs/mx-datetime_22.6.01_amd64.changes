@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 17 Jun 2022 12:48:05 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 22.6.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.6.01) mx; urgency=medium
+ .
+   * Improve time adjustment: use -S step option for dtpdig and use as steplimit of 500ms for time slewing
+Checksums-Sha1:
+ 6f27d45be67a8b881c4b1472736abd7b7c8a2108 1129 mx-datetime_22.6.01.dsc
+ 96874fe221b717b7852e229d90488751e2f69830 111848 mx-datetime_22.6.01.tar.xz
+ dd8c6c12299492b8dbef65c688584df1af4097f9 10755 mx-datetime_22.6.01_amd64.buildinfo
+ c62e56307a91c4ecbebdb5084401e96887d4fcef 140920 mx-datetime_22.6.01_amd64.deb
+Checksums-Sha256:
+ 76569c0b24d1fa31ecad07d0338130707486d2b5a9d958562a507768878a7e64 1129 mx-datetime_22.6.01.dsc
+ 9d4df27ee4dfcb41b5c9f9198575a366cdf6d60c031160edfd34dbcff57e6e70 111848 mx-datetime_22.6.01.tar.xz
+ c7c1500f07236ffe98082180099d7ff0b729e342c8d06c673e2e7b53dc6b55be 10755 mx-datetime_22.6.01_amd64.buildinfo
+ 9352d82dfb39a6ca882deeb07075421eefddd52aeb0c3296ef8f9fc9f9bda7ce 140920 mx-datetime_22.6.01_amd64.deb
+Files:
+ 4d4b1de457b906220a2c23873f9cbd13 1129 admin optional mx-datetime_22.6.01.dsc
+ 48b7bddd5592df3d6273396f04c866ef 111848 admin optional mx-datetime_22.6.01.tar.xz
+ 5c2a2701b3a5c5316a7dbf273132251c 10755 admin optional mx-datetime_22.6.01_amd64.buildinfo
+ f8b227d7445d99f44615e607fdb84168 140920 admin optional mx-datetime_22.6.01_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmKssL4THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumMFyCACBbUSEvKm6sO+9wBr8kvMEFt9lMAtL
+P19/qHO4SYhKqn20+xTQ68U5eGOiKM3Uzr3GMij17Oh8dfaqgSOJlM+ejZM5NBAQ
+0iupEV/YADDUVIa8UmpZQKeOwFg64Lwd193fi4d9wHBA8r5MpnS1UfuWepUbkMDz
++p8od3Lbwfc/H1MjxfZDLbKUKNtHPxER1d9tag7QSOPufgtDWJv4pkl+QH0YxwKr
+VAqaTcBfy8J4JNVmztXqz/BnxdahyiK5vQotQex43VEbZP3k3I3mcVLxgJoPozbT
+yzFCG5BYtfbnTWVVOd5OxlkkyQNlb2OiSi8/Ybz5v5aPJvySPbhqJQe4
+=BiyS
+-----END PGP SIGNATURE-----

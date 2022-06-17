@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Fri, 17 Jun 2022 12:48:05 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 22.6.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.6.01) mx; urgency=medium
+ .
+   * Improve time adjustment: use -S step option for dtpdig and use as steplimit of 500ms for time slewing
+Checksums-Sha1:
+ 2972cddee22075af62333656443ee78a3825e831 10048 mx-datetime_22.6.01_i386.buildinfo
+ 2f0979f145c9bc2b195d682fbf4465226584e394 143272 mx-datetime_22.6.01_i386.deb
+Checksums-Sha256:
+ a2b7f9823c32b16eb1e74eeb77f0cc11b7edfd13318b47e1daa2e7ffadc17426 10048 mx-datetime_22.6.01_i386.buildinfo
+ 006215b0799a4c2dbbc2731a2a7b50af36194a9a2d5425ded089f0db76f9e5e0 143272 mx-datetime_22.6.01_i386.deb
+Files:
+ 61250ee8c47f4741f19ecbf7a7b153d2 10048 admin optional mx-datetime_22.6.01_i386.buildinfo
+ 370414c8ae8464c0a24cd793209c9455 143272 admin optional mx-datetime_22.6.01_i386.deb

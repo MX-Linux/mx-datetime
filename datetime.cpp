@@ -344,7 +344,7 @@ void MXDateTime::on_pushSyncNow_clicked()
     bool rexit = false;
 
     // Run ntpdate one server at a time and break at first succesful update
-    const QString cmd = QFile::exists("/usr/bin/ntpdig") ? "ntpdig -s " : "ntpdate -u ";
+    const QString cmd = QFile::exists(QStringLiteral("/usr/bin/ntpdig")) ? "ntpdig -Ss --steplimit=500 " : "ntpdate -u ";
     for (int ixi = 0; ixi < serverCount; ++ixi) {
         QTableWidgetItem *item = tableServers->item(ixi, 1);
         const QString &address = item->text().trimmed();

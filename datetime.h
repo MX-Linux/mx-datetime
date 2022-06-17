@@ -31,6 +31,7 @@
 // QTimeEdit subclassing just to stop the cursor and selection jumping every second.
 class MTimeEdit : public QTimeEdit
 {
+	Q_OBJECT
 public:
     MTimeEdit(QWidget *parent = nullptr);
     void updateDateTime(const QDateTime &dateTime);
@@ -45,7 +46,7 @@ class MXDateTime : public QDialog, private Ui::MXDateTime
 
 public:
     explicit MXDateTime(QWidget *parent = nullptr);
-    ~MXDateTime();
+    ~MXDateTime() = default;
 
 private slots:
     void on_tabsDateTime_currentChanged(int index);
@@ -84,8 +85,8 @@ private:
     QList<QByteArray> zones;
     QByteArray confBaseNTP;
     QByteArray confServers;
-    bool enabledNTP;
-    bool isHardwareUTC;
+    bool enabledNTP{};
+    bool isHardwareUTC{};
     bool updating = false;
 
     void startup();

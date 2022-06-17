@@ -24,7 +24,7 @@ ClockFace::ClockFace(QWidget *parent) : QWidget(parent)
 {
 }
 
-void ClockFace::setTime(const QTime &newtime)
+void ClockFace::setTime(QTime newtime)
 {
     time = newtime;
     update();

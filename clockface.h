@@ -28,7 +28,7 @@ class ClockFace : public QWidget
     Q_OBJECT
 public:
     ClockFace(QWidget *parent = nullptr);
-    void setTime(const QTime &newtime);
+    void setTime(QTime newtime);
 
 private:
     QTime time;

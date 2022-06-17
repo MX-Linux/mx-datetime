@@ -32,14 +32,14 @@ int main(int argc, char *argv[])
         qputenv("HOME", "/root");
     }
     QApplication a(argc, argv);
-    a.setWindowIcon(QIcon::fromTheme("mx-datetime"));
+    a.setWindowIcon(QIcon::fromTheme(QStringLiteral("mx-datetime")));
 
     QTranslator qtTran;
-    qtTran.load(QString("qt_") + QLocale::system().name());
+    qtTran.load(QStringLiteral("qt_") + QLocale::system().name());
     a.installTranslator(&qtTran);
 
     QTranslator appTran;
-    appTran.load(QString("mx-datetime_") + QLocale::system().name(), "/usr/share/mx-datetime/locale");
+    appTran.load(QStringLiteral("mx-datetime_") + QLocale::system().name(), QStringLiteral("/usr/share/mx-datetime/locale"));
     a.installTranslator(&appTran);
 
     MXDateTime w;

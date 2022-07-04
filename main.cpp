@@ -29,9 +29,10 @@ int main(int argc, char *argv[])
 {
     if (getuid() == 0) {
         qputenv("XDG_RUNTIME_DIR", "/run/user/0");
-        qputenv("HOME", "/root");
+        qunsetenv("SESSION_MANAGER");
     }
     QApplication a(argc, argv);
+    if (getuid() == 0) qputenv("HOME", "/root");
     a.setWindowIcon(QIcon::fromTheme(QStringLiteral("mx-datetime")));
 
     QTranslator qtTran;

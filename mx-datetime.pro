@@ -25,6 +25,7 @@ TRANSLATIONS += translations/mx-datetime_am.ts \
                 translations/mx-datetime_da.ts \
                 translations/mx-datetime_de.ts \
                 translations/mx-datetime_el.ts \
+                translations/mx-datetime_en.ts \
                 translations/mx-datetime_es.ts \
                 translations/mx-datetime_et.ts \
                 translations/mx-datetime_eu.ts \

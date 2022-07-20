@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="he_IL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="he_IL">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -37,7 +35,7 @@
     <message>
         <location filename="../datetime.ui" line="192"/>
         <source>H:mm:ss</source>
-        <translation type="unfinished"></translation>
+        <translation>H:mm:ss</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="278"/>
@@ -124,7 +122,7 @@
     <message>
         <location filename="../datetime.ui" line="390"/>
         <source>Universally Coordinated Time (or Greenwich Meridian Time)</source>
-        <translation type="unfinished"></translation>
+        <translation>זמן אוניברסלי מתואם (או שעון גריניץ׳)</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="393"/>
@@ -245,7 +243,7 @@
     <message>
         <location filename="../datetime.cpp" line="604"/>
         <source>Version: </source>
-        <translation>גרסה:</translation>
+        <translation>גירסה:</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="605"/>

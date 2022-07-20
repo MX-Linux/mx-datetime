@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pt_BR">
 <context>
     <name>MXDateTime</name>
     <message>
@@ -32,7 +30,7 @@
     <message>
         <location filename="../datetime.ui" line="124"/>
         <source>Date &amp;&amp; Time</source>
-        <translation>Data &amp;&amp; Hora</translation>
+        <translation>Data e Hora</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="192"/>

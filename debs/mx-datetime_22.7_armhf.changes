@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Sat, 23 Jul 2022 11:24:38 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: armhf
+Version: 22.7
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.7) mx; urgency=medium
+ .
+   * translation referesh
+Checksums-Sha1:
+ 3a1a540857876a9e23d32ae72d5abe023ed338b9 9857 mx-datetime_22.7_armhf.buildinfo
+ 55901fde5edb11348ee7c231acee71c69fb21698 139864 mx-datetime_22.7_armhf.deb
+Checksums-Sha256:
+ e202d16badc10d89fdd4ef7c3573dbfbd2cb8c94eb79a3712e6cc9534b69689e 9857 mx-datetime_22.7_armhf.buildinfo
+ c5595517ee5938f0794836352c07e594be852f3ca988eb93f74ba43f3d85bfeb 139864 mx-datetime_22.7_armhf.deb
+Files:
+ f63ef694985940191ff827a30bfa14c8 9857 admin optional mx-datetime_22.7_armhf.buildinfo
+ 08c874e962a4388b3d4529e2dce45cc4 139864 admin optional mx-datetime_22.7_armhf.deb

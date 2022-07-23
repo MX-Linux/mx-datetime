@@ -1,3 +1,9 @@
+mx-datetime (22.7) mx; urgency=medium
+
+  * translation referesh 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 23 Jul 2022 11:24:38 -0400
+
 mx-datetime (22.6.01) mx; urgency=medium
 
   * Improve time adjustment: use -S step option for dtpdig and use as steplimit of 500ms for time slewing

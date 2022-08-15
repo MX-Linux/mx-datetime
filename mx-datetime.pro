@@ -32,6 +32,7 @@ TRANSLATIONS += translations/mx-datetime_am.ts \
                 translations/mx-datetime_fa.ts \
                 translations/mx-datetime_fi.ts \
                 translations/mx-datetime_fr.ts \
+                translations/mx-datetime_fr_BE.ts \
                 translations/mx-datetime_he_IL.ts \
                 translations/mx-datetime_hi.ts \
                 translations/mx-datetime_hr.ts \

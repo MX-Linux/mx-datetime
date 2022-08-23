@@ -17,17 +17,19 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
-#include <unistd.h>
-#include <QDebug>
 #include <QDateTime>
-#include <QTimeZone>
+#include <QDebug>
 #include <QFileInfo>
+#include <QLineEdit>
+#include <QMessageBox>
 #include <QProcess>
 #include <QTextCharFormat>
-#include <QMessageBox>
-#include <QLineEdit>
+#include <QTimeZone>
+
+#include "about.h"
 #include "datetime.h"
 #include "version.h"
+#include <unistd.h>
 
 MXDateTime::MXDateTime(QWidget *parent) :
     QDialog(parent), updater(this)
@@ -599,63 +601,19 @@ void MXDateTime::on_pushClose_clicked()
 // MX Standard User Interface
 void MXDateTime::on_pushAbout_clicked()
 {
-    QMessageBox msgBox(QMessageBox::NoIcon,
-                       tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" +
-                       tr("MX Date & Time") + "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
+    displayAboutMsgBox(tr("About MX Date & Time"), "<p align=\"center\"><b><h2>" + tr("MX Date & Time") +
+                       "</h2></b></p><p align=\"center\">" + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
                        tr("GUI program for setting the time and date in MX Linux") +
                        "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
-                       tr("Copyright (c) MX Linux") + "<br /><br /></p>");
-    QPushButton *pushLicense = msgBox.addButton(tr("License"), QMessageBox::HelpRole);
-    QPushButton *pushChangelog = msgBox.addButton(tr("Changelog"), QMessageBox::HelpRole);
-    QPushButton *pushCancel = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
-    pushCancel->setIcon(QIcon::fromTheme(QStringLiteral("window-close")));
-
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == pushLicense) {
-        QString url = QStringLiteral("/usr/share/doc/mx-datetime/license.html");
-        QByteArray user;
-        execute(QStringLiteral("logname"), &user);
-        user = user.trimmed();
-        QString env_run = userRoot ? "runuser  " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
-        if (system("command -v mx-viewer") == 0) { // use mx-viewer if available
-            system("mx-viewer " + url.toUtf8() + " " + tr("License").toUtf8() + "&");
-        } else {
-            system(env_run.toUtf8() + "xdg-open " + url.toUtf8() + "\"&");
-        }
-    } else if (msgBox.clickedButton() == pushChangelog) {
-        QDialog *changelog = new QDialog(this);
-        changelog->resize(600, 500);
-
-        QTextEdit *text = new QTextEdit;
-        text->setReadOnly(true);
-        QByteArray rtcout;
-        execute("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()  + "/changelog.gz", &rtcout);
-        text->setText(rtcout);
-
-        QPushButton *pushClose = new QPushButton(tr("&Close"));
-        pushClose->setIcon(QIcon::fromTheme(QStringLiteral("window-close")));
-        connect(pushClose, &QPushButton::clicked, changelog, &QDialog::close);
-
-        QVBoxLayout *layout = new QVBoxLayout;
-        layout->addWidget(text);
-        layout->addWidget(pushClose);
-        changelog->setLayout(layout);
-        changelog->exec();
-    }
+                       tr("Copyright (c) MX Linux") + "<br /><br /></p>",
+                       QStringLiteral("/usr/share/doc/mx-datetime/license.html"),
+                       tr("%1 License").arg(this->windowTitle()));
 }
+
 void MXDateTime::on_pushHelp_clicked()
 {
     QString url = QStringLiteral("/usr/share/doc/mx-datetime/mx-datetime.html");
-    QByteArray user;
-    execute(QStringLiteral("logname"), &user);
-    user = user.trimmed();
-    if (system("command -v mx-viewer") == 0) {
-        system ("mx-viewer " + url.toUtf8() + " \"" + tr("MX Date & Time Help").toUtf8() + "\"&");
-    } else {
-        QString env_run = userRoot ? "runuser  " + user + " -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u " + user + ") " : QString();
-        system(env_run.toUtf8() + "xdg-open " + url.toUtf8() + "\"&");
-    }
+    displayDoc(url, tr("MX Date & Time Help").toUtf8());
 }
 
 // SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND

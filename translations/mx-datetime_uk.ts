@@ -177,7 +177,7 @@
     <message>
         <location filename="../datetime.ui" line="536"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Тип</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="541"/>

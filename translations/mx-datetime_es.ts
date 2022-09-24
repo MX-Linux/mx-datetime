@@ -142,7 +142,7 @@
     <message>
         <location filename="../datetime.ui" line="450"/>
         <source>Move the selected item up</source>
-        <translation>Mueve el elemento seleccionado hacia arriba</translation>
+        <translation>Mover el elemento seleccionado hacia arriba</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="461"/>

@@ -1,3 +1,9 @@
+mx-datetime (22.10.01) mx; urgency=medium
+
+  * update translations 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Wed, 26 Oct 2022 19:59:19 -0400
+
 mx-datetime (22.8.01) mx; urgency=medium
 
   * Fix: launching documents from Help (fixes a problem in Plasma) 

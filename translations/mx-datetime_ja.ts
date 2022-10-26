@@ -5,7 +5,7 @@
         <location filename="../datetime.ui" line="20"/>
         <location filename="../datetime.cpp" line="604"/>
         <source>MX Date &amp; Time</source>
-        <translation>MX Date &amp; Time</translation>
+        <translation>MX 日付と時刻の設定</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="26"/>
@@ -30,7 +30,7 @@
     <message>
         <location filename="../datetime.ui" line="124"/>
         <source>Date &amp;&amp; Time</source>
-        <translation>日付 &amp;&amp; 時間</translation>
+        <translation>日付 &amp;&amp; 時刻</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="192"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../datetime.ui" line="329"/>
         <source>Time transfer</source>
-        <translation>時間の転送</translation>
+        <translation>時刻の転送</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="335"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../datetime.ui" line="433"/>
         <source>Network Time</source>
-        <translation>Network Time</translation>
+        <translation>ネットワーク時刻</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="439"/>
@@ -208,12 +208,12 @@
     <message>
         <location filename="../datetime.cpp" line="309"/>
         <source>The %1 time was transferred to the %2.</source>
-        <translation>%1 の時間を %2 に転送しました。</translation>
+        <translation>%1 の時刻を %2 に転送しました。</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="312"/>
         <source>The %1 time could not be transferred to the %2.</source>
-        <translation>%1 の時間を %2 に転送できません。</translation>
+        <translation>%1 の時刻を %2 に転送できません。</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="352"/>
@@ -238,7 +238,7 @@
     <message>
         <location filename="../datetime.cpp" line="603"/>
         <source>About MX Date &amp; Time</source>
-        <translation>MX Date &amp; Time について</translation>
+        <translation>MX 日付と時刻の設定について</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="604"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="../datetime.cpp" line="605"/>
         <source>GUI program for setting the time and date in MX Linux</source>
-        <translation>MX Linux で日時を設定する GUI プログラム</translation>
+        <translation>MX Linux で時刻／日付設定を行う GUI プログラム</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="607"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../datetime.cpp" line="654"/>
         <source>MX Date &amp; Time Help</source>
-        <translation>MX Date &amp; Time のヘルプ</translation>
+        <translation>MX 日付と時刻の設定ヘルプ</translation>
     </message>
 </context>
 </TS>

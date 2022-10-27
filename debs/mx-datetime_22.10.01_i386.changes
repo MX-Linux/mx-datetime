@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Wed, 26 Oct 2022 19:59:19 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 22.10.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.10.01) mx; urgency=medium
+ .
+   * update translations
+Checksums-Sha1:
+ 1b40ccd2599fb54d62751a20d2cfadf52fd10d6f 10202 mx-datetime_22.10.01_i386.buildinfo
+ bb74685496b60787d71bfb63b943dcfb32ce0b9d 148152 mx-datetime_22.10.01_i386.deb
+Checksums-Sha256:
+ 42001db83daae220846d17b881cb10a24863c5a3f0034b25419b7297cf82568d 10202 mx-datetime_22.10.01_i386.buildinfo
+ 4b5f8cf22713e88ce95c33cf85c5ab009bc6241b65faded4a1632b4d28f1f6a0 148152 mx-datetime_22.10.01_i386.deb
+Files:
+ 888a0bb4341803f54dc9c7a3acad7c21 10202 admin optional mx-datetime_22.10.01_i386.buildinfo
+ 6013efb77beea3a30fff84e2d9376171 148152 admin optional mx-datetime_22.10.01_i386.deb

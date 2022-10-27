@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Wed, 26 Oct 2022 19:59:19 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: armhf
+Version: 22.10.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (22.10.01) mx; urgency=medium
+ .
+   * update translations
+Checksums-Sha1:
+ aabafc022f99a723bd265bf6a86f64ab7a798b76 9873 mx-datetime_22.10.01_armhf.buildinfo
+ 8ada41e8d03068d6498162676a2e88b211509d96 142364 mx-datetime_22.10.01_armhf.deb
+Checksums-Sha256:
+ 2c7e117af304a6f0ccd73be528faf2cd38daded9cb6b0c1baa4d187c8dbe7207 9873 mx-datetime_22.10.01_armhf.buildinfo
+ 577625b2ea96d5257ee85e796865d2f3c4c0b71c3c47b8b7e87e4a5201a6a1b1 142364 mx-datetime_22.10.01_armhf.deb
+Files:
+ 56784f27955c451e9b77d46a30690717 9873 admin optional mx-datetime_22.10.01_armhf.buildinfo
+ e92bf67cdcb44b6e71dc32c66c552a48 142364 admin optional mx-datetime_22.10.01_armhf.deb

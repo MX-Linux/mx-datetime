@@ -40,6 +40,9 @@ CMakeLists.txt.user*
 # Debian debhelper folder
 debian/.debhelper/
 
+# Transifex ignore
+.tx/
+
 # Exclude binary
 mx-datetime
 

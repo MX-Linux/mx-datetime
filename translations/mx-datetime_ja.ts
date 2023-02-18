@@ -82,7 +82,7 @@
     <message>
         <location filename="../datetime.ui" line="338"/>
         <source>Hardware Clock to System Clock</source>
-        <translation>ハードウェアクロックをシステムクロックに</translation>
+        <translation>システムクロックに合わせる</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="348"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../datetime.ui" line="351"/>
         <source>System Clock to Hardware Clock</source>
-        <translation>システムクロックをハードウェアクロックに</translation>
+        <translation>ハードウェアクロックに合わせる</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="361"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="../datetime.cpp" line="605"/>
         <source>GUI program for setting the time and date in MX Linux</source>
-        <translation>MX Linux で時刻／日付設定を行う GUI プログラム</translation>
+        <translation>MX Linux で時刻と日付の設定を行えるグラフィカルなプログラム</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="607"/>

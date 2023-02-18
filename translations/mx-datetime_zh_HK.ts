@@ -15,7 +15,7 @@
     <message>
         <location filename="../datetime.ui" line="40"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>說明</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="73"/>
@@ -25,7 +25,7 @@
     <message>
         <location filename="../datetime.ui" line="100"/>
         <source>About...</source>
-        <translation type="unfinished"/>
+        <translation>關於……</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="124"/>
@@ -243,7 +243,7 @@
     <message>
         <location filename="../datetime.cpp" line="604"/>
         <source>Version: </source>
-        <translation type="unfinished"/>
+        <translation>版本：</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="605"/>
@@ -253,28 +253,28 @@
     <message>
         <location filename="../datetime.cpp" line="607"/>
         <source>Copyright (c) MX Linux</source>
-        <translation type="unfinished"/>
+        <translation>MX Linux 版權所有 (c)</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="608"/>
         <location filename="../datetime.cpp" line="622"/>
         <source>License</source>
-        <translation type="unfinished"/>
+        <translation>授權條款</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="609"/>
         <source>Changelog</source>
-        <translation type="unfinished"/>
+        <translation>變更紀錄</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="610"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="636"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>關閉（&amp;C）</translation>
     </message>
     <message>
         <location filename="../datetime.cpp" line="654"/>

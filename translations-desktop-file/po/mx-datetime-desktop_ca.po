@@ -4,6 +4,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
+# Dolphin Oracle <dolphinoracle@gmail.com>, 2022
 # Eduard Selma <selma@tinet.cat>, 2022
 # 
 #, fuzzy
@@ -11,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-08 22:25-0500\n"
-"PO-Revision-Date: 2022-12-09 03:26+0000\n"
+"POT-Creation-Date: 2022-12-08 22:22-0500\n"
+"PO-Revision-Date: 2022-12-09 03:23+0000\n"
 "Last-Translator: Eduard Selma <selma@tinet.cat>, 2022\n"
 "Language-Team: Catalan (https://www.transifex.com/anticapitalista/teams/10162/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -30,3 +31,15 @@ msgstr "MX Data i Hora"
 #: desktop-in/mx-datetime.desktop.in:7
 msgid "Date & Time Settings"
 msgstr "Paràmetres de data i hora"
+
+#. The desktop entry name will be displayed within the menu.
+#. The desktop entry name will be displayed within the menu.
+#: desktop-in/mx-snapshot.desktop.in:6
+msgid "MX Snapshot"
+msgstr "MX Snapshot "
+
+#. # The desktop entry comment will be shown within the menu.
+#. # The desktop entry comment will be shown within the menu.
+#: desktop-in/mx-snapshot.desktop.in:9
+msgid "Create a live iso snapshot of your running system."
+msgstr "Crea una instantània ISO del sistema en execució"

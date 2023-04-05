@@ -1,3 +1,9 @@
+mx-datetime (23.4) mx; urgency=medium
+
+  * Adjust check for autosync ntp daemon -- fix for systemd
+
+ -- Adrian <adrian@mxlinux.org>  Tue, 04 Apr 2023 23:31:02 -0400
+
 mx-datetime (23.2) mx; urgency=medium
 
   * Oass DISPLAY variable in launcher script 

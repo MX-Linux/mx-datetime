@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Wallon Wallon, 2022
+# Wallon Wallon, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-08 22:25-0500\n"
-"PO-Revision-Date: 2022-12-09 03:26+0000\n"
-"Last-Translator: Wallon Wallon, 2022\n"
-"Language-Team: French (Belgium) (https://www.transifex.com/anticapitalista/teams/10162/fr_BE/)\n"
+"POT-Creation-Date: 2022-12-08 22:22-0500\n"
+"PO-Revision-Date: 2022-12-09 03:23+0000\n"
+"Last-Translator: Wallon Wallon, 2023\n"
+"Language-Team: French (Belgium) (https://app.transifex.com/anticapitalista/teams/10162/fr_BE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,4 +29,16 @@ msgstr "MX Date et Heure - MX Date & Time"
 #. # The desktop entry comment will be shown within the menu.
 #: desktop-in/mx-datetime.desktop.in:7
 msgid "Date & Time Settings"
-msgstr "Paramètres de la date et de l'heure"
+msgstr "Paramètres de la date et de l’heure"
+
+#. The desktop entry name will be displayed within the menu.
+#. The desktop entry name will be displayed within the menu.
+#: desktop-in/mx-snapshot.desktop.in:6
+msgid "MX Snapshot"
+msgstr "MX Instantané - MX Snapshot"
+
+#. # The desktop entry comment will be shown within the menu.
+#. # The desktop entry comment will be shown within the menu.
+#: desktop-in/mx-snapshot.desktop.in:9
+msgid "Create a live iso snapshot of your running system."
+msgstr "Créer une image .iso de votre système actuel."

@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Tue, 04 Apr 2023 23:31:02 -0400
+Source: mx-datetime
+Architecture: source
+Version: 23.4
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ mx-datetime (23.4) mx; urgency=medium
+ .
+   * Adjust check for autosync ntp daemon -- fix for systemd
+Checksums-Sha1:
+ 551f64075ee0dd6046583ba34f5a1f54e79e3855 1117 mx-datetime_23.4.dsc
+ 9f4983e7f000b986b01cf298ba978ddcddbccb4a 134484 mx-datetime_23.4.tar.xz
+ 3ecf1f8f0224fdd7d5b6ef963ff6cd4eb9f6a935 10731 mx-datetime_23.4_amd64.buildinfo
+Checksums-Sha256:
+ 484877b7725960a3fb51a795d7057d9b83ddbf1977885ef60d0d5b4ee6490cfb 1117 mx-datetime_23.4.dsc
+ 5ffa3440e0ab9f6ff767db58bb4fecee6cd312add468194aa4ae15ec746b25dc 134484 mx-datetime_23.4.tar.xz
+ 311fa9732799208a35f348d7ac1d54c05444e3cb8a5536c19fcb7187d06d0775 10731 mx-datetime_23.4_amd64.buildinfo
+Files:
+ 3fbeac60e1ca37cc8e0e5718c57a0da3 1117 admin optional mx-datetime_23.4.dsc
+ 31b243808982b7ab421cea0c9b1febf2 134484 admin optional mx-datetime_23.4.tar.xz
+ bd2c2b49bf6ea484f1904ef6efe48fac 10731 admin optional mx-datetime_23.4_amd64.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmQs7ZETHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumEHhB/9AvqTURePanlmlG3cd5UP7YXSQS/QL
+1gekKyLTckXjo4uvMn2RH1RI3IP8WMCsRcGHHHgrtZleVm7ds5HxuL6OrLiJehBy
+4kNqLGbQ5MuisjF9zfiwGngZu0gM7+0OWlxKBDlGhJINtDgSU9TWv4PdAr0XE1De
+ZOwkMFu8HdHA8dRuIiX1gsQdVJM30aTSMsGMFkMQk9RKTeXSWHKIxx2gCv+YbNuy
+sP9Q7/L5DBFL/OJZt22VPFD9FMPg+BPmV+lcEGEF8424vbhHaJFZcbvwHohCGaNx
+XcKLsmZ5GqtcxKAHqgMZ1YztCToHP7uSJ2wF0yV2S6DjotkZnnZqGtdH
+=lxjl
+-----END PGP SIGNATURE-----

@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Thu, 13 Apr 2023 23:26:45 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 23.4.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.4.01) mx; urgency=medium
+ .
+   * Update icon
+Checksums-Sha1:
+ dfc44becfae2a09ba586f475074ec1a056f34662 10080 mx-datetime_23.4.01_i386.buildinfo
+ 5c7f757d52801d69c544083aae92b4d8c15a1142 153336 mx-datetime_23.4.01_i386.deb
+Checksums-Sha256:
+ a0e9a0559e8008d5e4548813f5833c5627e03cacbe6ab46d805436d0a7c7eb68 10080 mx-datetime_23.4.01_i386.buildinfo
+ 5a9ce762a1e2d5c77ab78c901754a9d383f8c102b179ecf0279a0cea2bef17e8 153336 mx-datetime_23.4.01_i386.deb
+Files:
+ 6bbcd09180357615458efb75b94806e2 10080 admin optional mx-datetime_23.4.01_i386.buildinfo
+ 3847833201e332141935a9c63f6d1c23 153336 admin optional mx-datetime_23.4.01_i386.deb

@@ -96,7 +96,7 @@ void MXDateTime::startup()
             QString text(area);
             if (area == QLatin1String("Indian") || area == QLatin1String("Pacific")
                 || area == QLatin1String("Atlantic") || area == QLatin1String("Arctic")) text.append(" Ocean");
-            comboTimeArea->addItem(text, QVariant(area.toUtf8()));
+            comboTimeArea->addItem(text, area);
         }
     }
     comboTimeArea->model()->sort(0);
@@ -217,7 +217,7 @@ void MXDateTime::loadDateTime()
     // Time zone.
     comboTimeZone->blockSignals(true);
     const QByteArray &zone = QTimeZone::systemTimeZoneId();
-    int index = comboTimeArea->findData(QVariant(QString(zone).section('/', 0, 0).toUtf8()));
+    int index = comboTimeArea->findData(QString(zone).section('/', 0, 0));
     comboTimeArea->setCurrentIndex(index);
     qApp->processEvents();
     index = comboTimeZone->findData(QVariant(zone));

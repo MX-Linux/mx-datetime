@@ -50,8 +50,8 @@ MXDateTime::MXDateTime(QWidget *parent) :
         pushClose->hide();
         tabsDateTime->tabBar()->hide();
         tabsDateTime->setDocumentMode(true);
-        gridWindow->setMargin(0);
-        gridDateTime->setMargin(0);
+        gridWindow->setContentsMargins(0,0,0,0);
+        gridDateTime->setContentsMargins(0,0,0,0);
         gridDateTime->setSpacing(1);
     }
     // This runs the slow startup tasks after the GUI is displayed.

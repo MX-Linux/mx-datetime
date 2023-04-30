@@ -36,6 +36,14 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user*
+# CMake
+.lupdate/
+.qt/
+.rcc/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+mx-datetime_autogen/
 
 # Debian debhelper folder
 debian/.debhelper/

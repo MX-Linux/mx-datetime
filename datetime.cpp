@@ -60,6 +60,7 @@ MXDateTime::MXDateTime(QWidget *parent) :
 
 void MXDateTime::startup()
 {
+    timeEdit->setTimeSpec(Qt::LocalTime); // TODO: Implement time zone differences properly.
     timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
     if (userRoot) {
         // Make the NTP server table columns the right proportions.

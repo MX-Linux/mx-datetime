@@ -1,0 +1,31 @@
+Format: 1.8
+Date: Sun, 14 May 2023 22:11:21 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 23.5
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.5) mx; urgency=medium
+ .
+   * Temporary fix for time being incorrect on Qt6.
+   * Fixed duplicate time zones. Found while porting to Qt6.
+   * Eliminate Qt4 test. MX Linux has Qt6 now.
+   * Allow building with qmake6.
+   * Eliminate Qt APIs deprecated before 5.15
+   * Update icon
+   * Update translations
+Checksums-Sha1:
+ fa61c5c78c465e2279e5c2d5f979d249406d7060 9494 mx-datetime_23.5_i386.buildinfo
+ ae13c331d9b22cd06190843564d1bc4c817fd2ae 151944 mx-datetime_23.5_i386.deb
+Checksums-Sha256:
+ 03afe59e182f0b1b53112818ca5a3c4bcef15886e191c133f043b19ba9c120e6 9494 mx-datetime_23.5_i386.buildinfo
+ 80deaf3ab7edd1acd4b19fdf3ebfebe8ed1786e44efc607ca33383bd42545c88 151944 mx-datetime_23.5_i386.deb
+Files:
+ 1a836718a0e9141cd914fb85a49878a5 9494 admin optional mx-datetime_23.5_i386.buildinfo
+ d11cf8d8ec1784e35448107b6e1c49d3 151944 admin optional mx-datetime_23.5_i386.deb

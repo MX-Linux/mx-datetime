@@ -351,7 +351,6 @@ void MXDateTime::on_pushSyncNow_clicked()
     bool rexit = false;
 
     // Run ntpdate one server at a time and break at first succesful update
-    const bool ntpdig = QFile::exists(QStringLiteral("/usr/bin/ntpdig"));
     for (int ixi = 0; ixi < serverCount; ++ixi) {
         QTableWidgetItem *item = tableServers->item(ixi, 1);
         const QString &address = item->text().trimmed();
@@ -359,8 +358,7 @@ void MXDateTime::on_pushSyncNow_clicked()
             checked = true;
             QString btext = pushSyncNow->text();
             pushSyncNow->setText(tr("Updating..."));
-            if (!ntpdig) rexit = execute("ntpdate", {"-u", address});
-            else rexit = execute("ntpdig", {"-Ss", "--steplimit=500", address});
+            rexit = execute("ntpdig", {"-Ss", "--steplimit=500", address});
             pushSyncNow->setText(btext);
         }
         if (rexit) break;
@@ -497,7 +495,6 @@ bool MXDateTime::validateServerList()
 void MXDateTime::loadNetworkTime()
 {
     QFile file(QStringLiteral("/etc/ntpsec/ntp.conf"));
-    if (!file.exists()) file.setFileName(QStringLiteral("/etc/ntp.conf"));
 
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QByteArray conf;
@@ -547,11 +544,11 @@ void MXDateTime::saveNetworkTime()
                 shell("rc-update " + QString(ntp?"add":"del") + " ntpd");
             }
         } else if (ntp){
-            shell(QStringLiteral("update-rc.d ntp enable"));
-            shell(QStringLiteral("service ntp start"));
+            shell(QStringLiteral("update-rc.d ntpsec enable"));
+            shell(QStringLiteral("service ntpsec start"));
         } else {
-            shell(QStringLiteral("service ntp stop"));
-            shell(QStringLiteral("update-rc.d ntp disable"));
+            shell(QStringLiteral("service ntpsec stop"));
+            shell(QStringLiteral("update-rc.d ntpsec disable"));
         }
     }
     QByteArray confServersNew;

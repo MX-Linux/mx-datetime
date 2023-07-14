@@ -1,0 +1,27 @@
+Format: 1.8
+Date: Thu, 13 Jul 2023 21:08:55 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 23.7
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.7) mx; urgency=medium
+ .
+   * Use standard icons for list buttons.
+   * Fixed NTPsec service setup.
+   * Retire support for ntp.
+Checksums-Sha1:
+ 036574eaa578faefe92d1fc59d89badb46025bce 9494 mx-datetime_23.7_i386.buildinfo
+ ebad27a042cd8a208f60d3c3a80be729cc089f4c 153000 mx-datetime_23.7_i386.deb
+Checksums-Sha256:
+ 994d459f5674e09678ef1fdbcfb126acc49f261c814bb356af6f62b27eb36a3a 9494 mx-datetime_23.7_i386.buildinfo
+ 5616ec48fc25b624f721784ba4f55026635f2939468b5a3a2377bba959e03014 153000 mx-datetime_23.7_i386.deb
+Files:
+ 6288ed6a1c909c60bbd6763a25dbdb8f 9494 admin optional mx-datetime_23.7_i386.buildinfo
+ 802ef0e20f26edf296f9562767235ddd 153000 admin optional mx-datetime_23.7_i386.deb

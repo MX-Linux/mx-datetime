@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>MX Date &amp; Time</source>
         <translation>Data &amp; Hora do MX</translation>
     </message>
@@ -142,52 +142,52 @@
         <translation>Mover o item selecionado para baixo</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="450"/>
+        <location filename="../datetime.ui" line="449"/>
         <source>Move the selected item up</source>
         <translation>Mover o item selecionado para cima</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="461"/>
+        <location filename="../datetime.ui" line="459"/>
         <source>Remove the current item from the list</source>
         <translation>Remover da lista o item atual</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="472"/>
+        <location filename="../datetime.ui" line="470"/>
         <source>Add an item to the list</source>
         <translation>Adicionar um item à lista</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="498"/>
+        <location filename="../datetime.ui" line="496"/>
         <source>Automatically update the System Clock with NTP servers:</source>
         <translation>Atualização automática da Hora do Sistema através de servidores NTP:</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="505"/>
+        <location filename="../datetime.ui" line="503"/>
         <source>Immediately update the system clock with NTP servers.</source>
         <translation>Atualização imediata do Relógio do Sistema com os servidores NTP.</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="508"/>
+        <location filename="../datetime.ui" line="506"/>
         <source>Update Now</source>
         <translation>Atualizar Agora</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="520"/>
+        <location filename="../datetime.ui" line="518"/>
         <source>List of NTP servers to use.</source>
         <translation>Lista de servidores NTP a serem utilizados.</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="536"/>
+        <location filename="../datetime.ui" line="534"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="541"/>
+        <location filename="../datetime.ui" line="539"/>
         <source>Address</source>
         <translation>Endereço</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="546"/>
+        <location filename="../datetime.ui" line="544"/>
         <source>Options</source>
         <translation>Opções</translation>
     </message>
@@ -218,47 +218,47 @@
         <translation>Não foi possível transferir a hora do %1 para o %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="361"/>
+        <location filename="../datetime.cpp" line="360"/>
         <source>Updating...</source>
         <translation>Atualizando...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="375"/>
+        <location filename="../datetime.cpp" line="373"/>
         <source>The system clock was updated successfully.</source>
         <translation>O relógio do sistema foi atualizado com sucesso.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="377"/>
+        <location filename="../datetime.cpp" line="375"/>
         <source>The system clock could not be updated.</source>
         <translation>Não foi possível atualizar o relógio do sistema</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="379"/>
+        <location filename="../datetime.cpp" line="377"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation>Nenhum dos servidores NTP da lista está ativado no momento.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>About MX Date &amp; Time</source>
         <translation>Sobre o Data &amp; Hora do MX</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="616"/>
+        <location filename="../datetime.cpp" line="613"/>
         <source>Version: </source>
         <translation>Versão: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="617"/>
+        <location filename="../datetime.cpp" line="614"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Programa de interface gráfica GUI para definir a Data e a Hora no MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="619"/>
+        <location filename="../datetime.cpp" line="616"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Direitos de Autor (c) MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="621"/>
+        <location filename="../datetime.cpp" line="618"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,7 +279,7 @@
         <translation type="vanished">&amp;Fechar</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="627"/>
+        <location filename="../datetime.cpp" line="624"/>
         <source>MX Date &amp; Time Help</source>
         <translation>Ajuda do Data &amp; Hora do MX</translation>
     </message>

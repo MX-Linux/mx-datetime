@@ -5,9 +5,9 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>MX Date &amp; Time</source>
-        <translation>Ημερομηνία και ώρα του MX</translation>
+        <translation>MX Ημερομηνία και ώρα</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="26"/>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../datetime.ui" line="361"/>
         <source>Update the drift factor for the Hardware Clock when it is being set.</source>
-        <translation>Ενημέρωση του συντελεστή διόρθωσης όταν ρυθμίζεται το ρολόι υλικού.</translation>
+        <translation>Ενημέρωση με το συντελεστή διόρθωσης, όταν ρυθμίζεται το ρολόι υλικού.</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="364"/>
@@ -119,12 +119,12 @@
     <message>
         <location filename="../datetime.ui" line="383"/>
         <source>Local</source>
-        <translation>Τοπικός</translation>
+        <translation>Τοπική</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="390"/>
         <source>Universally Coordinated Time (or Greenwich Meridian Time)</source>
-        <translation>Παγκοσμίως ώρα συντονισμού (ή ώρα Greenwich)</translation>
+        <translation>Παγκόσμια ώρα συντονισμού (ή ώρα Greenwich)</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="393"/>
@@ -142,52 +142,52 @@
         <translation>Μετακίνηση του επιλεγμένου στοιχείου προς τα κάτω</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="450"/>
+        <location filename="../datetime.ui" line="449"/>
         <source>Move the selected item up</source>
         <translation>Μετακίνηση του επιλεγμένου στοιχείου προς τα επάνω</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="461"/>
+        <location filename="../datetime.ui" line="459"/>
         <source>Remove the current item from the list</source>
         <translation>Αφαίρεση του στοιχείου από τη λίστα</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="472"/>
+        <location filename="../datetime.ui" line="470"/>
         <source>Add an item to the list</source>
         <translation>Προσθήκη στοιχείου στη λίστα</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="498"/>
+        <location filename="../datetime.ui" line="496"/>
         <source>Automatically update the System Clock with NTP servers:</source>
         <translation>Αυτόματη ενημέρωση του ρολογιού συστήματος από τους διακομιστές NTP:</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="505"/>
+        <location filename="../datetime.ui" line="503"/>
         <source>Immediately update the system clock with NTP servers.</source>
         <translation>Άμεση ενημέρωση του ρολογιού συστήματος από τους διακομιστές NTP.</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="508"/>
+        <location filename="../datetime.ui" line="506"/>
         <source>Update Now</source>
         <translation>Ενημέρωση τώρα</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="520"/>
+        <location filename="../datetime.ui" line="518"/>
         <source>List of NTP servers to use.</source>
         <translation>Λίστα διακομιστών NTP.</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="536"/>
+        <location filename="../datetime.ui" line="534"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="541"/>
+        <location filename="../datetime.ui" line="539"/>
         <source>Address</source>
         <translation>Διεύθυνση</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="546"/>
+        <location filename="../datetime.ui" line="544"/>
         <source>Options</source>
         <translation>Επιλογές</translation>
     </message>
@@ -218,47 +218,47 @@
         <translation>Η ώρα %1 δεν μεταφέρθηκε στο %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="361"/>
+        <location filename="../datetime.cpp" line="360"/>
         <source>Updating...</source>
         <translation>Ενημέρωση...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="375"/>
+        <location filename="../datetime.cpp" line="373"/>
         <source>The system clock was updated successfully.</source>
         <translation>Το ρολόι συστήματος ενημερώθηκε με επιτυχία.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="377"/>
+        <location filename="../datetime.cpp" line="375"/>
         <source>The system clock could not be updated.</source>
         <translation>Το ρολόι συστήματος δεν ενημερώθηκε.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="379"/>
+        <location filename="../datetime.cpp" line="377"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation>Κανένας από τους διακομιστές NTP της λίστας δεν είναι ενεργοποιημένος.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>About MX Date &amp; Time</source>
-        <translation>Περί του MX Date &amp; Time</translation>
+        <translation>Περί του MX Ημερομηνία και ώρα</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="616"/>
+        <location filename="../datetime.cpp" line="613"/>
         <source>Version: </source>
         <translation>Έκδοση: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="617"/>
+        <location filename="../datetime.cpp" line="614"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Γραφικό πρόγραμμα για τον καθορισμό της ώρας και της ημερομηνίας στο MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="619"/>
+        <location filename="../datetime.cpp" line="616"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Πνευματικά δικαιώματα (c) MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="621"/>
+        <location filename="../datetime.cpp" line="618"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -272,16 +272,16 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Ακύρωση</translation>
+        <translation type="vanished">Άκυρο</translation>
     </message>
     <message>
         <source>&amp;Close</source>
         <translation type="vanished">&amp;Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="627"/>
+        <location filename="../datetime.cpp" line="624"/>
         <source>MX Date &amp; Time Help</source>
-        <translation>Βοήθεια για το MX Date &amp; Time</translation>
+        <translation>Βοήθεια για το MX Ημερομηνία και ώρα</translation>
     </message>
 </context>
 <context>

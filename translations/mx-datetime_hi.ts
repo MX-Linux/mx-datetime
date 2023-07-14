@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>MX Date &amp; Time</source>
         <translation>एमएक्स दिनांक व समय</translation>
     </message>
@@ -142,52 +142,52 @@
         <translation>चयनित वस्तु को नीचे लाएं</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="450"/>
+        <location filename="../datetime.ui" line="449"/>
         <source>Move the selected item up</source>
         <translation>चयनित वस्तु को ऊपर करें</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="461"/>
+        <location filename="../datetime.ui" line="459"/>
         <source>Remove the current item from the list</source>
         <translation>वर्तमान वस्तु को सूची से हटाएँ</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="472"/>
+        <location filename="../datetime.ui" line="470"/>
         <source>Add an item to the list</source>
         <translation>सूची में वस्तु जोड़ें</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="498"/>
+        <location filename="../datetime.ui" line="496"/>
         <source>Automatically update the System Clock with NTP servers:</source>
         <translation>सिस्टम घड़ी को एनटीपी सर्वर द्वारा स्वतः अपडेट करें :</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="505"/>
+        <location filename="../datetime.ui" line="503"/>
         <source>Immediately update the system clock with NTP servers.</source>
         <translation>सिस्टम घड़ी को एनटीपी सर्वर द्वारा तुरंत अपडेट करें।</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="508"/>
+        <location filename="../datetime.ui" line="506"/>
         <source>Update Now</source>
         <translation>अभी अपडेट करें</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="520"/>
+        <location filename="../datetime.ui" line="518"/>
         <source>List of NTP servers to use.</source>
         <translation>उपयोग हेतु एनटीपी सर्वर।</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="536"/>
+        <location filename="../datetime.ui" line="534"/>
         <source>Type</source>
         <translation>प्रकार</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="541"/>
+        <location filename="../datetime.ui" line="539"/>
         <source>Address</source>
         <translation>पता</translation>
     </message>
     <message>
-        <location filename="../datetime.ui" line="546"/>
+        <location filename="../datetime.ui" line="544"/>
         <source>Options</source>
         <translation>विकल्प</translation>
     </message>
@@ -218,47 +218,47 @@
         <translation>%1 समय का %2 में अंतरण विफल।</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="361"/>
+        <location filename="../datetime.cpp" line="360"/>
         <source>Updating...</source>
         <translation>अपडेट करना जारी...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="375"/>
+        <location filename="../datetime.cpp" line="373"/>
         <source>The system clock was updated successfully.</source>
         <translation>सिस्टम घड़ी अपडेट सफल।</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="377"/>
+        <location filename="../datetime.cpp" line="375"/>
         <source>The system clock could not be updated.</source>
         <translation>सिस्टम घड़ी अपडेट विफल।</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="379"/>
+        <location filename="../datetime.cpp" line="377"/>
         <source>None of the NTP servers on the list are currently enabled.</source>
         <translation>सूची में मौजूद कोई भी एनटीपी सर्वर सक्रिय नहीं है।</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="615"/>
+        <location filename="../datetime.cpp" line="612"/>
         <source>About MX Date &amp; Time</source>
         <translation>एमएक्स दिनांक व समय के बारे में</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="616"/>
+        <location filename="../datetime.cpp" line="613"/>
         <source>Version: </source>
         <translation>संस्करण :</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="617"/>
+        <location filename="../datetime.cpp" line="614"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>एमएक्स लिनक्स में दिनांक व समय सेट करने हेतु ग्राफ़िकल अंतरफलक प्रोग्राम</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="619"/>
+        <location filename="../datetime.cpp" line="616"/>
         <source>Copyright (c) MX Linux</source>
         <translation>कॉपीराइट (c) एमएक्स लिनक्स</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="621"/>
+        <location filename="../datetime.cpp" line="618"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,7 +279,7 @@
         <translation type="vanished">बंद करें (&amp;C)</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="627"/>
+        <location filename="../datetime.cpp" line="624"/>
         <source>MX Date &amp; Time Help</source>
         <translation>एमएक्स दिनांक व समय सहायता</translation>
     </message>

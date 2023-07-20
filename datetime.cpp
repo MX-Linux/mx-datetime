@@ -40,9 +40,12 @@ MXDateTime::MXDateTime(QWidget *parent) :
     QTextCharFormat tcfmt;
     tcfmt.setFontPointSize(calendar->font().pointSizeF() * 0.75);
     calendar->setHeaderTextFormat(tcfmt);
-    // Operate with reduced functionality if not running as root.
-    userRoot = (getuid() == 0);
-    if (!userRoot) {
+    if (getuid() == 0) {
+        userRoot = true;
+        connect(pushClose, &QPushButton::clicked, this, &MXDateTime::close);
+        connect(tabsDateTime, &QTabWidget::currentChanged, this, &MXDateTime::loadTab);
+    } else {
+        // Operate with reduced functionality if not running as root.
         pushAbout->hide();
         pushHelp->hide();
         labelLogo->hide();
@@ -63,7 +66,8 @@ void MXDateTime::startup()
     timeEdit->setTimeSpec(Qt::LocalTime); // TODO: Implement time zone differences properly.
     timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
     if (userRoot) {
-        connect(tableServers, &QTableWidget::itemChanged, this, &MXDateTime::serverRowChanged);
+        connect(pushReadHardware, &QPushButton::clicked, this, &MXDateTime::readHardwareClock);
+
         // Make the NTP server table columns the right proportions.
         int colSizes[3];
         addServerRow(true, QString(), QString(), QString());
@@ -73,6 +77,15 @@ void MXDateTime::startup()
         for (int ixi = 0; ixi < 3; ++ixi) tableServers->setColumnWidth(ixi, colSizes[ixi]);
         tableServers->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
         tableServers->removeRow(0);
+
+        // Server page slots
+        connect(pushServerMoveUp, &QPushButton::clicked, pushServerMoveUp, [this]() {
+            moveServerRow(-1);
+        });
+        connect(pushServerMoveDown, &QPushButton::clicked, pushServerMoveDown, [this]() {
+            moveServerRow(1);
+        });
+        connect(tableServers, &QTableWidget::itemChanged, this, &MXDateTime::serverRowChanged);
 
         // Used to decide the type of commands to run on this system.
         QByteArray testSystemD;
@@ -115,7 +128,7 @@ void MXDateTime::setClockLock(bool locked)
     if (clockLock != locked) {
         clockLock = locked;
         if (locked) qApp->setOverrideCursor(QCursor(Qt::BusyCursor));
-        else on_tabsDateTime_currentChanged(tabsDateTime->currentIndex());
+        else loadTab(tabsDateTime->currentIndex());
         tabsDateTime->blockSignals(locked);
         tabDateTime->setDisabled(locked);
         tabHardware->setDisabled(locked);
@@ -151,7 +164,7 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
 }
 
-void MXDateTime::on_tabsDateTime_currentChanged(int index)
+void MXDateTime::loadTab(int index)
 {
     const unsigned int loaded = 1 << index;
     if ((loadedTabs & loaded) == 0) {
@@ -159,7 +172,7 @@ void MXDateTime::on_tabsDateTime_currentChanged(int index)
         setClockLock(true);
         switch(index) {
         case 0: loadDateTime(); break; // Date & Time.
-        case 1: on_pushReadHardware_clicked(); break; // Hardware Clock.
+        case 1: readHardwareClock(); break; // Hardware Clock.
         case 2: loadNetworkTime(); break; // Network Time.
         }
         setClockLock(false);
@@ -274,7 +287,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
 
 // HARDWARE CLOCK
 
-void MXDateTime::on_pushReadHardware_clicked()
+void MXDateTime::readHardwareClock()
 {
     setClockLock(true);
     const QString btext = pushReadHardware->text();
@@ -404,14 +417,6 @@ void MXDateTime::on_pushServerRemove_clicked()
             tableServers->removeRow(row);
         }
     }
-}
-void MXDateTime::on_pushServerMoveUp_clicked()
-{
-    moveServerRow(-1);
-}
-void MXDateTime::on_pushServerMoveDown_clicked()
-{
-    moveServerRow(1);
 }
 
 QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)
@@ -657,10 +662,6 @@ void MXDateTime::on_pushApply_clicked()
     // Refresh the UI (especially the current tab) with newly set values.
     loadedTabs = 0;
     setClockLock(false);
-}
-void MXDateTime::on_pushClose_clicked()
-{
-    qApp->exit(0);
 }
 
 // Slots

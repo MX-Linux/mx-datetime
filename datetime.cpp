@@ -417,6 +417,7 @@ void MXDateTime::on_pushServerRemove_clicked()
             tableServers->removeRow(row);
         }
     }
+    changedServers = true;
 }
 
 QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)

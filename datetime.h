@@ -33,7 +33,7 @@ class MTimeEdit : public QTimeEdit
 {
 	Q_OBJECT
 public:
-    MTimeEdit(QWidget *parent = nullptr);
+    MTimeEdit(QWidget *parent = nullptr) : QTimeEdit(parent) {}
     void updateDateTime(const QDateTime &dateTime);
 };
 

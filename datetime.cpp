@@ -693,13 +693,6 @@ void MXDateTime::on_pushHelp_clicked()
 
 // SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND
 
-MTimeEdit::MTimeEdit(QWidget *parent) : QTimeEdit(parent)
-{
-    // Ensure the widget is not too wide.
-    QString fmt(displayFormat());
-    if (fmt.section(':', 0, 0).length() < 2) fmt.insert(0, QChar('X'));
-    setMaximumWidth(fontMetrics().boundingRect(fmt).width() + (width() - lineEdit()->width()));
-}
 void MTimeEdit::updateDateTime(const QDateTime &dateTime)
 {
     QLineEdit *ledit = lineEdit();

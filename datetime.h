@@ -92,7 +92,8 @@ private:
     void startup();
     void setClockLock(bool locked);
     bool shell(const QString &cmd, QByteArray *output = nullptr);
-    bool execute(const QString &program, const QStringList &arguments = QStringList(), QByteArray *output = nullptr);
+    bool execute(const QString &program, const QStringList &arguments = QStringList(),
+        QByteArray *output = nullptr, QByteArray *error = nullptr);
     void update();
     void loadDateTime();
     void saveDateTime(const QDateTime &driftStart);
@@ -103,6 +104,8 @@ private:
     bool validateServerList();
     void loadNetworkTime();
     void saveNetworkTime();
+    int loadSources(const QString &filename, bool commented);
+    int clearSources(const QString &filename, bool comment, bool backup = true);
 };
 
 #endif // DATETIME_H

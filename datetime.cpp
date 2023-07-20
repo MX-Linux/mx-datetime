@@ -129,7 +129,7 @@ bool MXDateTime::shell(const QString &cmd, QByteArray *output)
     qDebug() << "Shell:" << cmd;
     return execute("bash", {"-c", cmd}, output);
 }
-bool MXDateTime::execute(const QString &program, const QStringList &arguments, QByteArray *output)
+bool MXDateTime::execute(const QString &program, const QStringList &arguments, QByteArray *output, QByteArray *error)
 {
     qDebug() << "Exec:" << program << arguments;
     QProcess proc(this);
@@ -144,7 +144,8 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     if (output) *output = sout;
     else if (!sout.isEmpty()) qDebug() << "SOut:" << proc.readAllStandardOutput();
     const QByteArray &serr = proc.readAllStandardError();
-    if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
+    if (error) *error = serr;
+    else if (!serr.isEmpty()) qDebug() << "SErr:" << serr;
     qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
 }
@@ -345,37 +346,27 @@ void MXDateTime::on_pushSyncNow_clicked()
     if (!validateServerList()) return;
     setClockLock(true);
 
-    // Command preparation.
-    const int serverCount = tableServers->rowCount();
-    bool checked = false;
+    saveNetworkTime();
+    QByteArray output;
     bool rexit = false;
+    if (enabledNTP) rexit = execute("chronyc", {"burst 2/10"}, &output);
+    else rexit = execute("chronyd", {"-q"}, nullptr, &output);
 
-    // Run ntpdate one server at a time and break at first succesful update
-    for (int ixi = 0; ixi < serverCount; ++ixi) {
-        QTableWidgetItem *item = tableServers->item(ixi, 1);
-        const QString &address = item->text().trimmed();
-        if (item->checkState() == Qt::Checked) {
-            checked = true;
-            QString btext = pushSyncNow->text();
-            pushSyncNow->setText(tr("Updating..."));
-            rexit = execute("ntpdig", {"-Ss", "--steplimit=500", address});
-            pushSyncNow->setText(btext);
-        }
-        if (rexit) break;
-    }
-
-    // Finishing touches.
     setClockLock(false);
     dateDelta = 0;
     timeDelta = 0;
     updater.setInterval(0);
+
+    QMessageBox msgbox(this);
     if (rexit) {
-        QMessageBox::information(this, windowTitle(), tr("The system clock was updated successfully."));
-    } else if (checked) {
-        QMessageBox::warning(this, windowTitle(), tr("The system clock could not be updated."));
+        msgbox.setIcon(QMessageBox::Information);
+        msgbox.setText(tr("The system clock was updated successfully."));
     } else {
-        QMessageBox::critical(this, windowTitle(), tr("None of the NTP servers on the list are currently enabled."));
+        msgbox.setIcon(QMessageBox::Critical);
+        msgbox.setText(tr("The system clock could not be updated."));
     }
+    msgbox.setDetailedText(output.trimmed());
+    msgbox.exec();
 }
 void MXDateTime::on_tableServers_itemSelectionChanged()
 {
@@ -494,41 +485,14 @@ bool MXDateTime::validateServerList()
 
 void MXDateTime::loadNetworkTime()
 {
-    QFile file(QStringLiteral("/etc/ntpsec/ntp.conf"));
-
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        QByteArray conf;
-        while (tableServers->rowCount() > 0) tableServers->removeRow(0);
-        confServers.clear();
-        while (!file.atEnd()) {
-            const QByteArray &bline = file.readLine();
-            const QString line(bline.trimmed());
-            const QRegularExpression tregex(QStringLiteral("^#?(pool|server|peer)\\s"));
-            if (!line.contains(tregex)) conf.append(bline);
-            else {
-                QStringList args = line.split(QRegularExpression(QStringLiteral("\\s")), Qt::SkipEmptyParts);
-                QString curarg = args.at(0);
-                bool enabled = true;
-                if (curarg.startsWith('#')) {
-                    enabled = false;
-                    curarg = curarg.remove(0, 1);
-                }
-                QString options;
-                for (int ixi = 2; ixi < args.count(); ++ixi) {
-                    options.append(' ');
-                    options.append(args.at(ixi));
-                }
-                addServerRow(enabled, curarg, args.at(1), options.trimmed());
-                confServers.append('\n');
-                confServers.append(line.toUtf8());
-            }
-        }
-        confBaseNTP = conf.trimmed();
-        file.close();
-    }
-    if (sysInit != SystemD) enabledNTP = shell("ls /etc/rc*.d | grep ntp | grep '^S'");
-    else {
-        enabledNTP = shell("LANG=C systemctl status ntp* | grep Loaded"
+    while (tableServers->rowCount() > 0) tableServers->removeRow(0);
+    confServers.clear();
+    loadSources("/etc/chrony/chrony.conf", false);
+    loadSources("/etc/chrony/sources.d/mx-datetime.sources", true);
+    if (sysInit != SystemD) {
+        enabledNTP = shell("ls /etc/rc*.d | grep chrony | grep '^S'");
+    } else {
+        enabledNTP = shell("LANG=C systemctl status chrony | grep Loaded"
             "| grep service |cut -d';' -f2 |grep -q enabled");
     }
     checkAutoSync->setChecked(enabledNTP);
@@ -538,24 +502,26 @@ void MXDateTime::saveNetworkTime()
     const bool ntp = checkAutoSync->isChecked();
     if (ntp != enabledNTP) {
         if (sysInit == SystemD) {
-            execute("timedatectl", {"set-ntp", ntp?"1":"0"});
+            execute("systemctl", {ntp?"enable":"disable", "chrony"});
+            execute("systemctl", {ntp?"start":"stop", "chrony"});
         } else if (sysInit == OpenRC) {
-            if (QFile::exists(QStringLiteral("/etc/init.d/ntpd"))) {
-                shell("rc-update " + QString(ntp?"add":"del") + " ntpd");
+            if (QFile::exists(QStringLiteral("/etc/init.d/chronyd"))) {
+                shell("rc-update " + QString(ntp?"add":"del") + " chronyd");
             }
         } else if (ntp){
-            shell(QStringLiteral("update-rc.d ntpsec enable"));
-            shell(QStringLiteral("service ntpsec start"));
+            shell(QStringLiteral("update-rc.d chrony enable"));
+            shell(QStringLiteral("service chrony start"));
         } else {
-            shell(QStringLiteral("service ntpsec stop"));
-            shell(QStringLiteral("update-rc.d ntpsec disable"));
+            shell(QStringLiteral("service chrony stop"));
+            shell(QStringLiteral("update-rc.d chrony disable"));
         }
+        enabledNTP = ntp;
     }
+
     QByteArray confServersNew;
     for (int ixi = 0; ixi < tableServers->rowCount(); ++ixi) {
         QComboBox *comboType = qobject_cast<QComboBox *>(tableServers->cellWidget(ixi, 0));
         QTableWidgetItem *item = tableServers->item(ixi, 1);
-        confServersNew.append('\n');
         if (item->checkState() != Qt::Checked) confServersNew.append('#');
         confServersNew.append(comboType->currentData().toByteArray());
         confServersNew.append(' ');
@@ -565,18 +531,94 @@ void MXDateTime::saveNetworkTime()
             confServersNew.append(' ');
             confServersNew.append(options.toUtf8());
         }
+        confServersNew.append('\n');
     }
-    if (confServersNew != confServers) {
-        QFile file(QStringLiteral("/etc/ntpsec/ntp.conf"));
-        if (!file.exists()) file.setFileName(QStringLiteral("/etc/ntp.conf"));
-        file.copy(file.fileName() + ".bak");
-        if (file.open(QFile::WriteOnly | QFile::Text)){
-            file.write(confBaseNTP);
-            file.write("\n\n# Generated by MX Date & Time");
+
+    // Clear the sources from the main config, will be migrated to source file.
+    const int nsmain = clearSources("/etc/chrony/chrony.conf", true);
+    // Copy to MX Date & Time source file.
+    if (nsmain > 0 || confServersNew != confServers) {
+        QFile file("/etc/chrony/sources.d/mx-datetime.sources");
+        if (file.open(QFile::WriteOnly | QFile::Text)) {
+            file.write("# Generated by MX Date & Time - ");
+            file.write(QDateTime::currentDateTime().toString("yyyy-MM-dd H:mm:ss t").toUtf8());
+            file.write("\n");
             file.write(confServersNew);
             file.close();
         }
+        // If main config is changed, the whole daemon will be restarted anyway.
+        if (ntp && !nsmain) execute("chronyc", {"reload", "sources"});
     }
+    // Restart the whole daemon if main config was changed.
+    if (ntp && nsmain) {
+        if (sysInit == SystemD) execute("systemctl", {"restart", "chrony"});
+        else execute("service", {"chrony", "restart"});
+    }
+}
+
+int MXDateTime::loadSources(const QString &filename, bool commented)
+{
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly | QFile::Text)) return -1;
+    int nsources = 0;
+    while (!file.atEnd()) {
+        const QByteArray &bline = file.readLine();
+        const QString line(bline.simplified());
+        static const QRegularExpression tregex("^#?(pool|server|peer)\\s");
+        if (line.contains(tregex)) {
+            QStringList args = line.split(' ', Qt::SkipEmptyParts);
+            QString curarg = args.at(0);
+            bool enabled = true;
+            if (curarg.startsWith('#')) {
+                if (!commented) continue;
+                enabled = false;
+                curarg = curarg.remove(0, 1);
+            }
+            QString options;
+            for (int ixi = 2; ixi < args.count(); ++ixi) {
+                options.append(' ');
+                options.append(args.at(ixi));
+            }
+            addServerRow(enabled, curarg, args.at(1), options.trimmed());
+            confServers.append(line.toUtf8());
+            confServers.append('\n');
+            ++nsources;
+        }
+    }
+    return nsources;
+}
+
+// Remove all source NTP lines from a file. Make a backup before writing.
+// Return the number of sources removed on success, -1 on failure.
+int MXDateTime::clearSources(const QString &filename, bool comment, bool backup)
+{
+    QFile file(filename);
+    int nsources = 0;
+    QByteArray confdata;
+    // Read config and skip sources.
+    if (!file.open(QFile::ReadOnly | QFile::Text)) return -1;
+    while (!file.atEnd()) {
+        const QByteArray &bline = file.readLine();
+        QString line(bline.simplified());
+        // If not commenting, treat commented source as an uncommented source.
+        if (!comment && line.startsWith('#')) line.remove(0, 1);
+
+        static const QRegularExpression tregex("^(pool|server|peer)\\s");
+        if (!line.contains(tregex)) confdata.append(bline); // Not a source.
+        else {
+            if (comment) confdata.append('#' + bline);
+            ++nsources;
+        }
+    }
+    file.close();
+    // Write cleared config.
+    if (nsources > 0) {
+        if (backup && !file.copy(file.fileName() + ".bak")) return -1;
+        if (!file.open(QFile::WriteOnly | QFile::Text)) return -1;
+        file.write(confdata);
+        file.close();
+    }
+    return nsources;
 }
 
 // ACTION BUTTONS

@@ -365,7 +365,7 @@ void MXDateTime::on_pushSyncNow_clicked()
     bool rexit = false;
     if (enabledNTP) {
         // All commands can be passed via stdin, but chronyc may return 0 even if one command fails.
-        rexit = execute("chronyc", {"burst 2/10"}, &output);
+        rexit = execute("chronyc", {"burst 4/4"}, &output);
         if (rexit) rexit = execute("chronyc", {"waitsync 10"}, &output);
         if (rexit) rexit = execute("chronyc", {"makestep"}, &output);
     } else {

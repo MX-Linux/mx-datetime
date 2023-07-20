@@ -72,6 +72,7 @@ private slots:
 private:
     QTimer updater;
     bool clockLock = false;
+    bool changedServers = false;
     unsigned int loadedTabs = 0;
     int dateDelta = 0;
     qint64 timeDelta = 0;
@@ -83,8 +84,6 @@ private:
     } sysInit = SystemV;
     bool userRoot = false;
     QList<QByteArray> zones;
-    QByteArray confBaseNTP;
-    QByteArray confServers;
     bool enabledNTP{};
     bool isHardwareUTC{};
     bool updating = false;
@@ -106,6 +105,9 @@ private:
     void saveNetworkTime();
     int loadSources(const QString &filename, bool commented);
     int clearSources(const QString &filename, bool comment, bool backup = true);
+
+    // Slots
+    void serverRowChanged();
 };
 
 #endif // DATETIME_H

@@ -1,0 +1,50 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 20 Jul 2023 11:05:18 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 23.7.01mx23
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.7.01mx23) mx; urgency=medium
+ .
+   * Move from NTPsec to Chrony, fixes stability issues noticed with NTP sync and config.
+   * Add default time sources (mx-datetime.sources).
+   * Fixed: time edit box is not big enough to show the time.
+   * Font tweaks, rely on the system font size.
+   * Use monospace fonts for the calendar and time zone/area combo boxes.
+Checksums-Sha1:
+ f463d379637bb51c32ab1e01e6c55e9373bd19ac 1145 mx-datetime_23.7.01mx23.dsc
+ da8924a50506077be47aa7543b378c39850bae4d 138824 mx-datetime_23.7.01mx23.tar.xz
+ f6b768a4904521fe95494a389843254816d9cec6 10578 mx-datetime_23.7.01mx23_amd64.buildinfo
+ 842d1dd0ef0f1ea6bf9594b508f81b82478676c8 154128 mx-datetime_23.7.01mx23_amd64.deb
+Checksums-Sha256:
+ aed9e36f00e98d0783b7211f4a85cb7c0b5544db15d8d4267d071d4073e8d90b 1145 mx-datetime_23.7.01mx23.dsc
+ 53abbcb9b0dcfae99a60226a59ca583b42441e5d1cf3d2f6bee1f2d45885ac36 138824 mx-datetime_23.7.01mx23.tar.xz
+ 95a4b06a1cc5f6de20eeb905501e4f97e4df18ee2f8af6e0ecb71e6911a7592c 10578 mx-datetime_23.7.01mx23_amd64.buildinfo
+ 504ddcb8b107055e8f9332c06c8d76d5398c19b2f3cda111b50f30b549156d90 154128 mx-datetime_23.7.01mx23_amd64.deb
+Files:
+ c454132c03483edb9107713782aed290 1145 admin optional mx-datetime_23.7.01mx23.dsc
+ 660ac9e381742c435c0c0ab8e86ea28a 138824 admin optional mx-datetime_23.7.01mx23.tar.xz
+ bf502c1697e6da7a982e84fbb7d6db2c 10578 admin optional mx-datetime_23.7.01mx23_amd64.buildinfo
+ 3af2012840938383ed4990f4970729f3 154128 admin optional mx-datetime_23.7.01mx23_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmS5jEATHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumEVLCAC10CBpyWAgJhrTlbDZKWvEqdqXIwCE
+U+8OK3UqA/WRb1UrhpdgVZ4k6oHETFgjXx1BreE+Ks9O08Bx0e3/XV2CCS/bsa/k
+jZsM9de0wKBLSJ0njR1NWYphVnOY2F5MnT5Vjlh5ui2Y6V8r64JKEGwggo5SoGBf
+ftsJ9YJPnypAeHqcAYIQRZYQD3KUlFivWX7srC8XfV9ZSfBSl6pdnnF006PK5qyA
+zT/18norpRaY4lWjS245FO3uHNC72UZAHeq1H5UTRV9bHiCPHzJHiJ6v0HON12K9
+WZGl/9DiW8GL2V+ifxXgThDXSmyJCO94qhIqzdKO7AR1iwdy36pZa1h8
+=Nb8D
+-----END PGP SIGNATURE-----

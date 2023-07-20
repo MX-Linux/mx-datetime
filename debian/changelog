@@ -1,3 +1,13 @@
+mx-datetime (23.7.01mx23) mx; urgency=medium
+
+  * Move from NTPsec to Chrony, fixes stability issues noticed with NTP sync and config.
+  * Add default time sources (mx-datetime.sources).
+  * Fixed: time edit box is not big enough to show the time.
+  * Font tweaks, rely on the system font size.
+  * Use monospace fonts for the calendar and time zone/area combo boxes.
+
+ -- Adrian <adrian@mxlinux.org>  Thu, 20 Jul 2023 11:05:18 -0400
+
 mx-datetime (23.7) mx; urgency=medium
 
   * Use standard icons for list buttons.

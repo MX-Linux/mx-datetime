@@ -422,13 +422,6 @@ void MXDateTime::on_pushServerRemove_clicked()
 
 QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, const QString &address, const QString &options)
 {
-    if (!address.isEmpty()) {
-        // If the server address exists return that item.
-        for (int ixi = 0; ixi < tableServers->rowCount(); ++ixi) {
-            QTableWidgetItem *item = tableServers->item(ixi, 1);
-            if (item->text() == address) return item;
-        }
-    }
     QComboBox *itemComboType = new QComboBox(tableServers);
     QTableWidgetItem *item = new QTableWidgetItem(address);
     QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
@@ -509,7 +502,7 @@ void MXDateTime::loadNetworkTime()
     while (tableServers->rowCount() > 0) tableServers->removeRow(0);
     loadSources("/etc/chrony/sources.d/mx-datetime.sources", true);
     loadSources("/etc/chrony/chrony.conf", false);
-    // Heal any damage caused by stray change signals.
+    // Stray change signals may have caused changedServers to be set.
     QApplication::processEvents();
     changedServers = false;
 

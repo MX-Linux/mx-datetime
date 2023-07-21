@@ -100,8 +100,8 @@ private:
     bool validateServerList();
     void loadNetworkTime();
     void saveNetworkTime();
-    int loadSources(const QString &filename, bool commented);
-    int clearSources(const QString &filename, bool comment, bool backup = true);
+    void loadSources(const QString &filename);
+    bool clearSources(const QString &filename);
 
     // Slots
     void serverRowChanged();

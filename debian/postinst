@@ -3,9 +3,7 @@
 if [ "$1" = "configure" ]; then
     if [ -x "$(command -v ucf)" ]; then
         ucf --three-way /usr/share/mx-datetime/mx-datetime.sources /etc/chrony/sources.d/mx-datetime.sources
-        if [ -x "$(command -v ucfr)" ]; then
-            ucfr mx-datetime /etc/chrony/sources.d/mx-datetime.sources
-        fi
+        [ -x "$(command -v ucfr)" ] && ucfr mx-datetime /etc/chrony/sources.d/mx-datetime.sources
     fi
 fi
 

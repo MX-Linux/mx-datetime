@@ -501,9 +501,11 @@ void MXDateTime::loadNetworkTime()
 {
     while (tableServers->rowCount() > 0) tableServers->removeRow(0);
     loadSources("/etc/chrony/sources.d/mx-datetime.sources");
+    const bool move = loadSources("/etc/chrony/chrony.conf");
+
     // Stray change signals may have caused changedServers to be set.
     QApplication::processEvents();
-    changedServers = false;
+    changedServers = move;
 
     if (sysInit != SystemD) {
         enabledNTP = shell("ls /etc/rc*.d | grep chrony | grep '^S'");
@@ -512,14 +514,6 @@ void MXDateTime::loadNetworkTime()
             "| grep service |cut -d';' -f2 |grep -q enabled");
     }
     checkAutoSync->setChecked(enabledNTP);
-
-    // Remove sources from config file as it could clash with mx-datetime.sources entries.
-    if (clearSources("/etc/chrony/chrony.conf")) {
-        if (enabledNTP) {
-            if (sysInit == SystemD) execute("systemctl", {"restart", "chrony"});
-            else execute("service", {"chrony", "restart"});
-        }
-    }
 }
 void MXDateTime::saveNetworkTime()
 {
@@ -566,14 +560,22 @@ void MXDateTime::saveNetworkTime()
             }
             file.close();
         }
-        if (ntp) execute("chronyc", {"reload", "sources"});
+        if (ntp) {
+            if (!clearSources("/etc/chrony/chrony.conf")) {
+                execute("chronyc", {"reload", "sources"});
+            } else {
+                if (sysInit == SystemD) execute("systemctl", {"restart", "chrony"});
+                else execute("service", {"chrony", "restart"});
+            }
+        }
     }
 }
 
-void MXDateTime::loadSources(const QString &filename)
+bool MXDateTime::loadSources(const QString &filename)
 {
     QFile file(filename);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) return;
+    if (!file.open(QFile::ReadOnly | QFile::Text)) return false;
+    bool hassrc = false;
     while (!file.atEnd()) {
         const QByteArray &bline = file.readLine();
         const QString line(bline.simplified());
@@ -592,8 +594,10 @@ void MXDateTime::loadSources(const QString &filename)
                 options.append(args.at(ixi));
             }
             addServerRow(enabled, curarg, args.at(1), options.trimmed());
+            hassrc = true;
         }
     }
+    return hassrc;
 }
 
 // Remove all source NTP lines from a file. Make a backup before writing.
@@ -609,7 +613,7 @@ bool MXDateTime::clearSources(const QString &filename)
         const QByteArray &bline = file.readLine();
         static const QRegularExpression tregex("^\\s?(pool|server|peer)\\s");
         if (QString(bline).contains(tregex)) {
-            confdata.append('#');
+            confdata.append("##");
             changed = true;
         }
         confdata.append(bline);

@@ -100,7 +100,7 @@ private:
     bool validateServerList();
     void loadNetworkTime();
     void saveNetworkTime();
-    void loadSources(const QString &filename);
+    bool loadSources(const QString &filename);
     bool clearSources(const QString &filename);
 
     // Slots

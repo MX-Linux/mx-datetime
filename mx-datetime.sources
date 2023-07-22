@@ -1,5 +1,5 @@
 # MX Date & Time sources
 pool 0.debian.pool.ntp.org
 pool 1.debian.pool.ntp.org
-pool 2.debian.pool.ntp.org
+##pool 2.debian.pool.ntp.org - conflicts with debian default.
 pool 3.debian.pool.ntp.org

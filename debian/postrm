@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+if [ "$1" = "purge" ]; then
+    rm -f /etc/chrony/sources.d/mx-datetime.sources
+    if [ -x "$(command -v ucf)" ]; then
+        ucf --purge /etc/chrony/sources.d/mx-datetime.sources
+        [ -x "$(command -v ucfr)" ] && ucfr --purge mx-datetime /etc/chrony/sources.d/mx-datetime.sources
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

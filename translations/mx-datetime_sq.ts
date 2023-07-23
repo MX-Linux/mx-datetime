@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>MX Date &amp; Time</source>
         <translation>Datë &amp; Kohë MX</translation>
     </message>
@@ -218,7 +218,7 @@
         <translation>Koha %1 s’u shpërngul dot te %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="685"/>
+        <location filename="../datetime.cpp" line="672"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">Asnjë nga shërbyesit NTP te lista s’është aktualisht i aktivizuar.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>About MX Date &amp; Time</source>
         <translation>Mbi Datë &amp; Kohë MX</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="680"/>
+        <location filename="../datetime.cpp" line="667"/>
         <source>Version: </source>
         <translation>Version: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="681"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Program GUI për ujdisjen e kohës dhe datës në MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="683"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Të drejta kopjimi (c) MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;Mbylle</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="691"/>
+        <location filename="../datetime.cpp" line="678"/>
         <source>MX Date &amp; Time Help</source>
         <translation>Ndihmë për Datë &amp; Kohë MX</translation>
     </message>

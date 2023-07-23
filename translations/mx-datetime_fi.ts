@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>MX Date &amp; Time</source>
         <translation>MX päivämäärä &amp; kellonaika</translation>
     </message>
@@ -218,7 +218,7 @@
         <translation>%1 aikaa ei voitu siirtää %2 :een</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="685"/>
+        <location filename="../datetime.cpp" line="672"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">Yksikään luettelon NTP-palvelimista ei ole tällä hetkellä päälle kytkettynä.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>About MX Date &amp; Time</source>
         <translation>Tietoja MX:n päivämäärästä &amp; kellonajasta</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="680"/>
+        <location filename="../datetime.cpp" line="667"/>
         <source>Version: </source>
         <translation>Versio: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="681"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Graafinen ohjelma kellonajan ja päivämäärän asettamiseen MX Linux:issa.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="683"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Copyright (c) MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;Sulje</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="691"/>
+        <location filename="../datetime.cpp" line="678"/>
         <source>MX Date &amp; Time Help</source>
         <translation>MX:n päivämäärän &amp; kellonajan apuopas</translation>
     </message>

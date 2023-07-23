@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>MX Date &amp; Time</source>
         <translation>MX Data i godzina</translation>
     </message>
@@ -218,7 +218,7 @@
         <translation>Nie można przenieść czasu %1 do %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="685"/>
+        <location filename="../datetime.cpp" line="672"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">Żaden z serwerów NTP na liście nie jest obecnie dostępny.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="679"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>About MX Date &amp; Time</source>
         <translation>O programie MX Data i godzina</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="680"/>
+        <location filename="../datetime.cpp" line="667"/>
         <source>Version: </source>
         <translation>Wersja:</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="681"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Program GUI do ustawiania czasu i daty w MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="683"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Prawa autorskie © MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;Zamknij</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="691"/>
+        <location filename="../datetime.cpp" line="678"/>
         <source>MX Date &amp; Time Help</source>
         <translation>Pomoc MX Data i godzina</translation>
     </message>

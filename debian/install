@@ -3,7 +3,6 @@ images/mx-datetime.png          usr/share/pixmaps
 images/mx-datetime.svg          usr/share/icons/hicolor/scalable/apps
 mx-datetime                     usr/bin
 mx-datetime.desktop             usr/share/applications
-mx-datetime.sources             usr/share/mx-datetime
 scripts/mx-datetime-launcher    usr/bin
 scripts/org.mxlinux.pkexec.mx-datetime-launcher.policy	usr/share/polkit-1/actions
 translations/*.qm               usr/share/mx-datetime/locale

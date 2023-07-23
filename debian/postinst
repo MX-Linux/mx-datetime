@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+##remove old sources file if its the old packaged version.
+
+if [ -e /etc/chrony/sources.d/mx-datetime.sources ]; then
+	if [ -n "$(grep '# MX Date & Time sources' /etc/chrony/sources.d/mx-datetime.sources)" ]; then
+		rm /etc/chrony/sources.list.d/mx-datetime.sources
+	fi
+fi

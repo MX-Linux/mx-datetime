@@ -1,5 +1,0 @@
-# Installed with MX Date & Time
-pool 0.debian.pool.ntp.org iburst
-pool 1.debian.pool.ntp.org iburst
-##pool 2.debian.pool.ntp.org iburst
-pool 3.debian.pool.ntp.org iburst

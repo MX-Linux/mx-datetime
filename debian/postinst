@@ -6,6 +6,8 @@ set -e
 
 if [ -e /etc/chrony/sources.d/mx-datetime.sources ]; then
 	if [ -n "$(grep '# MX Date & Time sources' /etc/chrony/sources.d/mx-datetime.sources)" ]; then
+		rm -f /etc/chrony/sources.d/mx-datetime.sources
+	else
 		echo "pool 2.debian.pool.ntp.org" > /etc/chrony/sources.d/mx-datetime.sources
 	fi
 fi

@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Sat, 29 Jul 2023 14:22:45 -0400
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: i386
+Version: 23.7.03mx23
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.7.03mx23) mx; urgency=medium
+ .
+   * update postinst routine to correct bad sources in 23.07.01mx23 version
+Checksums-Sha1:
+ edabe425bcdc6a2faead6680f0d023dd85c42fab 9560 mx-datetime_23.7.03mx23_i386.buildinfo
+ 717d3dcb429b9a70e6c4c13b8746c4a45d174fcf 156200 mx-datetime_23.7.03mx23_i386.deb
+Checksums-Sha256:
+ feefc713ba7f348bc7e4a10d692ab02b762841fedd571d8c8d997b5f84fbe24e 9560 mx-datetime_23.7.03mx23_i386.buildinfo
+ 9e11f7f81fac16026f89b1246d24463e784abef3a1a7622aa6bf3f746cf5f2ca 156200 mx-datetime_23.7.03mx23_i386.deb
+Files:
+ aa4c6fe5fabe615f8d4a8fe1814fe364 9560 admin optional mx-datetime_23.7.03mx23_i386.buildinfo
+ b51dfaf28c0a52d65365ded333c60bd8 156200 admin optional mx-datetime_23.7.03mx23_i386.deb

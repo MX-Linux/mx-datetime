@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Sat, 29 Jul 2023 14:22:45 -0400
+Source: mx-datetime
+Architecture: source
+Version: 23.7.03mx23
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Changes:
+ mx-datetime (23.7.03mx23) mx; urgency=medium
+ .
+   * update postinst routine to correct bad sources in 23.07.01mx23 version
+Checksums-Sha1:
+ fa3b939f9dbca5c1ca9635be048783297080d555 583 mx-datetime_23.7.03mx23.dsc
+ b38cba1b3bcb60939a0a17305e5d9bbcf01a922b 592272 mx-datetime_23.7.03mx23.tar.xz
+ 48d5474ec500f10419246d4a8738594715674c51 9617 mx-datetime_23.7.03mx23_amd64.buildinfo
+Checksums-Sha256:
+ 4ad625d17db70dcded02b705ce99961d00285f9b4fe7e4f838d2bd27bb1c8953 583 mx-datetime_23.7.03mx23.dsc
+ fd3c078da228f2785f50bcd4e4f4cecbbb047de16328cba813d86d5d8edf69a1 592272 mx-datetime_23.7.03mx23.tar.xz
+ 1c6d8507bb9fe4b46559182014f3b1fd88a21de4cc3bc3a35395e0f6bd9104c9 9617 mx-datetime_23.7.03mx23_amd64.buildinfo
+Files:
+ bee094a0203d117428d4a47e7089f55d 583 admin optional mx-datetime_23.7.03mx23.dsc
+ dbe2a73e2fb300e91633b888736a7b8d 592272 admin optional mx-datetime_23.7.03mx23.tar.xz
+ 33e69c64b2ca8cf8f0f2778944e9d9c4 9617 admin optional mx-datetime_23.7.03mx23_amd64.buildinfo

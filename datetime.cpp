@@ -19,7 +19,6 @@
 
 #include <QDateTime>
 #include <QDebug>
-#include <QFileInfo>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QProcess>
@@ -88,12 +87,11 @@ void MXDateTime::startup()
         connect(tableServers, &QTableWidget::itemChanged, this, &MXDateTime::serverRowChanged);
 
         // Used to decide the type of commands to run on this system.
-        QByteArray testSystemD;
-        if (QFileInfo::exists(QStringLiteral("/run/openrc"))) sysInit = OpenRC;
-        else if (QFileInfo(QStringLiteral("/usr/bin/timedatectl")).isExecutable()
-                && execute("ps", {"-hp1"}, &testSystemD) && testSystemD.contains("systemd")) {
-            sysInit = SystemD;
-        } else sysInit = SystemV;
+        if (QFile::exists("/run/openrc")) sysInit = OpenRC;
+        else if (QFile::exists("/usr/bin/timedatectl")) {
+            QByteArray test;
+            if (execute("ps", {"-hp1"}, &test) && test.contains("systemd")) sysInit = SystemD;
+        }
         static const char *sysInitNames[] = {"SystemV", "OpenRC", "SystemD"};
         qDebug() << "Init system:" << sysInitNames[sysInit];
     }
@@ -213,7 +211,7 @@ void MXDateTime::on_timeEdit_dateTimeChanged(const QDateTime &dateTime)
     clock->setTime(dateTime.time());
     if (!updating) {
         timeDelta = QDateTime::currentDateTime().secsTo(dateTime) - zoneDelta;
-        if (abs(dateDelta*86400 + timeDelta) == 316800) setWindowTitle(QStringLiteral("88 MILES PER HOUR"));
+        if (abs(dateDelta*86400 + timeDelta) == 316800) setWindowTitle("88 MILES PER HOUR");
     }
 }
 
@@ -252,7 +250,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
         if (sysInit == SystemD) execute("timedatectl", {"set-timezone", newzone});
         else {
             execute("ln", {"-nfs", "/usr/share/zoneinfo/" + newzone, "/etc/localtime"});
-            QFile file(QStringLiteral("/etc/timezone"));
+            QFile file("/etc/timezone");
             if (file.open(QFile::WriteOnly | QFile::Text)) {
                 file.write(newzone.toUtf8());
                 file.close();
@@ -263,7 +261,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
 
     // Set the date and time if their controls have been altered.
     if (dateDelta || timeDelta) {
-        static const QString dtFormat(QStringLiteral("yyyy-MM-ddTHH:mm:ss.zzz"));
+        static const QString dtFormat("yyyy-MM-ddTHH:mm:ss.zzz");
         QDateTime newTime(calendar->selectedDate(),
                           timeEdit->time());
         updater.stop();
@@ -405,7 +403,7 @@ void MXDateTime::on_tableServers_itemSelectionChanged()
 }
 void MXDateTime::on_pushServerAdd_clicked()
 {
-    QTableWidgetItem *item = addServerRow(true, QStringLiteral("server"), QString(), QString());
+    QTableWidgetItem *item = addServerRow(true, "server", QString(), QString());
     tableServers->setCurrentItem(item);
     tableServers->editItem(item);
 }
@@ -426,9 +424,9 @@ QTableWidgetItem *MXDateTime::addServerRow(bool enabled, const QString &type, co
     QComboBox *itemComboType = new QComboBox(tableServers);
     QTableWidgetItem *item = new QTableWidgetItem(address);
     QTableWidgetItem *itemOptions = new QTableWidgetItem(options);
-    itemComboType->addItem(QStringLiteral("Pool"), QVariant("pool"));
-    itemComboType->addItem(QStringLiteral("Server"), QVariant("server"));
-    itemComboType->addItem(QStringLiteral("Peer"), QVariant("peer"));
+    itemComboType->addItem("Pool", QVariant("pool"));
+    itemComboType->addItem("Server", QVariant("server"));
+    itemComboType->addItem("Peer", QVariant("peer"));
     itemComboType->setCurrentIndex(itemComboType->findData(QVariant(type)));
     connect(itemComboType, &QComboBox::currentTextChanged, this, &MXDateTime::serverRowChanged);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsUserCheckable);
@@ -521,19 +519,18 @@ void MXDateTime::saveNetworkTime()
     // Enable/disable NTP
     const bool ntp = checkAutoSync->isChecked();
     if (ntp != enabledNTP) {
+        const QString enable_disable(ntp?"enable":"disable");
+        const QString start_stop(ntp?"start":"stop");
         if (sysInit == SystemD) {
-            execute("systemctl", {ntp?"enable":"disable", "chrony"});
-            execute("systemctl", {ntp?"start":"stop", "chrony"});
+            execute("systemctl", {enable_disable, "chrony"});
+            execute("systemctl", {start_stop, "chrony"});
         } else if (sysInit == OpenRC) {
-            if (QFile::exists(QStringLiteral("/etc/init.d/chronyd"))) {
-                shell("rc-update " + QString(ntp?"add":"del") + " chronyd");
+            if (QFile::exists("/etc/init.d/chronyd")) {
+                execute("rc-update", {ntp?"add":"del", "chronyd"});
             }
-        } else if (ntp){
-            shell(QStringLiteral("update-rc.d chrony enable"));
-            shell(QStringLiteral("service chrony start"));
         } else {
-            shell(QStringLiteral("service chrony stop"));
-            shell(QStringLiteral("update-rc.d chrony disable"));
+            execute("update-rc.d", {"chrony", enable_disable});
+            execute("service", {"chrony", start_stop});
         }
         enabledNTP = ntp;
     }
@@ -669,14 +666,12 @@ void MXDateTime::on_pushAbout_clicked()
                        tr("GUI program for setting the time and date in MX Linux") +
                        "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
                        tr("Copyright (c) MX Linux") + "<br /><br /></p>",
-                       QStringLiteral("/usr/share/doc/mx-datetime/license.html"),
+                       "/usr/share/doc/mx-datetime/license.html",
                        tr("%1 License").arg(this->windowTitle()));
 }
-
 void MXDateTime::on_pushHelp_clicked()
 {
-    QString url = QStringLiteral("/usr/share/doc/mx-datetime/mx-datetime.html");
-    displayDoc(url, tr("MX Date & Time Help").toUtf8());
+    displayDoc("/usr/share/doc/mx-datetime/mx-datetime.html", tr("MX Date & Time Help").toUtf8());
 }
 
 // SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND

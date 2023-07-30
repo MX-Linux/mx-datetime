@@ -344,13 +344,13 @@ void MXDateTime::saveHardwareClock()
     if (rtcUTC != isHardwareUTC) {
         if (sysInit == SystemD) {
             execute("timedatectl", {"set-local-rtc", rtcUTC?"0":"1"});
-        } else if (sysInit == OpenRC) {
-            if (QFile::exists("/etc/conf.d/hwclock")) {
+        } else {
+            if (sysInit == OpenRC && QFile::exists("/etc/conf.d/hwclock")) {
                 const char *sed = rtcUTC ? "s/clock=.*/clock=\\\"UTC\\\"/" : "s/clock=.*/clock=\\\"local\\\"/";
                 execute("sed", {"-i", sed, "/etc/conf.d/hwclock"});
             }
+            execute("hwclock", {"--systohc", rtcUTC?"--utc":"--localtime"});
         }
-        execute("hwclock", {"--systohc", rtcUTC?"--utc":"--localtime"});
     }
 }
 

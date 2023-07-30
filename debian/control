@@ -2,10 +2,10 @@ Source: mx-datetime
 Section: admin
 Priority: optional
 Maintainer: Adrian <adrian@mxlinux.org>
-Build-Depends: debhelper (>=10), 
+Build-Depends: debhelper-compat (=12),
 	qtbase5-dev, 
 	qttools5-dev-tools
-Standards-Version: 3.9.8
+Standards-Version: 4.4.0
 
 Package: mx-datetime
 Architecture: any

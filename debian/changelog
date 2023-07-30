@@ -1,4 +1,4 @@
-mx-datetime (23.7.03mx23) mx; urgency=medium
+mx-datetime (23.7.03mx23) mx; urgency=emergency
 
   * update postinst routine to correct bad sources in 23.07.01mx23 version
 

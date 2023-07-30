@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>MX Date &amp; Time</source>
         <translation>התאריך והשעה של MX</translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="265"/>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>Hardware Clock</source>
         <translation>שעון חומרה</translation>
     </message>
@@ -192,33 +192,33 @@
         <translation>אפשרויות</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="294"/>
+        <location filename="../datetime.cpp" line="292"/>
         <source>Reading...</source>
         <translation>מתבצעת קריאה…</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="308"/>
+        <location filename="../datetime.cpp" line="306"/>
         <source>Adjusting...</source>
         <translation>מתבצע כוונון…</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>System Clock</source>
         <translation>שעון מערכת</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="333"/>
+        <location filename="../datetime.cpp" line="331"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation>השעה %1 הועברה אל %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="336"/>
+        <location filename="../datetime.cpp" line="334"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation>לא ניתן להעביר את השעה %1 אל %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="672"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,12 +227,12 @@
         <translation type="vanished">מתבצע עדכון…</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="383"/>
+        <location filename="../datetime.cpp" line="382"/>
         <source>The system clock was updated successfully.</source>
         <translation>שעון המערכת עודכן בהצלחה.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="386"/>
+        <location filename="../datetime.cpp" line="385"/>
         <source>The system clock could not be updated.</source>
         <translation>שעון המערכת לא עודכן.</translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">אף אחד משרתי ה־NTP ברשימה מופעלים.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>About MX Date &amp; Time</source>
         <translation>על אודות התאריך והשעה של MX</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="667"/>
+        <location filename="../datetime.cpp" line="665"/>
         <source>Version: </source>
         <translation>גירסה:</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="668"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>תכנית חזותית להגדרת השעה והתאריך ב־MX Linux.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="670"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>Copyright (c) MX Linux</source>
         <translation>זכויות היוצרים (c) שמורות ל־MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;סגירה</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="678"/>
+        <location filename="../datetime.cpp" line="674"/>
         <source>MX Date &amp; Time Help</source>
         <translation>עזרה בנושא התאריך והשעה של MX</translation>
     </message>

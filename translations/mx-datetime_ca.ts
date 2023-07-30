@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>MX Date &amp; Time</source>
         <translation>MX Data i Hora</translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="265"/>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>Hardware Clock</source>
         <translation>Rellotge de maquinari</translation>
     </message>
@@ -192,33 +192,33 @@
         <translation>Opcions </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="294"/>
+        <location filename="../datetime.cpp" line="292"/>
         <source>Reading...</source>
         <translation>Llegint...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="308"/>
+        <location filename="../datetime.cpp" line="306"/>
         <source>Adjusting...</source>
         <translation>Ajustant...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>System Clock</source>
         <translation>Rellotge de Sistema</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="333"/>
+        <location filename="../datetime.cpp" line="331"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation>L&apos;hora %1 s&apos;ha transferit al %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="336"/>
+        <location filename="../datetime.cpp" line="334"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation>No es pot transferir l&apos;hora %1 al %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="672"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,12 +227,12 @@
         <translation type="vanished">Actualitzant...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="383"/>
+        <location filename="../datetime.cpp" line="382"/>
         <source>The system clock was updated successfully.</source>
         <translation>El rellotge del Sistema s&apos;ha actualitzat amb èxit.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="386"/>
+        <location filename="../datetime.cpp" line="385"/>
         <source>The system clock could not be updated.</source>
         <translation>No es pot actualitzar el rellotge del Sistema.</translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">Cap dels servidors de la llista està activat en aquest moment.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>About MX Date &amp; Time</source>
         <translation>Quant a MX Data i Hora</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="667"/>
+        <location filename="../datetime.cpp" line="665"/>
         <source>Version: </source>
         <translation>Versió: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="668"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>Programa amb IGU per ajustar la data i l&apos;hora a MX Linux</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="670"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Copyright (c) MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">Tan&amp;ca </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="678"/>
+        <location filename="../datetime.cpp" line="674"/>
         <source>MX Date &amp; Time Help</source>
         <translation>Ajuda de MX Data i Hora</translation>
     </message>

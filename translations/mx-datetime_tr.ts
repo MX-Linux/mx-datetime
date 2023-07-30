@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>MX Date &amp; Time</source>
         <translation>MX Tarih &amp; Saat</translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="265"/>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>Hardware Clock</source>
         <translation>Donanım Saati</translation>
     </message>
@@ -192,33 +192,33 @@
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="294"/>
+        <location filename="../datetime.cpp" line="292"/>
         <source>Reading...</source>
         <translation>Okunuyor...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="308"/>
+        <location filename="../datetime.cpp" line="306"/>
         <source>Adjusting...</source>
         <translation>Ayarlanıyor...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="320"/>
-        <location filename="../datetime.cpp" line="327"/>
+        <location filename="../datetime.cpp" line="318"/>
+        <location filename="../datetime.cpp" line="325"/>
         <source>System Clock</source>
         <translation>Sistem Saati</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="333"/>
+        <location filename="../datetime.cpp" line="331"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation>%1 zamanı %2’ye aktarıldı.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="336"/>
+        <location filename="../datetime.cpp" line="334"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation>%1 zamanı %2’ye aktarılamadı.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="672"/>
+        <location filename="../datetime.cpp" line="670"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,12 +227,12 @@
         <translation type="vanished">Güncelleniyor...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="383"/>
+        <location filename="../datetime.cpp" line="382"/>
         <source>The system clock was updated successfully.</source>
         <translation>Sistem saati başarıyla güncellendi.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="386"/>
+        <location filename="../datetime.cpp" line="385"/>
         <source>The system clock could not be updated.</source>
         <translation>Sistem saati güncellenemedi.</translation>
     </message>
@@ -241,28 +241,28 @@
         <translation type="vanished">Listedeki NTP sunucularının hiçbiri şu anda etkin değil.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>About MX Date &amp; Time</source>
         <translation>MX Tarih &amp; Saat Hakkında</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="667"/>
+        <location filename="../datetime.cpp" line="665"/>
         <source>Version: </source>
         <translation>Sürüm</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="668"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>MX Linux’ta tarih ve saati ayarlamak için grafik arayüzlü program</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="670"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="vanished">Ruhsat</translation>
+        <translation type="vanished">Lisans</translation>
     </message>
     <message>
         <source>Changelog</source>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;Kapat</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="678"/>
+        <location filename="../datetime.cpp" line="674"/>
         <source>MX Date &amp; Time Help</source>
         <translation>MX Tarih ve Zaman Yardımı</translation>
     </message>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../about.cpp" line="52"/>
         <source>License</source>
-        <translation type="unfinished">Ruhsat</translation>
+        <translation type="unfinished">Lisans</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="53"/>

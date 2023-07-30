@@ -1,3 +1,12 @@
+mx-datetime (23.7.04mx23) mx; urgency=medium
+
+  * Fixed: hardware clock time zone set twice on systemd.
+  * Code optimisation
+  * Packaging improvements
+  * Updated help. 
+
+ -- Adrian <adrian@mxlinux.org>  Sun, 30 Jul 2023 10:13:57 -0400
+
 mx-datetime (23.7.03mx23) mx; urgency=emergency
 
   * update postinst routine to correct bad sources in 23.07.01mx23 version

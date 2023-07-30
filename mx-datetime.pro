@@ -2,6 +2,8 @@ QT       += core gui widgets
 
 TARGET = mx-datetime
 TEMPLATE = app
+CONFIG += debug_and_release
+CONFIG(release, debug|release): DEFINES += NDEBUG
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_DISABLE_DEPRECATED_UP_TO=0x050F00
 

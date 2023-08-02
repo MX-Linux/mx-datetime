@@ -17,13 +17,13 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
+#include <unistd.h>
 #include <QApplication>
-#include <QIcon>
+#include <QLibraryInfo>
 #include <QMessageBox>
 #include <QTranslator>
 
 #include "datetime.h"
-#include <unistd.h>
 
 const extern QString starting_home = qEnvironmentVariable("HOME");
 
@@ -35,16 +35,22 @@ int main(int argc, char *argv[])
     }
     QApplication a(argc, argv);
     if (getuid() == 0) qputenv("HOME", "/root");
-    a.setWindowIcon(QIcon::fromTheme(QStringLiteral("mx-datetime")));
 
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    const QString &transpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
+    const QString &transpath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
     QTranslator qtTran;
-    if (qtTran.load(QStringLiteral("qt_") + QLocale::system().name())) {
+    if (qtTran.load(QLocale::system(), "qt", "_", transpath)) {
         a.installTranslator(&qtTran);
     }
-
+    QTranslator qtBaseTran;
+    if (qtBaseTran.load(QLocale::system(), "qtbase", "_", transpath)) {
+        a.installTranslator(&qtBaseTran);
+    }
     QTranslator appTran;
-    if (appTran.load(QStringLiteral("mx-datetime_") + QLocale::system().name(),
-        QStringLiteral("/usr/share/mx-datetime/locale"))) {
+    if (appTran.load(QLocale::system(), "mx-datetime", "_", "/usr/share/mx-datetime/locale")) {
         a.installTranslator(&appTran);
     }
 

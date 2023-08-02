@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <QApplication>
 #include <QLibraryInfo>
+#include <QIcon>
 #include <QMessageBox>
 #include <QTranslator>
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
     }
     QApplication a(argc, argv);
     if (getuid() == 0) qputenv("HOME", "/root");
+    a.setWindowIcon(QIcon::fromTheme(a.applicationName()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     const QString &transpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
         a.installTranslator(&qtBaseTran);
     }
     QTranslator appTran;
-    if (appTran.load(QLocale::system(), "mx-datetime", "_", "/usr/share/mx-datetime/locale")) {
+    if (appTran.load(QLocale::system(), a.applicationName(), "_", "/usr/share/mx-datetime/locale")) {
         a.installTranslator(&appTran);
     }
 

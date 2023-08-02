@@ -24,6 +24,7 @@
 #include <QProcess>
 #include <QTextCharFormat>
 #include <QTimeZone>
+#include <QFile>
 
 #include "about.h"
 #include "datetime.h"

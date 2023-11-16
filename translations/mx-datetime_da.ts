@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="664"/>
+        <location filename="../datetime.cpp" line="662"/>
         <source>MX Date &amp; Time</source>
         <translation>MX Dato og klokkeslæt</translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="265"/>
-        <location filename="../datetime.cpp" line="318"/>
-        <location filename="../datetime.cpp" line="325"/>
+        <location filename="../datetime.cpp" line="313"/>
+        <location filename="../datetime.cpp" line="320"/>
         <source>Hardware Clock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -192,33 +192,33 @@
         <translation>Valgmuligheder</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="292"/>
+        <location filename="../datetime.cpp" line="287"/>
         <source>Reading...</source>
         <translation>Læser...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="306"/>
+        <location filename="../datetime.cpp" line="301"/>
         <source>Adjusting...</source>
         <translation>Justerer...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="318"/>
-        <location filename="../datetime.cpp" line="325"/>
+        <location filename="../datetime.cpp" line="313"/>
+        <location filename="../datetime.cpp" line="320"/>
         <source>System Clock</source>
         <translation>Systemets ur</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="331"/>
+        <location filename="../datetime.cpp" line="326"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="334"/>
+        <location filename="../datetime.cpp" line="329"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="670"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,32 +227,32 @@
         <translation type="vanished">Opdaterer...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="382"/>
+        <location filename="../datetime.cpp" line="377"/>
         <source>The system clock was updated successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="385"/>
+        <location filename="../datetime.cpp" line="380"/>
         <source>The system clock could not be updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="664"/>
+        <location filename="../datetime.cpp" line="662"/>
         <source>About MX Date &amp; Time</source>
         <translation>Om MX Dato og klokkeslæt</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="665"/>
+        <location filename="../datetime.cpp" line="663"/>
         <source>Version: </source>
         <translation>Version: </translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="668"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Ophavsret (c) MX Linux</translation>
     </message>
@@ -273,7 +273,7 @@
         <translation type="vanished">&amp;Luk</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="674"/>
+        <location filename="../datetime.cpp" line="672"/>
         <source>MX Date &amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>

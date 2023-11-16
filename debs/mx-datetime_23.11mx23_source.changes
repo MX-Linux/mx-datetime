@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Wed, 15 Nov 2023 22:01:11 -0500
+Source: mx-datetime
+Architecture: source
+Version: 23.11mx23
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ mx-datetime (23.11mx23) mx; urgency=medium
+ .
+   * Run as normal user and elevate commands when needed
+Checksums-Sha1:
+ 547c83af2b390b39fa448c5a6e834a9c278f7c97 581 mx-datetime_23.11mx23.dsc
+ 5ca1f56704599487dd4a8a147fd2ed4fce2acebc 134416 mx-datetime_23.11mx23.tar.xz
+ 5e8d3ad41fb2b9cf46fd374703193129abb52446 9810 mx-datetime_23.11mx23_arm64.buildinfo
+Checksums-Sha256:
+ d6445e6526c4955b6795d9880d868d03ceb416bd1575ebf1a7028fd0e9ac2692 581 mx-datetime_23.11mx23.dsc
+ 9df164c06ca0fd1d3a5c4a1325b580118267d20ef1be8fe4cfbb7f3363660fa9 134416 mx-datetime_23.11mx23.tar.xz
+ 267080732b4b2cbc6c4d15d82cd037089cd8afd412926fc3625a3e172d0bba81 9810 mx-datetime_23.11mx23_arm64.buildinfo
+Files:
+ e5c6a35bc17f09e0065cbbc4bd02f49c 581 admin optional mx-datetime_23.11mx23.dsc
+ 521477d28b1cea87e7940adc37c0164e 134416 admin optional mx-datetime_23.11mx23.tar.xz
+ 9908bb6112073c0a9100bd4be9a00571 9810 admin optional mx-datetime_23.11mx23_arm64.buildinfo

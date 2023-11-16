@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="664"/>
+        <location filename="../datetime.cpp" line="662"/>
         <source>MX Date &amp; Time</source>
         <translation>MX Datum a čas</translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="265"/>
-        <location filename="../datetime.cpp" line="318"/>
-        <location filename="../datetime.cpp" line="325"/>
+        <location filename="../datetime.cpp" line="313"/>
+        <location filename="../datetime.cpp" line="320"/>
         <source>Hardware Clock</source>
         <translation>Hardwarové hodiny</translation>
     </message>
@@ -192,33 +192,33 @@
         <translation>Možnosti</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="292"/>
+        <location filename="../datetime.cpp" line="287"/>
         <source>Reading...</source>
         <translation>Načítání...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="306"/>
+        <location filename="../datetime.cpp" line="301"/>
         <source>Adjusting...</source>
         <translation>Nastavuje se...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="318"/>
-        <location filename="../datetime.cpp" line="325"/>
+        <location filename="../datetime.cpp" line="313"/>
+        <location filename="../datetime.cpp" line="320"/>
         <source>System Clock</source>
         <translation>Systémový čas</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="331"/>
+        <location filename="../datetime.cpp" line="326"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation> %1 čas byl přestaven na %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="334"/>
+        <location filename="../datetime.cpp" line="329"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation> %1 čas nemohl být přestaven na %2.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="670"/>
+        <location filename="../datetime.cpp" line="668"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,12 +227,12 @@
         <translation type="vanished">Aktualizace...</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="382"/>
+        <location filename="../datetime.cpp" line="377"/>
         <source>The system clock was updated successfully.</source>
         <translation>Systémový čas byl úspěšně aktualizován.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="385"/>
+        <location filename="../datetime.cpp" line="380"/>
         <source>The system clock could not be updated.</source>
         <translation>Systémový čas nebyl aktualizován.</translation>
     </message>
@@ -241,22 +241,22 @@
         <translation type="vanished">Žádný z NTP servrů v seznamu není aktuálně v provozu.</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="664"/>
+        <location filename="../datetime.cpp" line="662"/>
         <source>About MX Date &amp; Time</source>
         <translation>O programu MX Datum a čas</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="665"/>
+        <location filename="../datetime.cpp" line="663"/>
         <source>Version: </source>
         <translation>Verze:</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="666"/>
+        <location filename="../datetime.cpp" line="664"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation>GUI program pro nastavení času a datumu v MX Linuxu</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="668"/>
+        <location filename="../datetime.cpp" line="666"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Vlastnická práva (c) MX Linux</translation>
     </message>
@@ -277,7 +277,7 @@
         <translation type="vanished">&amp;Zavřít</translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="674"/>
+        <location filename="../datetime.cpp" line="672"/>
         <source>MX Date &amp; Time Help</source>
         <translation>Nápověda MX Datum a čas</translation>
     </message>

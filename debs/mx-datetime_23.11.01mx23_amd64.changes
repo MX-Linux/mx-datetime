@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Thu, 16 Nov 2023 13:11:15 -0500
+Source: mx-datetime
+Binary: mx-datetime
+Architecture: source amd64
+Version: 23.11.01mx23
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-datetime - MX Date & Time
+Changes:
+ mx-datetime (23.11.01mx23) mx; urgency=medium
+ .
+   * Fix: set correct ownership and rights .sources and .conf files
+Checksums-Sha1:
+ 876ece21130191cb5819d492012fe2ac455b01f0 1155 mx-datetime_23.11.01mx23.dsc
+ 9a67324c5e1491b29f73057eeb6692cb8e8b2a65 134384 mx-datetime_23.11.01mx23.tar.xz
+ 8821513b2b9b0d690e8d8a170965aaa360019002 10700 mx-datetime_23.11.01mx23_amd64.buildinfo
+ 75866456f85683a9156280378e6be0af32c4e47d 148060 mx-datetime_23.11.01mx23_amd64.deb
+Checksums-Sha256:
+ 642feddd4c94dee35d7c53c227a17683a8cef0e7bb676f446f4fc4cfefc90a42 1155 mx-datetime_23.11.01mx23.dsc
+ 567833c4dd0d3cd702b4de880777201b77502aaff37a3b20c8f3913f5e72c69e 134384 mx-datetime_23.11.01mx23.tar.xz
+ fa3114bc38c6429f0354cf1892281970be43bed4091bf84127335c84f8a72383 10700 mx-datetime_23.11.01mx23_amd64.buildinfo
+ 0f17bb6dac9e946a0815120cde3f29cee96db2ab0e1e8b409eb1705853231943 148060 mx-datetime_23.11.01mx23_amd64.deb
+Files:
+ 964f0f1ab5a5998c34546586e3238ced 1155 admin optional mx-datetime_23.11.01mx23.dsc
+ 1d589799403faf26b02c9fd80c727e2a 134384 admin optional mx-datetime_23.11.01mx23.tar.xz
+ 9e74644b10c0824a90d60b7b15ee5420 10700 admin optional mx-datetime_23.11.01mx23_amd64.buildinfo
+ dd76c5e725fa5be24e961774b5354c2f 148060 admin optional mx-datetime_23.11.01mx23_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmVWXf4THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumPNVB/0RPFXGSjzO4PjpaFRDtYmPeY324tj2
+5qmE5HwPS7J7yJrYG306oiXoB/YMp+x3nus9QWig1WbiQGrMhasLU9Y5hi+KeNMS
+DcquTOMTW7zar5bkY1HeGWIIW3bMBw12mkvpzEwx5zxLVsyeF6dU65byWzLxdjJ8
+zPMTJJNdSKJ9y1EZWzNMMgUYoNxisfgrWF4E7JOfn3KL9yVT7CtHeZHte3ueXAQW
+U1u2JR+/Dj0X7UW0vYUo/jVBUvo6DUAHwSZn6ca0zOgfF4viOdkLzKyZTzByiCZC
+xY411k8roE//f72rbZgFAwquzKeWNOQM+r8mBb4DQ1BiVtjvyGI38uIu
+=0VXe
+-----END PGP SIGNATURE-----

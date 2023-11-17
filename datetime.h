@@ -64,7 +64,7 @@ private slots:
     void on_pushServerRemove_clicked();
     void on_pushApply_clicked();
     void on_pushAbout_clicked();
-    void on_pushHelp_clicked();
+    static void on_pushHelp_clicked();
 
 private:
     QTimer updater;

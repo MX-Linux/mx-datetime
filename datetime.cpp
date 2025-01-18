@@ -231,12 +231,9 @@ void MXDateTime::on_comboTimeZone_currentIndexChanged(int index)
     // Check IANA-zone id differ
     const QByteArray &currentTimeZone = QTimeZone::systemTimeZoneId();
     const QByteArray &selectedTimeZone = QTimeZone(comboTimeZone->itemData(index).toByteArray()).id();
-    if (QLatin1String(currentTimeZone) != QLatin1String(selectedTimeZone)) {
-        zoneIdChanged = true;
-    } else {
-        zoneIdChanged = false;
-    }
-    update();                                                         // Make the change immediately visible
+    zoneIdChanged = (currentTimeZone != selectedTimeZone);
+    // Make the change immediately visible
+    update();
 }
 void MXDateTime::on_calendar_selectionChanged()
 {

@@ -10,6 +10,7 @@ Standards-Version: 4.4.0
 Package: mx-datetime
 Architecture: any
 Depends: chrony,
+	util-linux-extra,
 	xdg-utils | mx-viewer,
         ${misc:Depends},
         ${shlibs:Depends}

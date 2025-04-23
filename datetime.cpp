@@ -94,7 +94,7 @@ void MXDateTime::startup()
     zones = zoneOut.trimmed().split('\n');
     comboTimeZone->blockSignals(true); // Keep blocked until loadSysTimeConfig().
     comboTimeArea->clear();
-    for (const QByteArray &zone : qAsConst(zones)) {
+    for (const QByteArray &zone : std::as_const(zones)) {
         const QString &area = QString(zone).section('/', 0, 0);
         if (comboTimeArea->findData(area) < 0) {
             QString text(area);
@@ -227,7 +227,7 @@ void MXDateTime::timeAreaIndexChanged(int index)
     }
     const QByteArray &area = comboTimeArea->itemData(index).toByteArray();
     comboTimeZone->clear();
-    for (const QByteArray &zone : qAsConst(zones)) {
+    for (const QByteArray &zone : std::as_const(zones)) {
         if (zone.startsWith(area)) {
             QString text(QString(zone).section('/', 1));
             text.replace('_', ' ');

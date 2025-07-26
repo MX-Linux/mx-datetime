@@ -26,6 +26,8 @@
 
 #include "datetime.h"
 
+using namespace Qt::StringLiterals;
+
 const extern QString starting_home = qEnvironmentVariable("HOME");
 
 int main(int argc, char *argv[])
@@ -40,15 +42,15 @@ int main(int argc, char *argv[])
 
     const QString &transpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
     QTranslator qtTran;
-    if (qtTran.load(QLocale::system(), "qt", "_", transpath)) {
+    if (qtTran.load(QLocale::system(), u"qt"_s, u"_"_s, transpath)) {
         a.installTranslator(&qtTran);
     }
     QTranslator qtBaseTran;
-    if (qtBaseTran.load(QLocale::system(), "qtbase", "_", transpath)) {
+    if (qtBaseTran.load(QLocale::system(), u"qtbase"_s, u"_"_s, transpath)) {
         a.installTranslator(&qtBaseTran);
     }
     QTranslator appTran;
-    if (appTran.load(QLocale::system(), a.applicationName(), "_", "/usr/share/mx-datetime/locale")) {
+    if (appTran.load(QLocale::system(), a.applicationName(), u"_"_s, u"/usr/share/mx-datetime/locale"_s)) {
         a.installTranslator(&appTran);
     }
 

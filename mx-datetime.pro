@@ -1,4 +1,5 @@
 QT       += core gui widgets
+DEFINES += QT_DISABLE_DEPRECATED_UP_TO=0x060400
 
 TARGET = mx-datetime
 TEMPLATE = app
@@ -8,8 +9,6 @@ CONFIG(release, debug|release) {
     QMAKE_CXXFLAGS += -flto=auto
     QMAKE_LFLAGS += -flto=auto
 }
-DEFINES += QT_DEPRECATED_WARNINGS
-DEFINES += QT_DISABLE_DEPRECATED_UP_TO=0x050F00
 
 SOURCES += \
     main.cpp \ 

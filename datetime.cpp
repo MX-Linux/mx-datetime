@@ -32,6 +32,8 @@
 #include "version.h"
 #include <unistd.h>
 
+using namespace Qt::StringLiterals;
+
 MXDateTime::MXDateTime(QWidget *parent)
     : QDialog(parent),
       updater(this)
@@ -303,10 +305,11 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
     if (zoneDelta || zoneIdChanged) {
         const QString newzone(comboTimeZone->currentData().toByteArray());
         if (sysInit == SystemD) {
-            executeAsRoot("timedatectl", {"set-timezone", newzone, "&&", "echo", newzone, ">", "/etc/timezone"});
+            executeAsRoot(u"timedatectl"_s, {u"set-timezone"_s, newzone});
         } else {
-            executeAsRoot("ln", {"-nfs", "/usr/share/zoneinfo/" + newzone, "/etc/localtime",  "&&", "echo", newzone, ">", "/etc/timezone"});
+            executeAsRoot(u"ln"_s, {u"-nfs"_s, "/usr/share/zoneinfo/"_L1 + newzone, u"/etc/localtime"_s});
         }
+        shell("echo "_L1 + newzone + " >/etc/timezone"_L1, nullptr, true);
         zoneDelta = 0;
         zoneIdChanged = false;
     }
@@ -641,9 +644,9 @@ void MXDateTime::saveNetworkTime()
                 file.write("\n");
             }
             file.close();
-            executeAsRoot("mv", {file.fileName(), "/etc/chrony/sources.d/mx-datetime.sources"});
-            executeAsRoot("chown root: /etc/chrony/sources.d/mx-datetime.sources");
-            executeAsRoot("chmod +r /etc/chrony/sources.d/mx-datetime.sources");
+            executeAsRoot(u"mv"_s, {file.fileName(), u"/etc/chrony/sources.d/mx-datetime.sources"_s});
+            executeAsRoot(u"chown"_s, {u"root:"_s, u"/etc/chrony/sources.d/mx-datetime.sources"_s});
+            executeAsRoot(u"chmod"_s, {u"+r"_s, u"/etc/chrony/sources.d/mx-datetime.sources"_s});
         }
         if (ntp) {
             if (!clearSources("/etc/chrony/chrony.conf")) {
@@ -719,9 +722,9 @@ bool MXDateTime::clearSources(const QString &filename)
         }
         tmpFile.write(confdata);
         tmpFile.close();
-        executeAsRoot("mv", {tmpFile.fileName(), file.fileName()});
-        executeAsRoot("chown root: " + file.fileName());
-        executeAsRoot("chmod +r " + file.fileName());
+        executeAsRoot(u"mv"_s, {tmpFile.fileName(), file.fileName()});
+        executeAsRoot(u"chown"_s, {u"root:"_s, file.fileName()});
+        executeAsRoot(u"chmod"_s, {u"+r"_s, file.fileName()});
     }
     return changed;
 }

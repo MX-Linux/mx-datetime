@@ -38,11 +38,7 @@ int main(int argc, char *argv[])
     if (getuid() == 0) qputenv("HOME", "/root");
     a.setWindowIcon(QIcon::fromTheme(a.applicationName()));
 
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     const QString &transpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
-#else
-    const QString &transpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
-#endif
     QTranslator qtTran;
     if (qtTran.load(QLocale::system(), "qt", "_", transpath)) {
         a.installTranslator(&qtTran);

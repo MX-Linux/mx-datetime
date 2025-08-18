@@ -152,8 +152,11 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(mx-datetime PRIVATE NDEBUG)
     target_compile_options(mx-datetime PRIVATE -O3)
     
-    # Only add LTO for GCC, not Clang
-    if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT USE_CLANG)
+    # Add LTO - different flags for different compilers
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR USE_CLANG)
+        target_compile_options(mx-datetime PRIVATE -flto=thin)
+        target_link_options(mx-datetime PRIVATE -flto=thin)
+    else()
         target_compile_options(mx-datetime PRIVATE -flto=auto)
         target_link_options(mx-datetime PRIVATE -flto=auto)
     endif()

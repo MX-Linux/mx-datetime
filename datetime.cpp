@@ -52,7 +52,14 @@ MXDateTime::MXDateTime(QWidget *parent)
 
 void MXDateTime::startup()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    timeEdit->setTimeZone(QTimeZone::systemTimeZone());  // TODO: Implement time zone differences properly.
+#else
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     timeEdit->setTimeSpec(Qt::LocalTime);                // TODO: Implement time zone differences properly.
+    #pragma GCC diagnostic pop
+#endif
     timeEdit->setDateTime(QDateTime::currentDateTime()); // Curtail the sudden jump.
     connect(pushReadHardware, &QPushButton::clicked, this, &MXDateTime::readHardwareClock);
 
@@ -767,7 +774,7 @@ void MXDateTime::aboutClicked()
 {
     displayAboutMsgBox(tr("About MX Date & Time"),
         "<p align=\"center\"><b><h2>"_L1 + tr("MX Date & Time") + "</h2></b></p><p align=\"center\">"_L1
-        + tr("Version: ") + QStringLiteral(VERSION) + "</p><p align=\"center\"><h3>"_L1
+        + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>"_L1
         + tr("GUI program for setting the time and date in MX Linux")
         + "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br/>"_L1
             "</p><p align=\"center\">"_L1

@@ -8,7 +8,6 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-#include "version.h"
 #include <unistd.h>
 
 using namespace Qt::StringLiterals;

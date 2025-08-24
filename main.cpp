@@ -26,6 +26,11 @@
 
 #include "datetime.h"
 
+// VERSION should come from compiler flags.
+#ifndef VERSION
+    #define VERSION "?.?.?.?"
+#endif
+
 using namespace Qt::StringLiterals;
 
 const extern QString starting_home = qEnvironmentVariable("HOME");
@@ -44,6 +49,7 @@ int main(int argc, char *argv[])
     }
 
     QApplication a(argc, argv);
+    a.setApplicationVersion(VERSION);
     if (getuid() == 0) qputenv("HOME", "/root");
     a.setWindowIcon(QIcon::fromTheme(a.applicationName()));
 

@@ -1,0 +1,92 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Main Configuration",
+      "description": "Recommended build using Ninja Multi-Config generator",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "ide",
+      "displayName": "IDE Configuration",
+      "description": "For IDEs like Qt Creator to avoid conflicting builds when loading the project",
+      "inherits": "default"
+    },
+    {
+      "name": "clang",
+      "displayName": "Clang configuration",
+      "description": "Compile using clang",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "gcc",
+      "displayName": "GCC configuration",
+      "description": "Compile using gcc",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "clang",
+      "configurePreset": "clang"
+    },
+    {
+      "name": "gcc",
+      "configurePreset": "gcc"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "output": {"outputOnFailure": true},
+      "execution": {"noTestsAction": "error", "stopOnFailure": true}
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "default",
+      "steps": [
+        { "type": "configure", "name": "default" },
+        { "type": "build", "name": "default" }
+      ]
+    },
+    {
+      "name": "clang",
+      "steps": [
+        { "type": "configure", "name": "clang" },
+        { "type": "build", "name": "clang" }
+      ]
+    },
+    {
+      "name": "gcc",
+      "steps": [
+        { "type": "configure", "name": "gcc" },
+        { "type": "build", "name": "gcc" }
+      ]
+    }
+  ],
+  "vendor": {
+    "qt.io/QtCreator/1.0": {
+      "AskBeforePresetsReload": false,
+      "AskReConfigureInitialParams": false,
+      "AutorunCMake": true,
+      "PackageManagerAutoSetup": false,
+      "ShowAdvancedOptionsByDefault": true,
+      "ShowSourceSubFolders": false,
+      "UseJunctionsForSourceAndBuildDirectories": false
+    }
+  }
+}

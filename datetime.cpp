@@ -17,6 +17,7 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
+#include <QApplication>
 #include <QDateTime>
 #include <QDebug>
 #include <QFile>
@@ -29,7 +30,6 @@
 
 #include "about.h"
 #include "datetime.h"
-#include "version.h"
 #include <unistd.h>
 
 using namespace Qt::StringLiterals;
@@ -774,7 +774,7 @@ void MXDateTime::aboutClicked()
 {
     displayAboutMsgBox(tr("About MX Date & Time"),
         "<p align=\"center\"><b><h2>"_L1 + tr("MX Date & Time") + "</h2></b></p><p align=\"center\">"_L1
-        + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>"_L1
+        + tr("Version: ") + qApp->applicationVersion() + "</p><p align=\"center\"><h3>"_L1
         + tr("GUI program for setting the time and date in MX Linux")
         + "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br/>"_L1
             "</p><p align=\"center\">"_L1

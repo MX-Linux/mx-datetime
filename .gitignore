@@ -1,3 +1,4 @@
+mx-datetime
 # C++ objects and libs
 
 *.slo
@@ -9,8 +10,6 @@
 *.so
 *.dll
 *.dylib
-debug/
-release/
 
 # Qt-es
 
@@ -38,13 +37,16 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user*
+CMakeCache.txt
+CMakeFiles/*
+Makefile
+cmake_install.cmake
+compile_commands.json
+.qt/*
+build/*
 
 # Debian debhelper folder
 debian/.debhelper/
 
 # Transifex ignore
 .tx/
-
-# Exclude binary
-mx-datetime
-

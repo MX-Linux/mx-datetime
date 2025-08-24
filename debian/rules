@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 override_dh_auto_configure:
-	cmake --preset default
+	cmake --preset default -DCMAKE_INSTALL_PREFIX=/usr
 
 override_dh_auto_clean:
 	dh_auto_clean
@@ -14,7 +14,7 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	# Install is handled by debian/install file
-	dh_auto_install
+	cd build && DESTDIR=$(CURDIR)/debian/mx-datetime ninja install
 
 override_dh_shlibdeps:
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info

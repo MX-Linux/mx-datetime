@@ -4,5 +4,5 @@ images/mx-datetime.svg		usr/share/icons/hicolor/scalable/apps
 mx-datetime.desktop		usr/share/applications
 scripts/*.policy		usr/share/polkit-1/actions
 scripts/helper			usr/lib/mx-datetime
-obj-*/*.qm 			usr/share/mx-datetime/locale
-obj-*/mx-datetime 		usr/bin
+build/*.qm 			usr/share/mx-datetime/locale
+build/Release/mx-datetime 	usr/bin

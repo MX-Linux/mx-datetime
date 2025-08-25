@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     }
 
     QApplication a(argc, argv);
-    a.setApplicationVersion(VERSION);
+    a.setApplicationVersion(QStringLiteral(VERSION));
     if (getuid() == 0) qputenv("HOME", "/root");
     a.setWindowIcon(QIcon::fromTheme(a.applicationName()));
 

@@ -51,41 +51,6 @@ qt_add_executable(mx-datetime
 #	TODO: add files that are C++20 modules.
 #)
 
-qt_add_translations(mx-datetime TS_FILES
-	"translations/mx-datetime_ca.ts"
-	"translations/mx-datetime_cs.ts"
-	"translations/mx-datetime_da.ts"
-	"translations/mx-datetime_de.ts"
-	"translations/mx-datetime_el.ts"
-	"translations/mx-datetime_en.ts"
-	"translations/mx-datetime_es.ts"
-	"translations/mx-datetime_es_ES.ts"
-	"translations/mx-datetime_fi.ts"
-	"translations/mx-datetime_fr.ts"
-	"translations/mx-datetime_fr_BE.ts"
-	"translations/mx-datetime_gl_ES.ts"
-	"translations/mx-datetime_he_IL.ts"
-	"translations/mx-datetime_hi.ts"
-	"translations/mx-datetime_hr.ts"
-	"translations/mx-datetime_hu.ts"
-	"translations/mx-datetime_it.ts"
-	"translations/mx-datetime_ja.ts"
-	"translations/mx-datetime_lt.ts"
-	"translations/mx-datetime_nb.ts"
-	"translations/mx-datetime_nl.ts"
-	"translations/mx-datetime_nl_BE.ts"
-	"translations/mx-datetime_pl.ts"
-	"translations/mx-datetime_pt.ts"
-	"translations/mx-datetime_pt_BR.ts"
-	"translations/mx-datetime_ru.ts"
-	"translations/mx-datetime_ru_RU.ts"
-	"translations/mx-datetime_sl.ts"
-	"translations/mx-datetime_sq.ts"
-	"translations/mx-datetime_sv.ts"
-	"translations/mx-datetime_tr.ts"
-	LRELEASE_OPTIONS -compress -nounfinished -removeidentical -silent
-)
-
 target_link_libraries(mx-datetime PRIVATE
 	Qt::Core
 	Qt::Gui
@@ -94,6 +59,7 @@ target_link_libraries(mx-datetime PRIVATE
 
 build_compilation_setup(mx-datetime)
 build_version_definition(mx-datetime VERSION)
+build_translation_files(mx-datetime translations)
 
 target_compile_definitions(mx-datetime PRIVATE
 	QT_DISABLE_DEPRECATED_UP_TO=0x060400

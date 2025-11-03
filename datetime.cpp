@@ -85,10 +85,13 @@ void MXDateTime::startup()
     // Used to decide the type of commands to run on this system.
     if (QFile::exists(u"/run/openrc"_s)) {
         sysInit = OpenRC;
-    } else if (QFile::exists(u"/usr/bin/timedatectl"_s)) {
-        QByteArray test;
-        if (execute(u"ps"_s, {u"-hp1"_s}, &test) && test.contains("systemd")) {
-            sysInit = SystemD;
+    } else {
+        QFile proc1comm(u"/proc/1/comm"_s);
+        if (proc1comm.open(QIODevice::ReadOnly)) {
+            if (proc1comm.readAll().contains("systemd")) {
+                sysInit = SystemD;
+            }
+            proc1comm.close();
         }
     }
     static const char *sysInitNames[] = {"SystemV", "OpenRC", "SystemD"};

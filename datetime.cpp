@@ -359,8 +359,22 @@ void MXDateTime::readHardwareClock()
     const QString btext = pushReadHardware->text();
     pushReadHardware->setText(tr("Reading..."));
     QByteArray rtcout;
-    executeAsRoot(u"hwclock"_s, {u"--verbose"_s}, &rtcout);
-    isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
+
+    // For systemd, use timedatectl to check RTC setting consistently
+    if (sysInit == SystemD) {
+        QByteArray timedatectl_out;
+        execute(u"timedatectl"_s, {u"show"_s, u"--property=LocalRTC"_s}, &timedatectl_out);
+        // LocalRTC=no means UTC, LocalRTC=yes means local time
+        isHardwareUTC = timedatectl_out.contains("LocalRTC=no");
+
+        // Still show hwclock output for user reference
+        executeAsRoot(u"hwclock"_s, {u"--verbose"_s}, &rtcout);
+    } else {
+        // For non-systemd systems, use hwclock output
+        executeAsRoot(u"hwclock"_s, {u"--verbose"_s}, &rtcout);
+        isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
+    }
+
     if (isHardwareUTC) {
         radioHardwareUTC->setChecked(true);
     } else {

@@ -84,6 +84,9 @@ private:
     bool validateServerList();
     void loadNetworkTime();
     void saveNetworkTime();
+    QString systemdChronyUnit();
+    QString chronyConfigFile();
+    QString chronySourcesFile();
     bool loadSources(const QString &filename);
     bool clearSources(const QString &filename);
 

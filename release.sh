@@ -297,10 +297,32 @@ main() {
         print_error "Usage: $0 <version> [--update|--force]"
         echo "Example: $0 1.0.0 or $0 v1.0.0"
         echo "         $0 26.01 --update"
+        echo "         $0 --update  (uses latest git tag as version)"
         exit 1
     fi
 
-    version=$1
+    # Check if first arg is a flag (no version provided)
+    if [[ "$1" == --* ]]; then
+        version=$(git describe --tags --abbrev=0 2>/dev/null)
+        if [ -z "$version" ]; then
+            print_error "No git tags found; cannot determine version"
+            exit 1
+        fi
+        print_step "Using version from latest git tag: $version"
+        case "$1" in
+            --update|--force)
+                mode="update"
+                FORCE_UPDATE=1
+                ;;
+            *)
+                print_error "Unknown option: $1"
+                exit 1
+                ;;
+        esac
+    else
+        version=$1
+    fi
+
     if [ $# -gt 1 ]; then
         case "$2" in
             --update|--force)

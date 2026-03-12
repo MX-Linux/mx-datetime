@@ -36,6 +36,38 @@
 
 using namespace Qt::StringLiterals;
 
+namespace
+{
+const QString HelperPath = u"/usr/lib/mx-datetime/helper"_s;
+
+QString elevationProgram()
+{
+    if (QFile::exists(u"/usr/bin/pkexec"_s)) {
+        return u"/usr/bin/pkexec"_s;
+    }
+    if (QFile::exists(u"/usr/bin/gksu"_s)) {
+        return u"/usr/bin/gksu"_s;
+    }
+    return {};
+}
+
+bool hasEnabledSystemVChronyService()
+{
+    const QDir etcDir(u"/etc"_s);
+    const QStringList rcDirs = etcDir.entryList({u"rc*.d"_s}, QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const QString &rcDirName : rcDirs) {
+        const QDir rcDir(etcDir.filePath(rcDirName));
+        const QStringList entries = rcDir.entryList({u"S*"_s}, QDir::Files | QDir::System | QDir::Hidden);
+        for (const QString &entry : entries) {
+            if (entry.contains(u"chrony"_s)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+} // namespace
+
 MXDateTime::MXDateTime(QWidget *parent)
     : QDialog(parent),
       updater(this)
@@ -150,24 +182,13 @@ void MXDateTime::setClockLock(bool locked)
         }
     }
 }
-bool MXDateTime::shell(const QString &cmd, QByteArray *output, bool elevate)
-{
-    qDebug() << "Shell:" << cmd;
-    return execute(u"bash"_s, {u"-c"_s, cmd}, output, nullptr, elevate);
-}
-bool MXDateTime::execute(const QString &program, const QStringList &arguments, QByteArray *output, QByteArray *error,
-                         bool elevate)
+bool MXDateTime::execute(const QString &program, const QStringList &arguments, QByteArray *output, QByteArray *error)
 {
     qDebug() << "Exec:" << program << arguments;
     QProcess proc(this);
     QEventLoop eloop;
     connect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &eloop, &QEventLoop::quit);
-    if (elevate && getuid() != 0) {
-        QString runAsRoot = QFile::exists(u"/usr/bin/pkexec"_s) ? u"/usr/bin/pkexec"_s : u"/usr/bin/gksu"_s;
-        proc.start(runAsRoot, (QStringList() << u"/usr/lib/mx-datetime/helper"_s << program << arguments));
-    } else {
-        proc.start(program, arguments);
-    }
+    proc.start(program, arguments);
     if (!output) {
         proc.closeReadChannel(QProcess::StandardOutput);
     }
@@ -178,7 +199,7 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     if (output) {
         output->append(sout);
     } else if (!sout.isEmpty()) {
-        qDebug() << "SOut:" << proc.readAllStandardOutput();
+        qDebug() << "SOut:" << sout;
     }
     const QByteArray &serr = proc.readAllStandardError();
     if (error) {
@@ -190,10 +211,33 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
 }
 
+bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QByteArray *error)
+{
+    qDebug() << "Helper:" << arguments;
+    QString program = HelperPath;
+    QStringList programArgs = arguments;
+    if (getuid() != 0) {
+        program = elevationProgram();
+        if (program.isEmpty()) {
+            qWarning() << "No suitable elevation command found (pkexec or gksu)";
+            return false;
+        }
+        programArgs.prepend(HelperPath);
+    }
+    return execute(program, programArgs, output, error);
+}
+
 bool MXDateTime::executeAsRoot(const QString &program, const QStringList &arguments, QByteArray *output,
                                QByteArray *error)
 {
-    return execute(program, arguments, output, error, true);
+    QStringList helperArgs {u"exec"_s, program};
+    helperArgs += arguments;
+    return runHelper(helperArgs, output, error);
+}
+
+bool MXDateTime::writeTimeZoneAsRoot(const QString &timeZone, QByteArray *error)
+{
+    return runHelper({u"write-timezone"_s, timeZone}, nullptr, error);
 }
 
 void MXDateTime::loadTab(int index)
@@ -320,7 +364,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
         } else {
             executeAsRoot(u"ln"_s, {u"-nfs"_s, "/usr/share/zoneinfo/"_L1 + newzone, u"/etc/localtime"_s});
         }
-        shell("echo "_L1 + newzone + " >/etc/timezone"_L1, nullptr, true);
+        writeTimeZoneAsRoot(newzone);
         zoneDelta = 0;
         zoneIdChanged = false;
     }
@@ -670,7 +714,7 @@ void MXDateTime::loadNetworkTime()
     changedServers = move;
 
     if (sysInit != SystemD) {
-        enabledNTP = shell(u"ls /etc/rc*.d | grep chrony | grep '^S'"_s);
+        enabledNTP = hasEnabledSystemVChronyService();
     } else {
         const QString unit = systemdChronyUnit();
         if (unit.isEmpty()) {

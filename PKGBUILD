@@ -56,7 +56,7 @@ package() {
     install -Dm644 build/*.qm "${pkgdir}/usr/share/mx-datetime/locale/" 2>/dev/null || true
 
     install -dm755 "${pkgdir}/usr/lib/mx-datetime"
-    install -Dm755 scripts/helper "${pkgdir}/usr/lib/mx-datetime/helper"
+    install -Dm755 build/helper "${pkgdir}/usr/lib/mx-datetime/helper"
 
     install -Dm644 scripts/org.mxlinux.pkexec.mx-datetime-helper.policy \
         "${pkgdir}/usr/share/polkit-1/actions/org.mxlinux.pkexec.mx-datetime-helper.policy"

@@ -690,6 +690,7 @@ QString MXDateTime::chronySourcesFile()
 {
     const QString configFile = chronyConfigFile();
     QFile file(configFile);
+    QString persistentSourcesFile;
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         while (!file.atEnd()) {
             QString line = QString::fromUtf8(file.readLine()).trimmed();
@@ -698,10 +699,16 @@ QString MXDateTime::chronySourcesFile()
                 const QStringList parts = line.split(' ', Qt::SkipEmptyParts);
                 if (parts.size() >= 2) {
                     const QString dirPath = parts.at(1);
-                    return QDir(dirPath).filePath(u"mx-datetime.sources"_s);
+                    if (dirPath.startsWith(u"/etc/"_s)) {
+                        persistentSourcesFile = QDir(dirPath).filePath(u"mx-datetime.sources"_s);
+                        break;
+                    }
                 }
             }
         }
+    }
+    if (!persistentSourcesFile.isEmpty()) {
+        return persistentSourcesFile;
     }
     if (QFileInfo(u"/etc/chrony/sources.d"_s).isDir()) {
         return u"/etc/chrony/sources.d/mx-datetime.sources"_s;

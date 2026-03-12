@@ -72,6 +72,10 @@ private:
     bool runHelper(const QStringList &arguments, QByteArray *output = nullptr, QByteArray *error = nullptr);
     bool executeAsRoot(const QString &program, const QStringList &arguments = QStringList(),
                        QByteArray *output = nullptr, QByteArray *error = nullptr);
+    bool installManagedFileAsRoot(const QString &sourcePath, const QString &destinationPath,
+                                  QByteArray *error = nullptr);
+    bool setHwclockModeAsRoot(bool utc, QByteArray *error = nullptr);
+    bool setLocaltimeLinkAsRoot(const QString &timeZone, QByteArray *error = nullptr);
     bool writeTimeZoneAsRoot(const QString &timeZone, QByteArray *error = nullptr);
     void loadTab(int index);
     void update();

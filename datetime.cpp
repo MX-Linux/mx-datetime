@@ -235,6 +235,21 @@ bool MXDateTime::executeAsRoot(const QString &program, const QStringList &argume
     return runHelper(helperArgs, output, error);
 }
 
+bool MXDateTime::installManagedFileAsRoot(const QString &sourcePath, const QString &destinationPath, QByteArray *error)
+{
+    return runHelper({u"install-managed-file"_s, sourcePath, destinationPath}, nullptr, error);
+}
+
+bool MXDateTime::setHwclockModeAsRoot(bool utc, QByteArray *error)
+{
+    return runHelper({u"set-hwclock-mode"_s, utc ? u"utc"_s : u"local"_s}, nullptr, error);
+}
+
+bool MXDateTime::setLocaltimeLinkAsRoot(const QString &timeZone, QByteArray *error)
+{
+    return runHelper({u"set-localtime-link"_s, timeZone}, nullptr, error);
+}
+
 bool MXDateTime::writeTimeZoneAsRoot(const QString &timeZone, QByteArray *error)
 {
     return runHelper({u"write-timezone"_s, timeZone}, nullptr, error);
@@ -362,7 +377,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
         if (sysInit == SystemD) {
             executeAsRoot(u"timedatectl"_s, {u"set-timezone"_s, newzone});
         } else {
-            executeAsRoot(u"ln"_s, {u"-nfs"_s, "/usr/share/zoneinfo/"_L1 + newzone, u"/etc/localtime"_s});
+            setLocaltimeLinkAsRoot(newzone);
         }
         writeTimeZoneAsRoot(newzone);
         zoneDelta = 0;
@@ -477,9 +492,7 @@ void MXDateTime::saveHardwareClock()
             executeAsRoot(u"timedatectl"_s, {u"set-local-rtc"_s, rtcUTC ? u"0"_s : u"1"_s});
         } else {
             if (sysInit == OpenRC && QFile::exists(u"/etc/conf.d/hwclock"_s)) {
-                executeAsRoot(u"sed"_s, {u"-i"_s,
-                    rtcUTC ? u"(s/clock=.*/clock=\"UTC\"/)"_s : u"(s/clock=.*/clock=\"local\"/)"_s,
-                    u"/etc/conf.d/hwclock"_s});
+                setHwclockModeAsRoot(rtcUTC);
             }
             executeAsRoot(u"hwclock"_s, {u"--systohc"_s, rtcUTC ? u"--utc"_s : u"--localtime"_s});
         }
@@ -778,13 +791,7 @@ void MXDateTime::saveNetworkTime()
                 file.write("\n");
             }
             file.close();
-            const QDir sourcesDir = QFileInfo(sourcesFile).dir();
-            if (!sourcesDir.exists()) {
-                executeAsRoot(u"mkdir"_s, {u"-p"_s, sourcesDir.absolutePath()});
-            }
-            executeAsRoot(u"mv"_s, {file.fileName(), sourcesFile});
-            executeAsRoot(u"chown"_s, {u"root:"_s, sourcesFile});
-            executeAsRoot(u"chmod"_s, {u"+r"_s, sourcesFile});
+            installManagedFileAsRoot(file.fileName(), sourcesFile);
         }
         if (ntp) {
             if (!clearSources(configFile)) {
@@ -883,9 +890,7 @@ bool MXDateTime::clearSources(const QString &filename)
         }
         tmpFile.write(confdata);
         tmpFile.close();
-        executeAsRoot(u"mv"_s, {tmpFile.fileName(), file.fileName()});
-        executeAsRoot(u"chown"_s, {u"root:"_s, file.fileName()});
-        executeAsRoot(u"chmod"_s, {u"+r"_s, file.fileName()});
+        installManagedFileAsRoot(tmpFile.fileName(), file.fileName());
     }
     return changed;
 }

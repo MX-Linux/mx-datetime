@@ -937,7 +937,7 @@ void MXDateTime::aboutClicked()
 }
 void MXDateTime::helpClicked()
 {
-    displayDoc(u"/usr/share/doc/mx-datetime/mx-datetime.html"_s, tr("MX Date & Time Help"));
+    displayHelpDoc(u"/usr/share/doc/mx-datetime/mx-datetime.html"_s, tr("MX Date & Time Help"));
 }
 
 // SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND

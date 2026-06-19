@@ -26,6 +26,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QTemporaryFile>
 #include <QTextCharFormat>
 #include <QTimeZone>
@@ -42,11 +43,13 @@ const QString HelperPath = u"/usr/lib/mx-datetime/helper"_s;
 
 QString elevationProgram()
 {
-    if (QFile::exists(u"/usr/bin/pkexec"_s)) {
-        return u"/usr/bin/pkexec"_s;
+    const QString pkexec = QStandardPaths::findExecutable(u"pkexec"_s);
+    if (!pkexec.isEmpty()) {
+        return pkexec;
     }
-    if (QFile::exists(u"/usr/bin/gksu"_s)) {
-        return u"/usr/bin/gksu"_s;
+    const QString gksu = QStandardPaths::findExecutable(u"gksu"_s);
+    if (!gksu.isEmpty()) {
+        return gksu;
     }
     return {};
 }
@@ -939,12 +942,12 @@ void MXDateTime::applyClicked()
 void MXDateTime::aboutClicked()
 {
     displayAboutMsgBox(tr("About MX Date & Time"),
-        "<p align=\"center\"><b><h2>"_L1 + tr("MX Date & Time") + "</h2></b></p><p align=\"center\">"_L1
-        + tr("Version: ") + qApp->applicationVersion() + "</p><p align=\"center\"><h3>"_L1
+        u"<p align=\"center\"><b><h2>"_s + tr("MX Date & Time") + u"</h2></b></p><p align=\"center\">"_s
+        + tr("Version: ") + qApp->applicationVersion() + u"</p><p align=\"center\"><h3>"_s
         + tr("GUI program for setting the time and date in MX Linux")
-        + "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br/>"_L1
-            "</p><p align=\"center\">"_L1
-        + tr("Copyright (c) MX Linux") + "<br /><br /></p>"_L1,
+        + u"</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br/>"_s
+            u"</p><p align=\"center\">"_s
+        + tr("Copyright (c) MX Linux") + u"<br /><br /></p>"_s,
         u"/usr/share/doc/mx-datetime/license.html"_s, tr("%1 License").arg(this->windowTitle()));
 }
 void MXDateTime::helpClicked()

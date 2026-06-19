@@ -7,7 +7,7 @@
   <vendor>MX Linux</vendor>
   <vendor_url>https://mxlinux.org</vendor_url>
   <action id="org.mxlinux.pkexec.mx-datetime-helper">
-  <message gettext-domain="mx-launcher-l10n">MX Date and Time</message>
+  <message gettext-domain="mx-datetime">MX Date and Time</message>
     <description>Run MX Datetime</description>
     <icon_name>mx-datetime</icon_name>
     <defaults>

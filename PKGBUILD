@@ -40,6 +40,7 @@ build() {
     cmake -G Ninja \
         -B build \
         -DCMAKE_BUILD_TYPE=Release \
+        -DHELPER_INSTALL_DIR=/usr/lib/mx-datetime \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
         -DPROJECT_VERSION_OVERRIDE="${pkgver}"
@@ -58,7 +59,7 @@ package() {
     install -dm755 "${pkgdir}/usr/lib/mx-datetime"
     install -Dm755 build/helper "${pkgdir}/usr/lib/mx-datetime/helper"
 
-    install -Dm644 scripts/org.mxlinux.pkexec.mx-datetime-helper.policy \
+    install -Dm644 build/org.mxlinux.pkexec.mx-datetime-helper.policy \
         "${pkgdir}/usr/share/polkit-1/actions/org.mxlinux.pkexec.mx-datetime-helper.policy"
 
     install -Dm644 mx-datetime.desktop "${pkgdir}/usr/share/applications/mx-datetime.desktop"

@@ -39,7 +39,7 @@ using namespace Qt::StringLiterals;
 
 namespace
 {
-const QString HelperPath = u"/usr/lib/mx-datetime/helper"_s;
+const QString HelperPath = QStringLiteral(HELPER_PATH);
 
 QString elevationProgram()
 {

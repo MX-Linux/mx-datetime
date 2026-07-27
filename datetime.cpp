@@ -190,7 +190,14 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     qDebug() << "Exec:" << program << arguments;
     QProcess proc(this);
     QEventLoop eloop;
+    bool failedToStart = false;
     connect(&proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &eloop, &QEventLoop::quit);
+    connect(&proc, &QProcess::errorOccurred, &eloop, [&](QProcess::ProcessError processError) {
+        if (processError == QProcess::FailedToStart) {
+            failedToStart = true;
+            eloop.quit();
+        }
+    });
     proc.start(program, arguments);
     if (!output) {
         proc.closeReadChannel(QProcess::StandardOutput);
@@ -207,14 +214,19 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
     } else if (!sout.isEmpty()) {
         qDebug() << "SOut:" << sout;
     }
-    const QByteArray &serr = proc.readAllStandardError();
+    QByteArray serr = proc.readAllStandardError();
+    if (failedToStart && serr.isEmpty()) {
+        serr = proc.errorString().toUtf8();
+    }
     if (error) {
         error->append(serr);
     } else if (!serr.isEmpty()) {
         qDebug() << "SErr:" << serr;
     }
-    qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
-    return (proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0);
+    if (!failedToStart) {
+        qDebug() << "Exit:" << proc.exitCode() << proc.exitStatus();
+    }
+    return !failedToStart && proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0;
 }
 
 bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QByteArray *error, const QByteArray &input)

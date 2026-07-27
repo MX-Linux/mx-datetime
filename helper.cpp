@@ -56,7 +56,13 @@ void printError(const QString &message)
 {
     static const QRegularExpression zoneRx(
         QRegularExpression::anchoredPattern(QStringLiteral(R"([A-Za-z0-9._+-]+(?:/[A-Za-z0-9._+-]+)*)")));
-    return zoneRx.match(zone.trimmed()).hasMatch();
+    const QString trimmedZone = zone.trimmed();
+    if (!zoneRx.match(trimmedZone).hasMatch()) {
+        return false;
+    }
+
+    const QStringList segments = trimmedZone.split('/');
+    return !segments.contains(QStringLiteral(".")) && !segments.contains(QStringLiteral(".."));
 }
 
 [[nodiscard]] bool isAllowedManagedDestination(const QString &path)
@@ -218,9 +224,13 @@ void printError(const QString &message)
         return 1;
     }
 
-    const QString targetPath = QStringLiteral("/usr/share/zoneinfo/") + zone;
+    const QFileInfo zoneInfoRoot(QStringLiteral("/usr/share/zoneinfo"));
+    const QString canonicalRoot = zoneInfoRoot.canonicalFilePath();
+    const QString targetPath = QDir(zoneInfoRoot.filePath()).filePath(zone);
     const QFileInfo targetInfo(targetPath);
-    if (!targetInfo.exists() || !targetInfo.isFile()) {
+    const QString canonicalTarget = targetInfo.canonicalFilePath();
+    if (canonicalRoot.isEmpty() || canonicalTarget.isEmpty()
+        || !canonicalTarget.startsWith(canonicalRoot + '/') || !targetInfo.isFile()) {
         printError(QString("Timezone data is not available: %1").arg(zone));
         return 1;
     }

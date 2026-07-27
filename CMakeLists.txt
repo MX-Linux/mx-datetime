@@ -1,5 +1,5 @@
 # **********************************************************************
-# * Copyright (C) 2019-2025 MX Authors
+# * Copyright (C) 2019-2026 MX Authors
 # *
 # * Authors: AK-47, Adrian
 # *          MX Linux <http://mxlinux.org>

@@ -1,3 +1,12 @@
+mx-datetime (26.07) mx; urgency=medium
+
+  * Show a useful error when a system command cannot be started.
+  * Reject unsafe timezone selections instead of accessing files outside the timezone data.
+  * Add a manual page and include the application help and authorization files in Debian packages.
+  * Place the application in the MX setup menu.
+
+ -- Adrian <adrian@mxlinux.org>  Mon, 27 Jul 2026 00:05:58 -0400
+
 mx-datetime (26.03.1) mx; urgency=medium
 
   * Fix chrony source path

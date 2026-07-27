@@ -1,0 +1,20 @@
+.TH MX-DATETIME 1 "2026-07-20" "MX Linux" "User Commands"
+.SH NAME
+mx-datetime \- manage system and hardware clock settings
+.SH SYNOPSIS
+.B mx-datetime
+.SH DESCRIPTION
+.B mx-datetime
+provides a graphical interface for managing the system date, time, time zone, and hardware clock. Changes to the system or hardware clock are applied only when the corresponding action is confirmed.
+.PP
+The hardware-clock controls can transfer the system time to the hardware clock or transfer the hardware-clock time to the system clock. The application can read the hardware clock and apply drift corrections when a drift factor is known. The hardware clock can be configured to use UTC or local time; UTC is recommended when the machine is not shared with an operating system that requires local hardware-clock time.
+.PP
+When run without root privileges, the application uses Slender Mode. This mode provides a calendar and clock for comparing time zones without allowing changes to the system or hardware clock.
+.SH OPTIONS
+This application has no documented command-line options. The graphical interface provides all operations.
+.SH FILES
+.TP
+.I /usr/share/doc/mx-datetime
+Installed HTML help, images, license, and changelog documentation.
+.SH AUTHOR
+MX Linux contributors.

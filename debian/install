@@ -1,4 +1,9 @@
-help/*				usr/share/doc/mx-datetime
+help/*.html			usr/share/doc/mx-datetime
+
+help/*.jpg			usr/share/doc/mx-datetime
+help/*.png			usr/share/doc/mx-datetime
+help/*.css			usr/share/doc/mx-datetime
+help/*.1			usr/share/man/man1
 images/mx-datetime.png		usr/share/pixmaps
 images/mx-datetime.svg		usr/share/icons/hicolor/scalable/apps
 mx-datetime.desktop		usr/share/applications

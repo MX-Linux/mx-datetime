@@ -3,10 +3,14 @@
 set -e
 
 ARCH_BUILD=false
+DEBIAN_BUILD=false
 
 ARGS=()
 for arg in "$@"; do
 	case "$arg" in
+		--debian)
+			DEBIAN_BUILD=true
+			;;
 		--arch)
 			ARCH_BUILD=true
 			;;
@@ -16,6 +20,30 @@ for arg in "$@"; do
 	esac
 done
 set -- "${ARGS[@]}"
+
+if [ "$DEBIAN_BUILD" = true ]; then
+	echo "Building Debian package..."
+
+	if ! command -v debuild &> /dev/null; then
+		echo "Error: debuild not found. Please install the devscripts package."
+		exit 1
+	fi
+
+	debuild -us -uc
+
+	PKG_DEST_DIR="$PWD/debs"
+	mkdir -p "$PKG_DEST_DIR"
+	mv ../mx-datetime_*.deb "$PKG_DEST_DIR"/ 2>/dev/null || true
+	mv ../mx-datetime_*.changes "$PKG_DEST_DIR"/ 2>/dev/null || true
+	mv ../mx-datetime_*.dsc "$PKG_DEST_DIR"/ 2>/dev/null || true
+	mv ../mx-datetime_*.tar.* "$PKG_DEST_DIR"/ 2>/dev/null || true
+	mv ../mx-datetime_*.buildinfo "$PKG_DEST_DIR"/ 2>/dev/null || true
+	mv ../mx-datetime_*.build "$PKG_DEST_DIR"/ 2>/dev/null || true
+
+	echo "Debian package build completed!"
+	echo "Package: $(ls "$PKG_DEST_DIR"/*.deb 2>/dev/null || echo 'not found')"
+	exit 0
+fi
 
 if [ "$ARCH_BUILD" = true ]; then
 	echo "Building Arch Linux package..."
@@ -92,6 +120,7 @@ case "${1:-all}" in
 		echo "  all          - Configure and build (default)"
 		echo "  fresh        - Clean first then configure and build"
 		echo "Options:"
+		echo "  --debian     - Build Debian package"
 		echo "  --arch       - Build Arch Linux package"
 		exit 1
 		;;

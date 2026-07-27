@@ -283,35 +283,25 @@ void printError(const QString &message)
 
 [[nodiscard]] int handleInstallManagedFile(const QStringList &arguments)
 {
-    if (arguments.size() != 2) {
-        printError(QStringLiteral("install-managed-file requires source and destination"));
+    if (arguments.size() != 1) {
+        printError(QStringLiteral("install-managed-file requires exactly one destination"));
         return 1;
     }
 
-    const QString sourcePath = arguments.at(0);
-    const QString destinationPath = arguments.at(1);
-    if (!QDir::isAbsolutePath(sourcePath)) {
-        printError(QStringLiteral("install-managed-file source must be absolute"));
-        return 1;
-    }
+    const QString destinationPath = arguments.constFirst();
     if (!isAllowedManagedDestination(destinationPath)) {
         printError(QString("install-managed-file destination is not allowed: %1").arg(destinationPath));
         return 1;
     }
 
-    QFile sourceFile(sourcePath);
-    if (!sourceFile.open(QIODevice::ReadOnly)) {
-        printError(QString("Unable to read %1").arg(sourcePath));
+    QFile sourceFile;
+    if (!sourceFile.open(stdin, QIODevice::ReadOnly)) {
+        printError(QStringLiteral("Unable to read managed file content from standard input"));
         return 1;
     }
     const QByteArray content = sourceFile.readAll();
-    sourceFile.close();
 
-    const int result = writeManagedFile(destinationPath, content);
-    if (result == 0) {
-        QFile::remove(sourcePath);
-    }
-    return result;
+    return writeManagedFile(destinationPath, content);
 }
 } // namespace
 

@@ -8,3 +8,6 @@ Files: debian/*
 Packaging copyright 2019-2026 by Steven Pusser [stevep@mxlinux.org]
 
 and is released under the GPL 3 license.
+
+On Debian systems, the complete text of the GNU General Public License
+version 3 can be found in "/usr/share/common-licenses/GPL-3".

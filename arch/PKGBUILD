@@ -70,7 +70,12 @@ package() {
     fi
     if [ -d "help" ]; then
         for help_file in "help"/*.html "help"/*.jpg "help"/*.png "help"/*.css; do
-            [ -f "$help_file" ] && install -Dm644 "$help_file" "${pkgdir}/usr/share/doc/mx-datetime/$(basename "$help_file")"
+            # "|| continue", not "&& install": this loop is the last statement in
+            # package(), and a glob that matches nothing makes the final
+            # iteration's test fail, so the loop - and the function - return 1
+            # and makepkg aborts. help/*.jpg already matches nothing here.
+            [ -f "$help_file" ] || continue
+            install -Dm644 "$help_file" "${pkgdir}/usr/share/doc/mx-datetime/$(basename "$help_file")"
         done
     fi
 }

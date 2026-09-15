@@ -61,7 +61,7 @@ package() {
 
     install -Dm644 mx-datetime.desktop "${pkgdir}/usr/share/applications/mx-datetime.desktop"
 
-    install -Dm644 images/mx-datetime.png "${pkgdir}/usr/share/icons/hicolor/48x48/apps/mx-datetime.png"
+    install -Dm644 images/mx-datetime.png "${pkgdir}/usr/share/icons/hicolor/64x64/apps/mx-datetime.png"
     install -Dm644 images/mx-datetime.png "${pkgdir}/usr/share/pixmaps/mx-datetime.png"
     install -Dm644 images/mx-datetime.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/mx-datetime.svg"
 

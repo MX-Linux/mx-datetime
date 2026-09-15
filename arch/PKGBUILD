@@ -11,7 +11,7 @@
 
 pkgname=mx-datetime
 pkgver=26.07
-pkgrel=2
+pkgrel=3
 pkgdesc="Date and time configuration tool for MX Linux"
 arch=('x86_64' 'i686')
 url="https://github.com/MX-Linux/mx-datetime"

@@ -67,7 +67,8 @@ package() {
 
     install -dm755 "${pkgdir}/usr/share/doc/mx-datetime"
 
-    install -Dm644 help/*.1 "${pkgdir}/usr/share/man/man1/" 2>/dev/null || true
+    install -Dm644 -t "$pkgdir/usr/share/man/man1/" help/*.1
+    gzip -c debian/changelog > "$pkgdir/usr/share/doc/mx-datetime/changelog.gz"
     if [ -d help ]; then
         for help_file in help/*.html help/*.jpg help/*.png help/*.css; do
             [ -f "$help_file" ] && install -Dm644 "$help_file" "${pkgdir}/usr/share/doc/mx-datetime/$(basename "$help_file")"

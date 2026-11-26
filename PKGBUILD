@@ -33,33 +33,30 @@ source=()
 sha256sums=()
 
 build() {
-    cd "${startdir}"
-
-    rm -rf build
-
     cmake -G Ninja \
-        -B build \
+        -S "$startdir" \
+        -B "$srcdir/build" \
         -DCMAKE_BUILD_TYPE=Release \
         -DHELPER_INSTALL_DIR=/usr/lib/mx-datetime \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
         -DPROJECT_VERSION_OVERRIDE="${pkgver}"
 
-    cmake --build build --parallel
+    cmake --build "$srcdir/build" --parallel
 }
 
 package() {
     cd "${startdir}"
 
-    install -Dm755 build/mx-datetime "${pkgdir}/usr/bin/mx-datetime"
+    install -Dm755 "$srcdir/build/mx-datetime" "${pkgdir}/usr/bin/mx-datetime"
 
     install -dm755 "${pkgdir}/usr/share/mx-datetime/locale"
-    install -Dm644 build/*.qm "${pkgdir}/usr/share/mx-datetime/locale/" 2>/dev/null || true
+    install -Dm644 "$srcdir/build"/*.qm "${pkgdir}/usr/share/mx-datetime/locale/" 2>/dev/null || true
 
     install -dm755 "${pkgdir}/usr/lib/mx-datetime"
-    install -Dm755 build/helper "${pkgdir}/usr/lib/mx-datetime/helper"
+    install -Dm755 "$srcdir/build/helper" "${pkgdir}/usr/lib/mx-datetime/helper"
 
-    install -Dm644 build/org.mxlinux.pkexec.mx-datetime-helper.policy \
+    install -Dm644 "$srcdir/build/org.mxlinux.pkexec.mx-datetime-helper.policy" \
         "${pkgdir}/usr/share/polkit-1/actions/org.mxlinux.pkexec.mx-datetime-helper.policy"
 
     install -Dm644 mx-datetime.desktop "${pkgdir}/usr/share/applications/mx-datetime.desktop"

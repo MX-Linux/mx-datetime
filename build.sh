@@ -63,19 +63,13 @@ if [ "$ARCH_BUILD" = true ]; then
 	ARCH_BUILDDIR=$(mktemp -d -p "$PWD" archpkgbuild.XXXXXX)
 	trap 'rm -rf "$ARCH_BUILDDIR"' EXIT
 
-	rm -rf pkg *.pkg.tar.zst
-
 	PKG_DEST_DIR="$PWD/build"
 	mkdir -p "$PKG_DEST_DIR"
 
 	BUILDDIR="$ARCH_BUILDDIR" PKGDEST="$PKG_DEST_DIR" PKGVER="$ARCH_VERSION" makepkg -f
 
-	echo "Cleaning makepkg artifacts..."
-	rm -rf pkg
-
 	echo "Arch Linux package build completed!"
 	echo "Package: $(ls "$PKG_DEST_DIR"/*.pkg.tar.zst 2>/dev/null || echo 'not found')"
-	echo "Binary available at: build/mx-datetime"
 	exit 0
 fi
 

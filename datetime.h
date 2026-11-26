@@ -54,6 +54,7 @@ private:
     QTimer updater;
     bool clockLock = false;
     bool changedServers = false;
+    bool chronyNeedsRestart = false;
     unsigned int loadedTabs = 0;
     int dateDelta = 0;
     qint64 timeDelta = 0;
@@ -87,11 +88,12 @@ private:
     void moveServerRow(int movement);
     bool validateServerList();
     void loadNetworkTime();
-    void saveNetworkTime();
+    bool saveNetworkTime();
+    bool showSaveError(const QString &message, const QByteArray &details);
     QString systemdChronyUnit();
     QByteArray inlineSources;
     bool loadSources(const QString &filename, QByteArray *activeLines = nullptr);
-    bool clearSources(const QString &filename);
+
 
     // Slots
 

@@ -238,6 +238,9 @@ bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QBy
     if (getuid() != 0) {
         program = elevationProgram();
         if (program.isEmpty()) {
+            if (error) {
+                *error = tr("No suitable elevation command found (pkexec or gksu).").toUtf8();
+            }
             qWarning() << "No suitable elevation command found (pkexec or gksu)";
             return false;
         }
@@ -516,7 +519,10 @@ void MXDateTime::syncNowClicked()
     }
     setClockLock(true);
 
-    saveNetworkTime();
+    if (!saveNetworkTime()) {
+        setClockLock(false);
+        return;
+    }
     QByteArray output;
     bool rexit = false;
     if (enabledNTP) {
@@ -713,7 +719,16 @@ void MXDateTime::loadNetworkTime()
     }
     checkAutoSync->setChecked(enabledNTP);
 }
-void MXDateTime::saveNetworkTime()
+bool MXDateTime::showSaveError(const QString &message, const QByteArray &details) {
+    QMessageBox box(QMessageBox::Critical, windowTitle(), message, QMessageBox::Ok, this);
+    if (!details.isEmpty()) {
+        box.setDetailedText(QString::fromUtf8(details.trimmed()));
+    }
+    box.exec();
+    return false;
+}
+
+bool MXDateTime::saveNetworkTime()
 {
     // Enable/disable NTP
     const bool ntp = checkAutoSync->isChecked();
@@ -760,22 +775,39 @@ void MXDateTime::saveNetworkTime()
             }
             content.append('\n');
         }
-        installManagedFileAsRoot(content, sourcesFile);
+        QByteArray error;
+        if (!installManagedFileAsRoot(content, sourcesFile, &error)) {
+            return showSaveError(tr("Could not save the time sources to %1.").arg(sourcesFile), error);
+        }
         if (ntp) {
-            if (!clearSources(configFile)) {
-                runHelper({u"reload-sources"_s});
-            } else {
+            if (!inlineSources.isEmpty()) {
+                QByteArray result;
+                if (!runHelper({u"retire-inline-sources"_s, configFile}, &result, &error, inlineSources)) {
+                    return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
+                }
+                chronyNeedsRestart |= result.trimmed() == "changed";
+                inlineSources.clear();
+            }
+            QStringList action {u"reload-sources"_s};
+            if (chronyNeedsRestart) {
                 if (sysInit == SystemD) {
                     const QString unit = systemdChronyUnit();
-                    if (!unit.isEmpty()) {
-                        runHelper({u"systemd-restart"_s, unit});
+                    if (unit.isEmpty()) {
+                        return showSaveError(tr("Could not find the chrony service to restart."), {});
                     }
+                    action = {u"systemd-restart"_s, unit};
                 } else {
-                    runHelper({u"sysv-restart"_s});
+                    action = {u"sysv-restart"_s};
                 }
             }
+            if (!runHelper(action, nullptr, &error)) {
+                return showSaveError(tr("Could not activate the saved time sources."), error);
+            }
+            chronyNeedsRestart = false;
         }
+        changedServers = false;
     }
+    return true;
 }
 
 bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
@@ -832,15 +864,6 @@ bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
     return hassrc;
 }
 
-bool MXDateTime::clearSources(const QString &filename) {
-    if (inlineSources.isEmpty()) {
-        return false;
-    }
-    QByteArray result;
-    return runHelper({u"retire-inline-sources"_s, filename}, &result, nullptr, inlineSources)
-           && result.trimmed() == "changed";
-}
-
 void MXDateTime::serverRowChanged()
 {
     changedServers = true;
@@ -865,8 +888,9 @@ void MXDateTime::applyClicked()
     if (loadedTabs & 2) {
         saveHardwareClock();
     }
-    if (loadedTabs & 4) {
-        saveNetworkTime();
+    if ((loadedTabs & 4) && !saveNetworkTime()) {
+        setClockLock(false);
+        return;
     }
 
     // Refresh the UI (especially the current tab) with newly set values.

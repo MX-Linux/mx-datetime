@@ -729,7 +729,9 @@ void MXDateTime::loadNetworkTime()
     QApplication::processEvents();
     changedServers = move;
 
-    if (sysInit != SystemD) {
+    if (sysInit == OpenRC) {
+        enabledNTP = QFileInfo::exists(u"/etc/runlevels/default/"_s + Chrony::openRcServiceName());
+    } else if (sysInit == SystemV) {
         enabledNTP = hasEnabledSystemVChronyService();
     } else {
         const QString unit = systemdChronyUnit();
@@ -767,9 +769,8 @@ bool MXDateTime::saveNetworkTime()
                 runHelper({u"systemd-"_s + start_stop, unit});
             }
         } else if (sysInit == OpenRC) {
-            if (QFile::exists(u"/etc/init.d/chronyd"_s)) {
-                runHelper({u"openrc-"_s + enable_disable});
-            }
+            runHelper({u"openrc-"_s + enable_disable});
+            runHelper({u"openrc-"_s + start_stop});
         } else {
             runHelper({u"sysv-"_s + enable_disable});
             runHelper({u"sysv-"_s + start_stop});
@@ -820,7 +821,7 @@ bool MXDateTime::saveNetworkTime()
                     }
                     action = {u"systemd-restart"_s, unit};
                 } else {
-                    action = {u"sysv-restart"_s};
+                    action = {sysInit == OpenRC ? u"openrc-restart"_s : u"sysv-restart"_s};
                 }
             }
             if (!runHelper(action, nullptr, &error)) {

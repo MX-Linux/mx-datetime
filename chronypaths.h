@@ -27,6 +27,13 @@
 namespace Chrony {
 using namespace Qt::StringLiterals;
 
+inline QString openRcServiceName() {
+    if (QFileInfo::exists(u"/etc/init.d/chronyd"_s)) {
+        return u"chronyd"_s;
+    }
+    return u"chrony"_s;
+}
+
 inline QString chronyConfigFile()
 {
     if (QFile::exists(u"/etc/chrony/chrony.conf"_s)) {

@@ -5,9 +5,11 @@ mx-datetime \- manage system time, the hardware clock, time zones, and network t
 .B mx-datetime
 .SH DESCRIPTION
 .B mx-datetime
-provides a graphical interface for managing the system date, time, time zone, hardware clock, and network time synchronization. Changes are applied only when the corresponding action is confirmed.
+provides a graphical interface for managing the system date, time, time zone, hardware clock, and network time synchronization. Use Apply to save changes to the date, time, time zone, hardware-clock mode, and network-time settings.
 .PP
-The application normally requires administrator authentication to change the system clock, hardware clock, time zone, or network-time configuration. When run without root privileges, it uses Slender Mode: a calendar and clock are available for comparing time zones, but system changes are disabled.
+Launch the application as your normal desktop user. All three tabs are available. Selecting a time zone previews its local date and time before you apply it.
+.PP
+Privileged operations use a helper that may prompt for administrator authentication. Opening the Hardware Clock tab reads the hardware clock and can trigger a prompt. The transfer and drift-adjust buttons act immediately. Update Now saves network-time settings and starts synchronization immediately.
 .SH SYSTEM AND HARDWARE CLOCKS
 The system clock is the clock maintained by the running operating system. It is used by applications and is normally kept accurate by a network-time service.
 .PP

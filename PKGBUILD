@@ -21,7 +21,7 @@
 
 # Maintainer: Adrian <adrian@mxlinux.org>
 pkgname=mx-datetime
-pkgver=${PKGVER:-26.07}
+pkgver=${PKGVER:-26.11}
 pkgrel=1
 pkgdesc="Date and time configuration tool for MX Linux"
 arch=('x86_64' 'i686')

@@ -1,3 +1,27 @@
+mx-datetime (26.11) mx; urgency=medium
+
+  * Limit administrator access to the clock and network time settings that
+    MX Date & Time manages.
+  * Keep date, time, and time zone edits available for retry when a change
+    fails or an authorization prompt is cancelled.
+  * Show the current time zone on startup, including UTC, and update the
+    clock preview as soon as a new zone takes effect.
+  * Show whether the hardware clock uses UTC or local time in all languages,
+    and report when its mode cannot be read.
+  * Keep working time servers active when moving them into the app's server
+    list, and report any failure before attempting to synchronize.
+  * Use the edited server list for Update Now even when automatic updates
+    are turned off.
+  * Allow date and time changes when another tool manages the time servers.
+  * Start or stop automatic time updates on OpenRC when the setting changes,
+    and report when the service cannot be started or stopped.
+  * Prevent a single button click from running an action several times
+    after using Apply.
+  * Explain that a graphical session is required when the application is
+    started without a display.
+
+ -- Adrian <adrian@mxlinux.org>  Thu, 26 Nov 2026 11:56:57 -0500
+
 mx-datetime (26.07) mx; urgency=medium
 
   * Show a useful error when a system command cannot be started.

@@ -5,7 +5,7 @@
     <name>MXDateTime</name>
     <message>
         <location filename="../datetime.ui" line="20"/>
-        <location filename="../datetime.cpp" line="766"/>
+        <location filename="../datetime.cpp" line="1000"/>
         <source>MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -41,8 +41,8 @@
     </message>
     <message>
         <location filename="../datetime.ui" line="261"/>
-        <location filename="../datetime.cpp" line="379"/>
-        <location filename="../datetime.cpp" line="386"/>
+        <location filename="../datetime.cpp" line="514"/>
+        <location filename="../datetime.cpp" line="521"/>
         <source>Hardware Clock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -192,68 +192,150 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="348"/>
+        <location filename="../datetime.cpp" line="271"/>
+        <source>No suitable elevation command found (pkexec or gksu).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="411"/>
+        <source>Could not set the system time zone to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="426"/>
+        <source>Could not write the time zone to /etc/timezone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="437"/>
+        <source>Could not set the system date and time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="451"/>
         <source>Reading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="365"/>
+        <location filename="../datetime.cpp" line="487"/>
+        <source>The hardware clock mode is unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="503"/>
         <source>Adjusting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="379"/>
-        <location filename="../datetime.cpp" line="386"/>
+        <location filename="../datetime.cpp" line="514"/>
+        <location filename="../datetime.cpp" line="521"/>
         <source>System Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="392"/>
+        <location filename="../datetime.cpp" line="527"/>
         <source>The %1 time was transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="395"/>
+        <location filename="../datetime.cpp" line="530"/>
         <source>The %1 time could not be transferred to the %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="449"/>
+        <location filename="../datetime.cpp" line="567"/>
+        <location filename="../datetime.cpp" line="876"/>
+        <source>Could not determine whether chrony is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="592"/>
         <source>The system clock was updated successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="452"/>
+        <location filename="../datetime.cpp" line="595"/>
         <source>The system clock could not be updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="765"/>
+        <location filename="../datetime.cpp" line="711"/>
+        <source>There are no NTP servers on the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="713"/>
+        <source>There are invalid entries on the NTP server list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="747"/>
+        <location filename="../datetime.cpp" line="819"/>
+        <source>Could not find the chrony service.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="830"/>
+        <source>Could not change whether chrony starts at boot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="834"/>
+        <source>Could not start chrony.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="834"/>
+        <source>Could not stop chrony.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="865"/>
+        <source>Could not save the time sources to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="869"/>
+        <source>Could not update the time sources in %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="884"/>
+        <source>Could not find the chrony service to restart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="892"/>
+        <source>Could not activate the saved time sources.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../datetime.cpp" line="999"/>
         <source>About MX Date &amp; Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="767"/>
+        <location filename="../datetime.cpp" line="1001"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="768"/>
+        <location filename="../datetime.cpp" line="1002"/>
         <source>GUI program for setting the time and date in MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="771"/>
+        <location filename="../datetime.cpp" line="1005"/>
         <source>Copyright (c) MX Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="772"/>
+        <location filename="../datetime.cpp" line="1006"/>
         <source>%1 License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../datetime.cpp" line="776"/>
+        <location filename="../datetime.cpp" line="1010"/>
         <source>MX Date &amp; Time Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -261,18 +343,34 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../about.cpp" line="52"/>
+        <location filename="../about.cpp" line="70"/>
+        <source>Could not load %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../about.cpp" line="93"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../about.cpp" line="53"/>
-        <location filename="../about.cpp" line="61"/>
+        <location filename="../about.cpp" line="94"/>
+        <location filename="../about.cpp" line="103"/>
         <source>Changelog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../about.cpp" line="73"/>
+        <location filename="../about.cpp" line="95"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../about.cpp" line="115"/>
+        <source>Could not load changelog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../about.cpp" line="50"/>
+        <location filename="../about.cpp" line="118"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>

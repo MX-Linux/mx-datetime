@@ -5,7 +5,7 @@
         <location filename="../datetime.ui" line="20"/>
         <location filename="../datetime.cpp" line="604"/>
         <source>MX Date &amp; Time</source>
-        <translation>MX dátum és idő</translation>
+        <translation>MX Dátum és idő</translation>
     </message>
     <message>
         <location filename="../datetime.ui" line="26"/>

@@ -71,8 +71,6 @@ private:
                  QByteArray *error = nullptr, const QByteArray &input = {});
     bool runHelper(const QStringList &arguments, QByteArray *output = nullptr, QByteArray *error = nullptr,
                    const QByteArray &input = {});
-    bool executeAsRoot(const QString &program, const QStringList &arguments = QStringList(),
-                       QByteArray *output = nullptr, QByteArray *error = nullptr);
     bool installManagedFileAsRoot(const QByteArray &content, const QString &destinationPath,
                                   QByteArray *error = nullptr);
     bool setHwclockModeAsRoot(bool utc, QByteArray *error = nullptr);
@@ -82,7 +80,7 @@ private:
     void update();
     void loadDateTime();
     void saveDateTime(const QDateTime &driftStart);
-    void transferTime(const QStringList &params, const QString &from, const QString &to);
+    void transferTime(const QString &action, const QString &from, const QString &to);
     void readHardwareClock();
     void saveHardwareClock();
     QTableWidgetItem *addServerRow(bool enabled, const QString &type, const QString &address, const QString &options);

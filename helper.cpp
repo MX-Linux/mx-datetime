@@ -18,6 +18,7 @@
  **********************************************************************/
 
 #include <QCoreApplication>
+#include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -173,27 +174,71 @@ void printError(const QString &message)
     return result.exitStatus == QProcess::NormalExit ? result.exitCode : 1;
 }
 
-[[nodiscard]] int handleExec(const QStringList &arguments)
-{
-    if (arguments.isEmpty()) {
-        printError(QStringLiteral("exec requires a command name"));
+struct Operation {
+    QString program;
+    QStringList arguments;
+};
+
+int runOperation(const QString &action, const QStringList &operands) {
+    using namespace Qt::StringLiterals;
+    static const QHash<QString, Operation> operations {
+        {u"set-zone"_s, {u"timedatectl"_s, {u"set-timezone"_s}}},
+        {u"systemd-set-time"_s, {u"timedatectl"_s, {u"set-time"_s}}},
+        {u"set-time"_s, {u"date"_s, {u"-s"_s}}},
+        {u"read-rtc"_s, {u"hwclock"_s, {u"--verbose"_s}}},
+        {u"adjust-rtc"_s, {u"hwclock"_s, {u"--adjust"_s}}},
+        {u"ntp-burst"_s, {u"chronyc"_s, {u"burst 4/4"_s}}},
+        {u"ntp-step"_s, {u"chronyc"_s, {u"makestep"_s}}},
+        {u"ntp-once"_s, {u"chronyd"_s, {u"-q"_s}}},
+        {u"copy-to-system"_s, {u"hwclock"_s, {u"--hctosys"_s}}},
+        {u"copy-to-rtc"_s, {u"hwclock"_s, {u"--systohc"_s}}},
+        {u"copy-to-rtc-update-drift"_s, {u"hwclock"_s, {u"--systohc"_s, u"--update-drift"_s}}},
+        {u"rtc-utc"_s, {u"hwclock"_s, {u"--systohc"_s, u"--utc"_s}}},
+        {u"rtc-local"_s, {u"hwclock"_s, {u"--systohc"_s, u"--localtime"_s}}},
+        {u"systemd-rtc-utc"_s, {u"timedatectl"_s, {u"set-local-rtc"_s, u"0"_s}}},
+        {u"systemd-rtc-local"_s, {u"timedatectl"_s, {u"set-local-rtc"_s, u"1"_s}}},
+        {u"reload-sources"_s, {u"chronyc"_s, {u"reload"_s, u"sources"_s}}},
+        {u"sysv-enable"_s, {u"update-rc.d"_s, {u"chrony"_s, u"enable"_s}}},
+        {u"sysv-disable"_s, {u"update-rc.d"_s, {u"chrony"_s, u"disable"_s}}},
+        {u"sysv-start"_s, {u"service"_s, {u"chrony"_s, u"start"_s}}},
+        {u"sysv-stop"_s, {u"service"_s, {u"chrony"_s, u"stop"_s}}},
+        {u"sysv-restart"_s, {u"service"_s, {u"chrony"_s, u"restart"_s}}},
+        {u"openrc-enable"_s, {u"rc-update"_s, {u"add"_s, u"chronyd"_s}}},
+        {u"openrc-disable"_s, {u"rc-update"_s, {u"del"_s, u"chronyd"_s}}},
+        {u"systemd-enable"_s, {u"systemctl"_s, {u"enable"_s}}},
+        {u"systemd-disable"_s, {u"systemctl"_s, {u"disable"_s}}},
+        {u"systemd-start"_s, {u"systemctl"_s, {u"start"_s}}},
+        {u"systemd-stop"_s, {u"systemctl"_s, {u"stop"_s}}},
+        {u"systemd-restart"_s, {u"systemctl"_s, {u"restart"_s}}},
+    };
+
+    const auto it = operations.constFind(action);
+    if (it == operations.cend()) {
+        printError(u"Unsupported helper action: %1"_s.arg(action));
         return 1;
     }
-
-    const QString command = arguments.constFirst();
-    const auto commandIt = allowedCommands().constFind(command);
-    if (commandIt == allowedCommands().constEnd()) {
-        printError(QString("Command is not allowed: %1").arg(command));
-        return 127;
+    bool valid = operands.isEmpty();
+    const QString value = operands.value(0);
+    if (it->program == u"systemctl"_s) {
+        valid = operands.size() == 1 && (value == u"chronyd.service"_s || value == u"chrony.service"_s);
+    } else if (action == u"set-zone"_s) {
+        valid = operands.size() == 1 && isValidTimeZone(value) && value == value.trimmed()
+                && !value.startsWith('-') && QFileInfo(u"/usr/share/zoneinfo/"_s + value).isFile();
+    } else if (action == u"set-time"_s || action == u"systemd-set-time"_s) {
+        const QString format = u"yyyy-MM-ddTHH:mm:ss.zzz"_s;
+        const QDateTime time = QDateTime::fromString(value, format);
+        valid = operands.size() == 1 && time.isValid() && time.toString(format) == value;
     }
-
-    const QString executable = resolveBinary(commandIt.value());
+    if (!valid) {
+        printError(u"Invalid arguments for %1"_s.arg(action));
+        return 1;
+    }
+    const QString executable = resolveBinary(allowedCommands().value(it->program));
     if (executable.isEmpty()) {
-        printError(QString("Command is not available: %1").arg(command));
+        printError(u"Command is not available: %1"_s.arg(it->program));
         return 127;
     }
-
-    return relayResult(runProcess(executable, arguments.mid(1)));
+    return relayResult(runProcess(executable, it->arguments + operands));
 }
 
 [[nodiscard]] int handleWriteTimezone(const QStringList &arguments)
@@ -327,9 +372,6 @@ int main(int argc, char *argv[])
     const QString action = arguments.constFirst();
     const QStringList remainingArgs = arguments.mid(1);
 
-    if (action == QStringLiteral("exec")) {
-        return handleExec(remainingArgs);
-    }
     if (action == QStringLiteral("install-managed-file")) {
         return handleInstallManagedFile(remainingArgs);
     }
@@ -343,6 +385,5 @@ int main(int argc, char *argv[])
         return handleWriteTimezone(remainingArgs);
     }
 
-    printError(QString("Unsupported helper action: %1").arg(action));
-    return 1;
+    return runOperation(action, remainingArgs);
 }

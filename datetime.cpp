@@ -245,14 +245,6 @@ bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QBy
     return execute(program, programArgs, output, error, input);
 }
 
-bool MXDateTime::executeAsRoot(const QString &program, const QStringList &arguments, QByteArray *output,
-                               QByteArray *error)
-{
-    QStringList helperArgs {u"exec"_s, program};
-    helperArgs += arguments;
-    return runHelper(helperArgs, output, error);
-}
-
 bool MXDateTime::installManagedFileAsRoot(const QByteArray &content, const QString &destinationPath, QByteArray *error)
 {
     return runHelper({u"install-managed-file"_s, destinationPath}, nullptr, error, content);
@@ -393,7 +385,7 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
     if (zoneDelta || zoneIdChanged) {
         const QString newzone(comboTimeZone->currentData().toByteArray());
         if (sysInit == SystemD) {
-            executeAsRoot(u"timedatectl"_s, {u"set-timezone"_s, newzone});
+            runHelper({u"set-zone"_s, newzone});
         } else {
             setLocaltimeLinkAsRoot(newzone);
         }
@@ -416,9 +408,9 @@ void MXDateTime::saveDateTime(const QDateTime &driftStart)
             param = newTime.toString(dtFormat);
         }
         if (sysInit != SystemD) {
-            executeAsRoot(u"date"_s, {u"-s"_s, param});
+            runHelper({u"set-time"_s, param});
         } else {
-            executeAsRoot(u"timedatectl"_s, {u"set-time"_s, param});
+            runHelper({u"systemd-set-time"_s, param});
         }
         dateDelta = 0;
         timeDelta = 0;
@@ -447,10 +439,10 @@ void MXDateTime::readHardwareClock()
         isHardwareUTC = timedatectl_out.contains("LocalRTC=no");
 
         // Still show hwclock output for user reference
-        executeAsRoot(u"hwclock"_s, {u"--verbose"_s}, &rtcout);
+        runHelper({u"read-rtc"_s}, &rtcout);
     } else {
         // For non-systemd systems, use hwclock output
-        executeAsRoot(u"hwclock"_s, {u"--verbose"_s}, &rtcout);
+        runHelper({u"read-rtc"_s}, &rtcout);
         isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
     }
 
@@ -469,7 +461,7 @@ void MXDateTime::hardwareAdjustClicked()
     const QString btext = pushHardwareAdjust->text();
     pushHardwareAdjust->setText(tr("Adjusting..."));
     QByteArray rtcout;
-    executeAsRoot(u"hwclock"_s, {u"--adjust"_s}, &rtcout);
+    runHelper({u"adjust-rtc"_s}, &rtcout);
     textHardwareClock->setPlainText(QString(rtcout.trimmed()));
     pushHardwareAdjust->setText(btext);
     setClockLock(false);
@@ -477,23 +469,20 @@ void MXDateTime::hardwareAdjustClicked()
 void MXDateTime::systemToHardwareClicked()
 {
     setClockLock(true);
-    QStringList params("--systohc");
-    if (checkDriftUpdate->isChecked()) {
-        params.append(u"--update-drift"_s);
-    }
-    transferTime(params, tr("System Clock"), tr("Hardware Clock"));
+    const QString action = checkDriftUpdate->isChecked() ? u"copy-to-rtc-update-drift"_s : u"copy-to-rtc"_s;
+    transferTime(action, tr("System Clock"), tr("Hardware Clock"));
     checkDriftUpdate->setCheckState(Qt::Unchecked);
     setClockLock(false);
 }
 void MXDateTime::hardwareToSystemClicked()
 {
     setClockLock(true);
-    transferTime({"--hctosys"}, tr("Hardware Clock"), tr("System Clock"));
+    transferTime(u"copy-to-system"_s, tr("Hardware Clock"), tr("System Clock"));
     setClockLock(false);
 }
-void MXDateTime::transferTime(const QStringList &params, const QString &from, const QString &to)
+void MXDateTime::transferTime(const QString &action, const QString &from, const QString &to)
 {
-    if (executeAsRoot(u"hwclock"_s, params)) {
+    if (runHelper({action})) {
         const QString &msg = tr("The %1 time was transferred to the %2.");
         QMessageBox::information(this, windowTitle(), msg.arg(from, to));
     } else {
@@ -507,12 +496,12 @@ void MXDateTime::saveHardwareClock()
     const bool rtcUTC = radioHardwareUTC->isChecked();
     if (rtcUTC != isHardwareUTC) {
         if (sysInit == SystemD) {
-            executeAsRoot(u"timedatectl"_s, {u"set-local-rtc"_s, rtcUTC ? u"0"_s : u"1"_s});
+            runHelper({rtcUTC ? u"systemd-rtc-utc"_s : u"systemd-rtc-local"_s});
         } else {
             if (sysInit == OpenRC && QFile::exists(u"/etc/conf.d/hwclock"_s)) {
                 setHwclockModeAsRoot(rtcUTC);
             }
-            executeAsRoot(u"hwclock"_s, {u"--systohc"_s, rtcUTC ? u"--utc"_s : u"--localtime"_s});
+            runHelper({rtcUTC ? u"rtc-utc"_s : u"rtc-local"_s});
         }
     }
 }
@@ -531,15 +520,15 @@ void MXDateTime::syncNowClicked()
     bool rexit = false;
     if (enabledNTP) {
         // All commands can be passed via stdin, but chronyc may return 0 even if one command fails.
-        rexit = executeAsRoot(u"chronyc"_s, {u"burst 4/4"_s}, &output);
+        rexit = runHelper({u"ntp-burst"_s}, &output);
         if (rexit) {
             rexit = execute(u"chronyc"_s, {u"waitsync 10"_s}, &output);
         }
         if (rexit) {
-            rexit = executeAsRoot(u"chronyc"_s, {u"makestep"_s}, &output);
+            rexit = runHelper({u"ntp-step"_s}, &output);
         }
     } else {
-        rexit = executeAsRoot(u"chronyd"_s, {u"-q"_s}, nullptr, &output);
+        rexit = runHelper({u"ntp-once"_s}, nullptr, &output);
     }
 
     setClockLock(false);
@@ -776,16 +765,16 @@ void MXDateTime::saveNetworkTime()
         if (sysInit == SystemD) {
             const QString unit = systemdChronyUnit();
             if (!unit.isEmpty()) {
-                executeAsRoot(u"systemctl"_s, {enable_disable, unit});
-                executeAsRoot(u"systemctl"_s, {start_stop, unit});
+                runHelper({u"systemd-"_s + enable_disable, unit});
+                runHelper({u"systemd-"_s + start_stop, unit});
             }
         } else if (sysInit == OpenRC) {
             if (QFile::exists(u"/etc/init.d/chronyd"_s)) {
-                executeAsRoot(u"rc-update"_s, {ntp ? u"add"_s : u"del"_s, u"chronyd"_s});
+                runHelper({u"openrc-"_s + enable_disable});
             }
         } else {
-            executeAsRoot(u"update-rc.d"_s, {u"chrony"_s, enable_disable});
-            executeAsRoot(u"service"_s, {u"chrony"_s, start_stop});
+            runHelper({u"sysv-"_s + enable_disable});
+            runHelper({u"sysv-"_s + start_stop});
         }
         enabledNTP = ntp;
     }
@@ -816,15 +805,15 @@ void MXDateTime::saveNetworkTime()
         installManagedFileAsRoot(content, sourcesFile);
         if (ntp) {
             if (!clearSources(configFile)) {
-                executeAsRoot(u"chronyc"_s, {u"reload"_s, u"sources"_s});
+                runHelper({u"reload-sources"_s});
             } else {
                 if (sysInit == SystemD) {
                     const QString unit = systemdChronyUnit();
                     if (!unit.isEmpty()) {
-                        executeAsRoot(u"systemctl"_s, {u"restart"_s, unit});
+                        runHelper({u"systemd-restart"_s, unit});
                     }
                 } else {
-                    executeAsRoot(u"service"_s, {u"chrony"_s, u"restart"_s});
+                    runHelper({u"sysv-restart"_s});
                 }
             }
         }

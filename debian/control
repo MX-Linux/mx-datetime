@@ -16,6 +16,7 @@ Homepage: https://github.com/MX-Linux/mx-datetime
 Package: mx-datetime
 Architecture: any
 Depends: chrony,
+         pkexec,
          util-linux-extra,
          ${misc:Depends},
          ${shlibs:Depends}

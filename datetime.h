@@ -60,6 +60,7 @@ private:
     qint64 timeDelta = 0;
     int zoneDelta = 0;
     bool zoneIdChanged = false;
+    QString pendingTimeZoneFile;
     enum InitSystem { SystemV, OpenRC, SystemD } sysInit = SystemV;
     QList<QByteArray> zones;
     bool enabledNTP {};
@@ -80,7 +81,7 @@ private:
     void loadTab(int index);
     void update();
     void loadDateTime();
-    void saveDateTime(const QDateTime &driftStart);
+    bool saveDateTime();
     void transferTime(const QString &action, const QString &from, const QString &to);
     void readHardwareClock();
     void saveHardwareClock();

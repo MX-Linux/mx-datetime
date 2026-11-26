@@ -26,6 +26,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QProcess>
+#include <QScopeGuard>
 #include <QStandardPaths>
 #include <QTextCharFormat>
 #include <QTimeZone>
@@ -378,52 +379,45 @@ void MXDateTime::loadDateTime()
     zoneIdChanged = false;
     comboTimeZone->blockSignals(false);
 }
-void MXDateTime::saveDateTime(const QDateTime &driftStart)
-{
-    // Stop display updates while setting the system clock.
-    if (zoneDelta || dateDelta || timeDelta || zoneIdChanged) {
-        updater.stop();
+bool MXDateTime::saveDateTime() {
+    if (!zoneIdChanged && !zoneDelta && pendingTimeZoneFile.isEmpty() && !dateDelta && !timeDelta) {
+        return true;
     }
+    updater.stop();
+    const auto restartTimer = qScopeGuard([this] { updater.start(0); });
 
-    // Set the time zone (if changed) before setting the time.
-    if (zoneDelta || zoneIdChanged) {
-        const QString newzone(comboTimeZone->currentData().toByteArray());
-        if (sysInit == SystemD) {
-            runHelper({u"set-zone"_s, newzone});
-        } else {
-            setLocaltimeLinkAsRoot(newzone);
+    QByteArray error;
+    if (zoneIdChanged || zoneDelta) {
+        const QString zone = comboTimeZone->currentData().toString();
+        const bool applied = sysInit == SystemD ? runHelper({u"set-zone"_s, zone}, nullptr, &error)
+                                                : setLocaltimeLinkAsRoot(zone, &error);
+        if (!applied) {
+            return showSaveError(tr("Could not set the system time zone to %1.").arg(zone), error);
         }
-        writeTimeZoneAsRoot(newzone);
+        pendingTimeZoneFile = zone;
         zoneDelta = 0;
         zoneIdChanged = false;
     }
-
-    // Set the date and time if their controls have been altered.
-    if (dateDelta || timeDelta) {
-        static const QString dtFormat(u"yyyy-MM-ddTHH:mm:ss.zzz"_s);
-        QDateTime newTime(calendar->selectedDate(), timeEdit->time());
-        updater.stop();
-        QString param;
-        if (timeDelta) {
-            const qint64 drift = driftStart.msecsTo(QDateTime::currentDateTimeUtc());
-            param = newTime.addMSecs(drift).toString(dtFormat);
-        } else {
-            newTime.setTime(QTime::currentTime());
-            param = newTime.toString(dtFormat);
+    if (!pendingTimeZoneFile.isEmpty()) {
+        error.clear();
+        if (!writeTimeZoneAsRoot(pendingTimeZoneFile, &error)) {
+            return showSaveError(tr("Could not write the time zone to /etc/timezone."), error);
         }
-        if (sysInit != SystemD) {
-            runHelper({u"set-time"_s, param});
-        } else {
-            runHelper({u"systemd-set-time"_s, param});
+        pendingTimeZoneFile.clear();
+    }
+
+    if (dateDelta || timeDelta) {
+        // Build the requested local time in the applied zone, including time spent authenticating.
+        const QDateTime desired = QDateTime::currentDateTime().addSecs(timeDelta).addDays(dateDelta);
+        const QString value = desired.toString(u"yyyy-MM-ddTHH:mm:ss.zzz"_s);
+        error.clear();
+        if (!runHelper({sysInit == SystemD ? u"systemd-set-time"_s : u"set-time"_s, value}, nullptr, &error)) {
+            return showSaveError(tr("Could not set the system date and time."), error);
         }
         dateDelta = 0;
         timeDelta = 0;
     }
-
-    // Kick the display timer back in action.
-    if (!updater.isActive()) {
-        updater.start(0);
-    }
+    return true;
 }
 
 // HARDWARE CLOCK
@@ -871,8 +865,6 @@ void MXDateTime::serverRowChanged()
 
 void MXDateTime::applyClicked()
 {
-    // Compensation for the execution time of this section.
-    QDateTime driftStart = QDateTime::currentDateTimeUtc();
     setClockLock(true);
 
     // Validate all data before trying to save settings.
@@ -882,7 +874,10 @@ void MXDateTime::applyClicked()
     }
 
     // Save the settings.
-    saveDateTime(driftStart);
+    if (!saveDateTime()) {
+        setClockLock(false);
+        return;
+    }
     if (loadedTabs & 2) {
         saveHardwareClock();
     }

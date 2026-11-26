@@ -779,13 +779,13 @@ bool MXDateTime::saveNetworkTime()
         if (!installManagedFileAsRoot(content, sourcesFile, &error)) {
             return showSaveError(tr("Could not save the time sources to %1.").arg(sourcesFile), error);
         }
+        QByteArray result;
+        if (!runHelper({u"activate-chrony-sources"_s, sourcesFile}, &result, &error, inlineSources)) {
+            return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
+        }
+        inlineSources.clear();
         if (ntp) {
-            QByteArray result;
-            if (!runHelper({u"activate-chrony-sources"_s, sourcesFile}, &result, &error, inlineSources)) {
-                return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
-            }
             chronyNeedsRestart |= result.trimmed() == "changed";
-            inlineSources.clear();
             QStringList action {u"reload-sources"_s};
             if (chronyNeedsRestart) {
                 if (sysInit == SystemD) {
@@ -801,8 +801,8 @@ bool MXDateTime::saveNetworkTime()
             if (!runHelper(action, nullptr, &error)) {
                 return showSaveError(tr("Could not activate the saved time sources."), error);
             }
-            chronyNeedsRestart = false;
         }
+        chronyNeedsRestart = false;
         changedServers = false;
     }
     return true;

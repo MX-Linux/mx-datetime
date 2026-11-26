@@ -33,8 +33,8 @@
 #include <QTimeZone>
 
 #include "about.h"
-#include "datetime.h"
 #include "chronypaths.h"
+#include "datetime.h"
 #include <unistd.h>
 
 using namespace Qt::StringLiterals;
@@ -56,12 +56,14 @@ QString elevationProgram()
     return {};
 }
 
-QByteArray displayZoneId() {
+QByteArray displayZoneId()
+{
     const QByteArray zone = QTimeZone::systemTimeZoneId();
     return zone == "UTC" ? QByteArrayLiteral("Etc/UTC") : zone;
 }
 
-bool openRcChronyEnabled() {
+bool openRcChronyEnabled()
+{
     return QFileInfo::exists(u"/etc/runlevels/default/"_s + Chrony::openRcServiceName());
 }
 
@@ -392,7 +394,8 @@ void MXDateTime::loadDateTime()
     zoneIdChanged = false;
     comboTimeZone->blockSignals(false);
 }
-bool MXDateTime::saveDateTime() {
+bool MXDateTime::saveDateTime()
+{
     if (!zoneIdChanged && !zoneDelta && pendingTimeZoneFile.isEmpty() && !dateDelta && !timeDelta) {
         return true;
     }
@@ -735,7 +738,8 @@ QString MXDateTime::systemdChronyUnit()
     return {};
 }
 
-std::optional<bool> MXDateTime::chronyRunning(QByteArray &error) {
+std::optional<bool> MXDateTime::chronyRunning(QByteArray &error)
+{
     QByteArray state;
     if (sysInit == SystemD) {
         const QString unit = systemdChronyUnit();
@@ -792,7 +796,8 @@ void MXDateTime::loadNetworkTime()
     }
     checkAutoSync->setChecked(enabledNTP);
 }
-bool MXDateTime::showSaveError(const QString &message, const QByteArray &details) {
+bool MXDateTime::showSaveError(const QString &message, const QByteArray &details)
+{
     QMessageBox box(QMessageBox::Critical, windowTitle(), message, QMessageBox::Ok, this);
     if (!details.isEmpty()) {
         box.setDetailedText(QString::fromUtf8(details.trimmed()));
@@ -899,7 +904,8 @@ bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         return false;
     }
-    const auto findSource = [this](const QString &type, const QString &address, const QString &options) -> QTableWidgetItem * {
+    const auto findSource = [this](const QString &type, const QString &address,
+                                   const QString &options) -> QTableWidgetItem * {
         const int serverCount = tableServers->rowCount();
         for (int ixi = 0; ixi < serverCount; ++ixi) {
             auto *comboType = qobject_cast<QComboBox *>(tableServers->cellWidget(ixi, 0));

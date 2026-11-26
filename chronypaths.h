@@ -24,10 +24,12 @@
 #include <QFile>
 #include <QFileInfo>
 
-namespace Chrony {
+namespace Chrony
+{
 using namespace Qt::StringLiterals;
 
-inline QString openRcServiceName() {
+inline QString openRcServiceName()
+{
     if (QFileInfo::exists(u"/etc/init.d/chronyd"_s)) {
         return u"chronyd"_s;
     }
@@ -45,7 +47,8 @@ inline QString chronyConfigFile()
     return u"/etc/chrony/chrony.conf"_s;
 }
 
-inline QStringList sourceDirectories(const QByteArray &raw) {
+inline QStringList sourceDirectories(const QByteArray &raw)
+{
     const QString line = QString::fromUtf8(raw).section('#', 0, 0).simplified();
     QStringList tokens = line.split(' ', Qt::SkipEmptyParts);
     if (tokens.isEmpty() || tokens.takeFirst().compare(u"sourcedir"_s, Qt::CaseInsensitive) != 0) {
@@ -54,7 +57,8 @@ inline QStringList sourceDirectories(const QByteArray &raw) {
     return tokens;
 }
 
-inline QString chronySourcesFile() {
+inline QString chronySourcesFile()
+{
     QFile file(chronyConfigFile());
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         while (!file.atEnd()) {
@@ -75,6 +79,6 @@ inline QString chronySourcesFile() {
     return u"/etc/chrony/sources.d/mx-datetime.sources"_s;
 }
 
-}
+} // namespace Chrony
 
 #endif // CHRONYPATHS_H

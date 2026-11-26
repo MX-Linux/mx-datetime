@@ -70,7 +70,8 @@ void printError(const QString &message)
     return !segments.contains(QStringLiteral(".")) && !segments.contains(QStringLiteral(".."));
 }
 
-bool isTrustedChronyPath(const QString &path) {
+[[nodiscard]] bool isTrustedChronyPath(const QString &path)
+{
     if (!path.startsWith(QStringLiteral("/etc/")) || QDir::cleanPath(path) != path) {
         return false;
     }
@@ -181,12 +182,14 @@ bool isTrustedChronyPath(const QString &path) {
     return result.exitStatus == QProcess::NormalExit ? result.exitCode : 1;
 }
 
-struct Operation {
+struct Operation
+{
     QString program;
     QStringList arguments;
 };
 
-int runOperation(const QString &action, const QStringList &operands) {
+[[nodiscard]] int runOperation(const QString &action, const QStringList &operands)
+{
     using namespace Qt::StringLiterals;
     static const QHash<QString, Operation> operations {
         {u"set-zone"_s, {u"timedatectl"_s, {u"set-timezone"_s}}},
@@ -369,12 +372,14 @@ int runOperation(const QString &action, const QStringList &operands) {
     return writeManagedFile(path, content.toUtf8());
 }
 
-bool isSourceLine(const QByteArray &line) {
+[[nodiscard]] bool isSourceLine(const QByteArray &line)
+{
     const QByteArray words = line.simplified();
     return words.startsWith("pool ") || words.startsWith("server ") || words.startsWith("peer ");
 }
 
-int handleChronyFile(const QString &action, const QStringList &arguments) {
+[[nodiscard]] int handleChronyFile(const QString &action, const QStringList &arguments)
+{
     using namespace Qt::StringLiterals;
     const QString config = Chrony::chronyConfigFile();
     const bool activate = action == u"activate-chrony-sources"_s;

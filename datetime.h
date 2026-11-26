@@ -68,6 +68,7 @@ private:
     bool enabledNTP {};
     bool serviceChangePending = false;
     std::optional<bool> isHardwareUTC;
+    QByteArray inlineSources;
     bool updating = false;
 
     void startup();
@@ -96,9 +97,7 @@ private:
     bool showSaveError(const QString &message, const QByteArray &details);
     QString systemdChronyUnit();
     std::optional<bool> chronyRunning(QByteArray &error);
-    QByteArray inlineSources;
     bool loadSources(const QString &filename, QByteArray *activeLines = nullptr);
-
 
     // Slots
 

@@ -904,7 +904,7 @@ void MXDateTime::applyClicked()
     setClockLock(true);
 
     // Validate all data before trying to save settings.
-    if ((loadedTabs & 4) && !validateServerList()) {
+    if ((loadedTabs & 4) && changedServers && !validateServerList()) {
         setClockLock(false);
         return;
     }

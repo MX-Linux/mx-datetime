@@ -374,8 +374,9 @@ void MXDateTime::loadDateTime()
     comboTimeZone->blockSignals(true);
     const QByteArray &zone = QTimeZone::systemTimeZoneId();
     int index = comboTimeArea->findData(QString(zone).section('/', 0, 0));
+    const QSignalBlocker loadingArea(comboTimeArea);
     comboTimeArea->setCurrentIndex(index);
-    qApp->processEvents();
+    timeAreaIndexChanged(index);
     index = comboTimeZone->findData(QVariant(zone));
     comboTimeZone->setCurrentIndex(index);
     zoneDelta = 0;

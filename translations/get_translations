@@ -1,65 +1,87 @@
 #!/usr/bin/env bash
+set -euo pipefail
+shopt -s nullglob
 
-# Get script directory and determine app name
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-APPNAME="$(basename "$PROJECT_DIR")"
-
-echodo() {
-  echo "${@}"
-  ${@}
-}
-
-# Prepare transifex
-if [ ! -s  .tx/config ]; then
-   mkdir -p .tx
-   cat <<EOF > .tx/config
-[main]
-host = https://www.transifex.com
-
-[o:anticapitalista:p:antix-development:r:$APPNAME]
-file_filter = ./${APPNAME}_<lang>.ts
-source_file = ${APPNAME}_en.ts
-source_lang = en
-type        = ts
-minimum_perc = 25
-EOF
+translations_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+project_dir=$(dirname -- "$translations_dir")
+app=mx-datetime
+sources=("$project_dir"/*.cpp "$project_dir"/*.h "$project_dir"/*.ui)
+if (( ${#sources[@]} == 0 )); then
+    echo "No C++, header, or UI sources found in $project_dir" >&2
+    exit 1
 fi
-
-# Migrate percent checking
-if [ -z "$(grep minimum_perc .tx/config)" ]; then
-        echo "minimum_perc = 25" >> .tx/config
+if ! command -v tx >/dev/null; then
+    echo "The Transifex client (tx) is required to refresh translations." >&2
+    exit 1
 fi
-
-# Remove existing translations
-find . -type f -name '*.ts' -not -name '*en.ts' -delete
-
-# Get all translations
-if command -v tx >/dev/null; then
-   echodo tx pull -r antix-development.$APPNAME --all
-fi
-
-# en_US duplicates the English source catalog and should not be shipped.
-rm -f "${APPNAME}_en_US.ts"
-
-# Find lupdate command in common locations
-LUPDATE=""
-for cmd in lupdate lupdate-qt6 /usr/lib/qt6/bin/lupdate /usr/bin/lupdate /usr/local/bin/lupdate; do
-    if command -v "$cmd" >/dev/null 2>&1; then
-        LUPDATE="$cmd"
+lupdate=
+for candidate in lupdate-qt6 /usr/lib/qt6/bin/lupdate lupdate; do
+    if command -v "$candidate" >/dev/null; then
+        lupdate=$candidate
         break
     fi
 done
-
-if [ -z "$LUPDATE" ]; then
-    echo "Error: lupdate command not found. Please install Qt development tools."
+if [[ -z $lupdate ]]; then
+    echo "Qt lupdate is required to extract source strings." >&2
     exit 1
 fi
 
-echo "Using lupdate: $LUPDATE"
+# Stage at the same depth as translations/ so lupdate records the same relative paths.
+stage=$(mktemp -d "$project_dir/.translation-refresh.XXXXXXXX")
+trap 'rm -rf -- "$stage"' EXIT
+cd -- "$stage"
+mkdir .tx
+if [[ -s $translations_dir/.tx/config ]]; then
+    # Keep project settings while directing all downloads into the staging directory.
+    sed -E "s|^[[:space:]]*file_filter[[:space:]]*=.*|file_filter = ${app}_<lang>.ts|; s|^[[:space:]]*source_file[[:space:]]*=.*|source_file = ${app}_en.ts|" \
+        "$translations_dir/.tx/config" > .tx/config
+else
+    cat > .tx/config <<CONFIG
+[main]
+host = https://www.transifex.com
 
-# Update all .ts files from source files
-SOURCE_FILES=$(find ../src -name "*.cpp" -o -name "*.h" -o -name "*.ui" 2>/dev/null)
-if [ -n "$SOURCE_FILES" ]; then
-    "$LUPDATE" $SOURCE_FILES -ts *en.ts
+[o:anticapitalista:p:antix-development:r:$app]
+file_filter = ${app}_<lang>.ts
+source_file = ${app}_en.ts
+source_lang = en
+type = ts
+CONFIG
+fi
+if ! grep -Eq '^[[:space:]]*minimum_perc[[:space:]]*=' .tx/config; then
+    echo 'minimum_perc = 25' >> .tx/config
+fi
+
+tx pull -r "antix-development.$app" --all
+# English is regenerated below. US English duplicates the source catalog.
+rm -f -- "${app}_en.ts" "${app}_en_US.ts"
+downloads=("${app}_"*.ts)
+if (( ${#downloads[@]} == 0 )); then
+    echo "Transifex returned no translation catalogs." >&2
+    exit 1
+fi
+for catalog in "${downloads[@]}"; do
+    if [[ ! -s $catalog ]]; then
+        echo "Transifex returned an empty catalog: $catalog" >&2
+        exit 1
+    fi
+done
+
+english=${app}_en.ts
+if [[ -f $translations_dir/$english ]]; then
+    cp -- "$translations_dir/$english" "$english"
+fi
+"$lupdate" "${sources[@]}" -ts "$english"
+
+# Publish complete refreshes one at a time. Prune obsolete locales last.
+exec {lock_fd}<"$translations_dir"
+flock -x "$lock_fd"
+obsolete=()
+for catalog in "$translations_dir/${app}_"*.ts; do
+    if [[ ! -f ${catalog##*/} ]]; then
+        obsolete+=("$catalog")
+    fi
+done
+mv -f -- "${app}_"*.ts "$translations_dir/"
+if (( ${#obsolete[@]} )); then
+    rm -- "${obsolete[@]}"
 fi

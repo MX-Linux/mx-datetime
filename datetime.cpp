@@ -157,6 +157,22 @@ void MXDateTime::startup()
     }
     comboTimeArea->model()->sort(0);
 
+    // Connect editing controls once. Applying changes reloads tab data.
+    connect(comboTimeArea, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this, &MXDateTime::timeAreaIndexChanged);
+    connect(comboTimeZone, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this, &MXDateTime::timeZoneIndexChanged);
+    connect(calendar, &QCalendarWidget::selectionChanged, this, &MXDateTime::calendarSelectionChanged);
+    connect(timeEdit, &MTimeEdit::dateTimeChanged, this, &MXDateTime::timeEditDateTimeChanged);
+    connect(pushHardwareAdjust, &QPushButton::clicked, this, &MXDateTime::hardwareAdjustClicked);
+    connect(pushSystemToHardware, &QPushButton::clicked, this, &MXDateTime::systemToHardwareClicked);
+    connect(pushHardwareToSystem, &QPushButton::clicked, this, &MXDateTime::hardwareToSystemClicked);
+    connect(pushSyncNow, &QPushButton::clicked, this, &MXDateTime::syncNowClicked);
+    connect(tableServers, &QTableWidget::itemSelectionChanged,
+        this, &MXDateTime::serversItemSelectionChanged);
+    connect(pushServerAdd, &QPushButton::clicked, this, &MXDateTime::serverAddClicked);
+    connect(pushServerRemove, &QPushButton::clicked, this, &MXDateTime::serverRemoveClicked);
+
     // Prepare the GUI.
     connect(pushAbout, &QPushButton::clicked, this, &MXDateTime::aboutClicked);
     connect(pushHelp, &QPushButton::clicked, this, &MXDateTime::helpClicked);
@@ -278,26 +294,12 @@ void MXDateTime::loadTab(int index)
         setClockLock(true);
         switch (index) {
         case 0:
-            connect(comboTimeArea, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                this, &MXDateTime::timeAreaIndexChanged);
-            connect(comboTimeZone, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                this, &MXDateTime::timeZoneIndexChanged);
-            connect(calendar, &QCalendarWidget::selectionChanged, this, &MXDateTime::calendarSelectionChanged);
-            connect(timeEdit, &MTimeEdit::dateTimeChanged, this, &MXDateTime::timeEditDateTimeChanged);
             loadDateTime();
             break; // Date & Time.
         case 1:
-            connect(pushHardwareAdjust, &QPushButton::clicked, this, &MXDateTime::hardwareAdjustClicked);
-            connect(pushSystemToHardware, &QPushButton::clicked, this, &MXDateTime::systemToHardwareClicked);
-            connect(pushHardwareToSystem, &QPushButton::clicked, this, &MXDateTime::hardwareToSystemClicked);
             readHardwareClock();
             break; // Hardware Clock.
         case 2:
-            connect(pushSyncNow, &QPushButton::clicked, this, &MXDateTime::syncNowClicked);
-            connect(tableServers, &QTableWidget::itemSelectionChanged,
-                this, &MXDateTime::serversItemSelectionChanged);
-            connect(pushServerAdd, &QPushButton::clicked, this, &MXDateTime::serverAddClicked);
-            connect(pushServerRemove, &QPushButton::clicked, this, &MXDateTime::serverRemoveClicked);
             loadNetworkTime();
             break; // Network Time.
         }

@@ -56,6 +56,11 @@ QString elevationProgram()
     return {};
 }
 
+QByteArray displayZoneId() {
+    const QByteArray zone = QTimeZone::systemTimeZoneId();
+    return zone == "UTC" ? QByteArrayLiteral("Etc/UTC") : zone;
+}
+
 bool openRcChronyEnabled() {
     return QFileInfo::exists(u"/etc/runlevels/default/"_s + Chrony::openRcServiceName());
 }
@@ -340,7 +345,7 @@ void MXDateTime::timeZoneIndexChanged(int index)
     zoneDelta = QTimeZone(comboTimeZone->itemData(index).toByteArray()).offsetFromUtc(current)
                 - QTimeZone::systemTimeZone().offsetFromUtc(current); // Delta = new - old
     // Check IANA-zone id differ
-    const QByteArray &currentTimeZone = QTimeZone::systemTimeZoneId();
+    const QByteArray &currentTimeZone = displayZoneId();
     const QByteArray &selectedTimeZone = QTimeZone(comboTimeZone->itemData(index).toByteArray()).id();
     zoneIdChanged = (currentTimeZone != selectedTimeZone);
     // Make the change immediately visible
@@ -376,7 +381,7 @@ void MXDateTime::loadDateTime()
 {
     // Time zone.
     comboTimeZone->blockSignals(true);
-    const QByteArray &zone = QTimeZone::systemTimeZoneId();
+    const QByteArray &zone = displayZoneId();
     int index = comboTimeArea->findData(QString(zone).section('/', 0, 0));
     const QSignalBlocker loadingArea(comboTimeArea);
     comboTimeArea->setCurrentIndex(index);

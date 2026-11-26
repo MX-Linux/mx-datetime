@@ -27,6 +27,7 @@
 #include <QProcessEnvironment>
 #include <QRegularExpression>
 #include <QSaveFile>
+#include <QTemporaryDir>
 
 #include <cstdio>
 
@@ -309,15 +310,18 @@ int runOperation(const QString &action, const QStringList &operands) {
         return 1;
     }
 
-    const QFileInfo localtimeInfo(QStringLiteral("/etc/localtime"));
-    if (localtimeInfo.exists()) {
-        if (localtimeInfo.isDir() || !QFile::remove(localtimeInfo.filePath())) {
-            printError(QStringLiteral("Unable to replace /etc/localtime"));
-            return 1;
-        }
+    QTemporaryDir staging(QStringLiteral("/etc/.mx-datetime-XXXXXX"));
+    if (!staging.isValid()) {
+        printError(staging.errorString());
+        return 1;
     }
-    if (!QFile::link(targetPath, QStringLiteral("/etc/localtime"))) {
-        printError(QStringLiteral("Unable to create /etc/localtime symlink"));
+    const QString link = staging.filePath(QStringLiteral("localtime"));
+    if (!QFile::link(targetPath, link)) {
+        printError(QStringLiteral("Unable to prepare the new /etc/localtime symlink"));
+        return 1;
+    }
+    if (std::rename(QFile::encodeName(link).constData(), "/etc/localtime") != 0) {
+        printError(QStringLiteral("Unable to replace /etc/localtime"));
         return 1;
     }
     return 0;

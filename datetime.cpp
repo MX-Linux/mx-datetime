@@ -56,6 +56,10 @@ QString elevationProgram()
     return {};
 }
 
+bool openRcChronyEnabled() {
+    return QFileInfo::exists(u"/etc/runlevels/default/"_s + Chrony::openRcServiceName());
+}
+
 bool hasEnabledSystemVChronyService()
 {
     const QDir etcDir(u"/etc"_s);
@@ -550,7 +554,13 @@ void MXDateTime::syncNowClicked()
     }
     QByteArray output;
     bool rexit = false;
-    if (enabledNTP) {
+    const auto running = chronyRunning(output);
+    if (!running.has_value()) {
+        showSaveError(tr("Could not determine whether chrony is running."), output);
+        setClockLock(false);
+        return;
+    }
+    if (*running) {
         // All commands can be passed via stdin, but chronyc may return 0 even if one command fails.
         rexit = runHelper({u"ntp-burst"_s}, &output);
         if (rexit) {
@@ -706,11 +716,42 @@ QString MXDateTime::systemdChronyUnit()
     const QStringList candidates {u"chronyd.service"_s, u"chrony.service"_s};
     for (const QString &unit : candidates) {
         QByteArray output;
-        execute(u"systemctl"_s, {u"show"_s, u"-p"_s, u"LoadState"_s, u"--value"_s, unit}, &output, nullptr);
-        if (QString::fromUtf8(output).trimmed() == u"loaded"_s) {
-            return unit;
+        if (execute(u"systemctl"_s, {u"show"_s, u"--property=Id,LoadState"_s, unit}, &output)) {
+            const auto properties = output.split('\n');
+            if (properties.contains("LoadState=loaded")) {
+                for (const QString &name : candidates) {
+                    if (properties.contains("Id=" + name.toUtf8())) {
+                        return name;
+                    }
+                }
+            }
         }
     }
+    return {};
+}
+
+std::optional<bool> MXDateTime::chronyRunning(QByteArray &error) {
+    QByteArray state;
+    if (sysInit == SystemD) {
+        const QString unit = systemdChronyUnit();
+        if (unit.isEmpty()) {
+            error = tr("Could not find the chrony service.").toUtf8();
+            return {};
+        }
+        if (!execute(u"systemctl"_s, {u"show"_s, u"--property=ActiveState"_s, u"--value"_s, unit}, &state, &error)) {
+            return {};
+        }
+    } else if (!runHelper({sysInit == OpenRC ? u"openrc-status"_s : u"sysv-status"_s}, &state, &error)) {
+        error.append(state);
+        return {};
+    }
+    if (state.trimmed() == "active") {
+        return true;
+    }
+    if (state.trimmed() == "inactive" || state.trimmed() == "failed") {
+        return false;
+    }
+    error.append(state);
     return {};
 }
 
@@ -730,7 +771,7 @@ void MXDateTime::loadNetworkTime()
     changedServers = move;
 
     if (sysInit == OpenRC) {
-        enabledNTP = QFileInfo::exists(u"/etc/runlevels/default/"_s + Chrony::openRcServiceName());
+        enabledNTP = openRcChronyEnabled();
     } else if (sysInit == SystemV) {
         enabledNTP = hasEnabledSystemVChronyService();
     } else {
@@ -759,22 +800,30 @@ bool MXDateTime::saveNetworkTime()
 {
     // Enable/disable NTP
     const bool ntp = checkAutoSync->isChecked();
-    if (ntp != enabledNTP) {
-        const QString enable_disable(ntp ? u"enable"_s : u"disable"_s);
-        const QString start_stop(ntp ? u"start"_s : u"stop"_s);
+    if (ntp != enabledNTP || serviceChangePending) {
+        QString prefix;
+        QStringList operands;
         if (sysInit == SystemD) {
             const QString unit = systemdChronyUnit();
-            if (!unit.isEmpty()) {
-                runHelper({u"systemd-"_s + enable_disable, unit});
-                runHelper({u"systemd-"_s + start_stop, unit});
+            if (unit.isEmpty()) {
+                return showSaveError(tr("Could not find the chrony service."), {});
             }
-        } else if (sysInit == OpenRC) {
-            runHelper({u"openrc-"_s + enable_disable});
-            runHelper({u"openrc-"_s + start_stop});
+            prefix = u"systemd-"_s;
+            operands << unit;
         } else {
-            runHelper({u"sysv-"_s + enable_disable});
-            runHelper({u"sysv-"_s + start_stop});
+            prefix = sysInit == OpenRC ? u"openrc-"_s : u"sysv-"_s;
         }
+        serviceChangePending = true;
+        QByteArray error;
+        if ((sysInit != OpenRC || openRcChronyEnabled() != ntp)
+            && !runHelper(QStringList{prefix + (ntp ? u"enable"_s : u"disable"_s)} + operands, nullptr, &error)) {
+            return showSaveError(tr("Could not change whether chrony starts at boot."), error);
+        }
+        error.clear();
+        if (!runHelper(QStringList{prefix + (ntp ? u"start"_s : u"stop"_s)} + operands, nullptr, &error)) {
+            return showSaveError(ntp ? tr("Could not start chrony.") : tr("Could not stop chrony."), error);
+        }
+        serviceChangePending = false;
         enabledNTP = ntp;
     }
 
@@ -810,8 +859,13 @@ bool MXDateTime::saveNetworkTime()
             return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
         }
         inlineSources.clear();
-        if (ntp) {
-            chronyNeedsRestart |= result.trimmed() == "changed";
+        chronyNeedsRestart |= result.trimmed() == "changed";
+        error.clear();
+        const auto running = chronyRunning(error);
+        if (!running.has_value()) {
+            return showSaveError(tr("Could not determine whether chrony is running."), error);
+        }
+        if (*running) {
             QStringList action {u"reload-sources"_s};
             if (chronyNeedsRestart) {
                 if (sysInit == SystemD) {

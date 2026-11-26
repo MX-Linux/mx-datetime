@@ -206,9 +206,11 @@ int runOperation(const QString &action, const QStringList &operands) {
         {u"reload-sources"_s, {u"chronyc"_s, {u"reload"_s, u"sources"_s}}},
         {u"sysv-enable"_s, {u"update-rc.d"_s, {u"chrony"_s, u"enable"_s}}},
         {u"sysv-disable"_s, {u"update-rc.d"_s, {u"chrony"_s, u"disable"_s}}},
+        {u"sysv-status"_s, {u"service"_s, {u"chrony"_s, u"status"_s}}},
         {u"sysv-start"_s, {u"service"_s, {u"chrony"_s, u"start"_s}}},
         {u"sysv-stop"_s, {u"service"_s, {u"chrony"_s, u"stop"_s}}},
         {u"sysv-restart"_s, {u"service"_s, {u"chrony"_s, u"restart"_s}}},
+        {u"openrc-status"_s, {u"rc-service"_s, {Chrony::openRcServiceName(), u"status"_s}}},
         {u"openrc-start"_s, {u"rc-service"_s, {Chrony::openRcServiceName(), u"start"_s}}},
         {u"openrc-stop"_s, {u"rc-service"_s, {Chrony::openRcServiceName(), u"stop"_s}}},
         {u"openrc-restart"_s, {u"rc-service"_s, {Chrony::openRcServiceName(), u"restart"_s}}},
@@ -247,7 +249,25 @@ int runOperation(const QString &action, const QStringList &operands) {
         printError(u"Command is not available: %1"_s.arg(it->program));
         return 127;
     }
-    return relayResult(runProcess(executable, it->arguments + operands, action == u"read-rtc"_s));
+    if (action == u"sysv-status"_s && !QFileInfo::exists(u"/etc/init.d/chrony"_s)) {
+        printError(u"Chrony init script is missing"_s);
+        return 1;
+    }
+    const auto result = runProcess(executable, it->arguments + operands, action == u"read-rtc"_s);
+    if (action == u"sysv-status"_s || action == u"openrc-status"_s) {
+        if (result.started && result.exitStatus == QProcess::NormalExit) {
+            // LSB also distinguishes dead processes with a stale PID or lock file.
+            // OpenRC reports a crashed service with status 32.
+            const bool stopped = result.exitCode == 3
+                || (action == u"sysv-status"_s && (result.exitCode == 1 || result.exitCode == 2))
+                || (action == u"openrc-status"_s && result.exitCode == 32);
+            if (result.exitCode == 0 || stopped) {
+                writeAndFlush(stdout, result.exitCode == 0 ? "active\n" : "inactive\n");
+                return 0;
+            }
+        }
+    }
+    return relayResult(result);
 }
 
 [[nodiscard]] int handleWriteTimezone(const QStringList &arguments)

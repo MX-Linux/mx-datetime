@@ -66,6 +66,7 @@ private:
     enum InitSystem { SystemV, OpenRC, SystemD } sysInit = SystemV;
     QList<QByteArray> zones;
     bool enabledNTP {};
+    bool serviceChangePending = false;
     std::optional<bool> isHardwareUTC;
     bool updating = false;
 
@@ -94,6 +95,7 @@ private:
     bool saveNetworkTime();
     bool showSaveError(const QString &message, const QByteArray &details);
     QString systemdChronyUnit();
+    std::optional<bool> chronyRunning(QByteArray &error);
     QByteArray inlineSources;
     bool loadSources(const QString &filename, QByteArray *activeLines = nullptr);
 

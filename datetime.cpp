@@ -808,7 +808,7 @@ bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         return false;
     }
-    const auto isDuplicate = [this](const QString &type, const QString &address, const QString &options) {
+    const auto findSource = [this](const QString &type, const QString &address, const QString &options) -> QTableWidgetItem * {
         const int serverCount = tableServers->rowCount();
         for (int ixi = 0; ixi < serverCount; ++ixi) {
             auto *comboType = qobject_cast<QComboBox *>(tableServers->cellWidget(ixi, 0));
@@ -816,13 +816,14 @@ bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
                 continue;
             }
             const QString rowType = comboType->currentData().toString();
-            const QString rowAddress = tableServers->item(ixi, 1)->text().trimmed();
+            auto *addressItem = tableServers->item(ixi, 1);
+            const QString rowAddress = addressItem->text().trimmed();
             const QString rowOptions = tableServers->item(ixi, 2)->text().simplified();
             if (rowType == type && rowAddress == address && rowOptions == options) {
-                return true;
+                return addressItem;
             }
         }
-        return false;
+        return nullptr;
     };
     bool hassrc = false;
     while (!file.atEnd()) {
@@ -847,7 +848,11 @@ bool MXDateTime::loadSources(const QString &filename, QByteArray *activeLines)
             }
             const QString address = args.at(1);
             const QString trimmedOptions = options.trimmed();
-            if (!isDuplicate(curarg, address, trimmedOptions)) {
+            if (auto *existing = findSource(curarg, address, trimmedOptions)) {
+                if (enabled) {
+                    existing->setCheckState(Qt::Checked);
+                }
+            } else {
                 addServerRow(enabled, curarg, address, trimmedOptions);
             }
             hassrc = true;

@@ -29,6 +29,8 @@
 
 #include <cstdio>
 
+#include "chronypaths.h"
+
 namespace
 {
 struct ProcessResult
@@ -66,25 +68,22 @@ void printError(const QString &message)
     return !segments.contains(QStringLiteral(".")) && !segments.contains(QStringLiteral(".."));
 }
 
-[[nodiscard]] bool isAllowedManagedDestination(const QString &path)
-{
-    if (!QDir::isAbsolutePath(path)) {
+bool isTrustedChronyPath(const QString &path) {
+    if (!path.startsWith(QStringLiteral("/etc/")) || QDir::cleanPath(path) != path) {
         return false;
     }
-
-    static const QStringList exactPaths {
-        QStringLiteral("/etc/chrony.conf"),
-        QStringLiteral("/etc/chrony/chrony.conf"),
-    };
-    if (exactPaths.contains(path)) {
-        return true;
+    QFileInfo info(path);
+    while (info.absoluteFilePath() != QStringLiteral("/")) {
+        if (info.isSymLink() || (info.exists() && (info.ownerId() != 0
+                || info.permissions().testAnyFlags(QFileDevice::WriteGroup | QFileDevice::WriteOther)))) {
+            return false;
+        }
+        info.setFile(info.absolutePath());
     }
-
-    const QFileInfo info(path);
-    return info.fileName() == QLatin1String("mx-datetime.sources") && path.startsWith(QStringLiteral("/etc/"));
+    return true;
 }
 
-[[nodiscard]] int writeManagedFile(const QString &destinationPath, const QByteArray &content)
+[[nodiscard]] int writeManagedFile(const QString &destinationPath, const QByteArray &content, bool preserveMode = false)
 {
     const QFileInfo destinationInfo(destinationPath);
     QDir parentDir;
@@ -107,7 +106,7 @@ void printError(const QString &message)
         printError(QString("Unable to commit %1").arg(destinationPath));
         return 1;
     }
-    if (!QFile::setPermissions(destinationPath,
+    if (!preserveMode && !QFile::setPermissions(destinationPath,
             QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther)) {
         printError(QString("Unable to set permissions on %1").arg(destinationPath));
         return 1;
@@ -336,27 +335,71 @@ int runOperation(const QString &action, const QStringList &operands) {
     return writeManagedFile(path, content.toUtf8());
 }
 
-[[nodiscard]] int handleInstallManagedFile(const QStringList &arguments)
-{
-    if (arguments.size() != 1) {
-        printError(QStringLiteral("install-managed-file requires exactly one destination"));
+bool isSourceLine(const QByteArray &line) {
+    const QByteArray words = line.simplified();
+    return words.startsWith("pool ") || words.startsWith("server ") || words.startsWith("peer ");
+}
+
+int handleChronyFile(const QString &action, const QStringList &arguments) {
+    using namespace Qt::StringLiterals;
+    const QString config = Chrony::chronyConfigFile();
+    if (!isTrustedChronyPath(config) || arguments.size() != 1) {
+        printError(u"Invalid chrony configuration path or argument count"_s);
         return 1;
     }
-
-    const QString destinationPath = arguments.constFirst();
-    if (!isAllowedManagedDestination(destinationPath)) {
-        printError(QString("install-managed-file destination is not allowed: %1").arg(destinationPath));
+    const bool retire = action == u"retire-inline-sources"_s;
+    const QString expected = retire ? config : Chrony::chronySourcesFile();
+    if (arguments.first() != expected || !isTrustedChronyPath(expected)) {
+        printError(u"Invalid chrony destination"_s);
         return 1;
     }
-
-    QFile sourceFile;
-    if (!sourceFile.open(stdin, QIODevice::ReadOnly)) {
-        printError(QStringLiteral("Unable to read managed file content from standard input"));
+    QFile input;
+    if (!input.open(stdin, QIODevice::ReadOnly)) {
+        printError(u"Cannot read chrony source data"_s);
         return 1;
     }
-    const QByteArray content = sourceFile.readAll();
+    const QByteArray content = input.readAll();
+    if (input.error() != QFileDevice::NoError || content.contains('\0')) {
+        printError(u"Invalid chrony source data"_s);
+        return 1;
+    }
+    if (!retire) {
+        for (const QByteArray &raw : content.split('\n')) {
+            const QByteArray line = raw.trimmed();
+            if (!line.isEmpty() && !line.startsWith('#') && !isSourceLine(line)) {
+                printError(u"Only chrony sources are allowed"_s);
+                return 1;
+            }
+        }
+        return writeManagedFile(expected, content);
+    }
 
-    return writeManagedFile(destinationPath, content);
+    QFile file(config);
+    if (!file.open(QIODevice::ReadOnly)) {
+        printError(file.errorString());
+        return 1;
+    }
+    const QList<QByteArray> snapshot = content.split('\n');
+    QByteArray updated;
+    bool changed = false;
+    while (!file.atEnd()) {
+        const QByteArray raw = file.readLine();
+        if (isSourceLine(raw) && snapshot.contains(raw.trimmed())) {
+            updated.append("##");
+            changed = true;
+        }
+        updated.append(raw);
+    }
+    if (file.error() != QFileDevice::NoError) {
+        printError(file.errorString());
+        return 1;
+    }
+    file.close();
+    if (changed && writeManagedFile(config, updated, true) != 0) {
+        return 1;
+    }
+    writeAndFlush(stdout, changed ? "changed\n" : "unchanged\n");
+    return 0;
 }
 } // namespace
 
@@ -372,8 +415,8 @@ int main(int argc, char *argv[])
     const QString action = arguments.constFirst();
     const QStringList remainingArgs = arguments.mid(1);
 
-    if (action == QStringLiteral("install-managed-file")) {
-        return handleInstallManagedFile(remainingArgs);
+    if (action == QStringLiteral("install-chrony-sources") || action == QStringLiteral("retire-inline-sources")) {
+        return handleChronyFile(action, remainingArgs);
     }
     if (action == QStringLiteral("set-hwclock-mode")) {
         return handleSetHwclockMode(remainingArgs);

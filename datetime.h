@@ -89,9 +89,8 @@ private:
     void loadNetworkTime();
     void saveNetworkTime();
     QString systemdChronyUnit();
-    QString chronyConfigFile();
-    QString chronySourcesFile();
-    bool loadSources(const QString &filename);
+    QByteArray inlineSources;
+    bool loadSources(const QString &filename, QByteArray *activeLines = nullptr);
     bool clearSources(const QString &filename);
 
     // Slots

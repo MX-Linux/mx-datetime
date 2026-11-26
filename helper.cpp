@@ -24,6 +24,7 @@
 #include <QFileInfo>
 #include <QHash>
 #include <QProcess>
+#include <QProcessEnvironment>
 #include <QRegularExpression>
 #include <QSaveFile>
 
@@ -142,11 +143,16 @@ bool isTrustedChronyPath(const QString &path) {
     return {};
 }
 
-[[nodiscard]] ProcessResult runProcess(const QString &program, const QStringList &arguments)
+[[nodiscard]] ProcessResult runProcess(const QString &program, const QStringList &arguments, bool useClockLocale)
 {
     ProcessResult result;
 
     QProcess process;
+    if (useClockLocale) {
+        auto environment = QProcessEnvironment::systemEnvironment();
+        environment.insert(QStringLiteral("LC_ALL"), QStringLiteral("C"));
+        process.setProcessEnvironment(environment);
+    }
     process.start(program, arguments, QIODevice::ReadOnly);
     if (!process.waitForStarted()) {
         result.standardError = QString("Failed to start %1").arg(program).toUtf8();
@@ -237,7 +243,7 @@ int runOperation(const QString &action, const QStringList &operands) {
         printError(u"Command is not available: %1"_s.arg(it->program));
         return 127;
     }
-    return relayResult(runProcess(executable, it->arguments + operands));
+    return relayResult(runProcess(executable, it->arguments + operands, action == u"read-rtc"_s));
 }
 
 [[nodiscard]] int handleWriteTimezone(const QStringList &arguments)

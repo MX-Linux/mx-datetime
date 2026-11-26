@@ -438,27 +438,48 @@ void MXDateTime::readHardwareClock()
     pushReadHardware->setText(tr("Reading..."));
     QByteArray rtcout;
 
-    // For systemd, use timedatectl to check RTC setting consistently
+    QByteArray error;
+    isHardwareUTC.reset();
+    const bool readClock = runHelper({u"read-rtc"_s}, &rtcout, &error);
     if (sysInit == SystemD) {
-        QByteArray timedatectl_out;
-        execute(u"timedatectl"_s, {u"show"_s, u"--property=LocalRTC"_s}, &timedatectl_out);
-        // LocalRTC=no means UTC, LocalRTC=yes means local time
-        isHardwareUTC = timedatectl_out.contains("LocalRTC=no");
-
-        // Still show hwclock output for user reference
-        runHelper({u"read-rtc"_s}, &rtcout);
-    } else {
-        // For non-systemd systems, use hwclock output
-        runHelper({u"read-rtc"_s}, &rtcout);
-        isHardwareUTC = rtcout.contains("\nHardware clock is on UTC time\n");
+        QByteArray mode;
+        if (execute(u"timedatectl"_s, {u"show"_s, u"--property=LocalRTC"_s, u"--value"_s}, &mode, &error)) {
+            if (mode.trimmed() == "no") {
+                isHardwareUTC = true;
+            } else if (mode.trimmed() == "yes") {
+                isHardwareUTC = false;
+            }
+        }
+    } else if (readClock) {
+        const auto lines = rtcout.split('\n');
+        if (lines.contains("Assuming hardware clock is kept in UTC time.")) {
+            isHardwareUTC = true;
+        } else if (lines.contains("Assuming hardware clock is kept in local time.")) {
+            isHardwareUTC = false;
+        }
     }
 
-    if (isHardwareUTC) {
-        radioHardwareUTC->setChecked(true);
+    boxHardwareZone->setEnabled(isHardwareUTC.has_value());
+    if (isHardwareUTC.has_value()) {
+        (*isHardwareUTC ? radioHardwareUTC : radioHardwareLocal)->setChecked(true);
     } else {
-        radioHardwareLocal->setChecked(true);
+        for (auto *button : {radioHardwareUTC, radioHardwareLocal}) {
+            button->setAutoExclusive(false);
+            button->setChecked(false);
+            button->setAutoExclusive(true);
+        }
     }
-    textHardwareClock->setPlainText(QString(rtcout.trimmed()));
+    QStringList details;
+    if (!isHardwareUTC.has_value()) {
+        details << tr("The hardware clock mode is unknown.");
+    }
+    if (!rtcout.trimmed().isEmpty()) {
+        details << QString::fromUtf8(rtcout.trimmed());
+    }
+    if (!error.trimmed().isEmpty()) {
+        details << QString::fromUtf8(error.trimmed());
+    }
+    textHardwareClock->setPlainText(details.join('\n'));
     pushReadHardware->setText(btext);
     setClockLock(false);
 }
@@ -501,7 +522,7 @@ void MXDateTime::transferTime(const QString &action, const QString &from, const 
 void MXDateTime::saveHardwareClock()
 {
     const bool rtcUTC = radioHardwareUTC->isChecked();
-    if (rtcUTC != isHardwareUTC) {
+    if (isHardwareUTC.has_value() && rtcUTC != *isHardwareUTC) {
         if (sysInit == SystemD) {
             runHelper({rtcUTC ? u"systemd-rtc-utc"_s : u"systemd-rtc-local"_s});
         } else {

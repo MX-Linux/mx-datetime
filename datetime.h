@@ -28,6 +28,8 @@
 #include <QTimeEdit>
 #include <QTimer>
 
+#include <optional>
+
 // QTimeEdit subclassing just to stop the cursor and selection jumping every second.
 class MTimeEdit : public QTimeEdit
 {
@@ -64,7 +66,7 @@ private:
     enum InitSystem { SystemV, OpenRC, SystemD } sysInit = SystemV;
     QList<QByteArray> zones;
     bool enabledNTP {};
-    bool isHardwareUTC {};
+    std::optional<bool> isHardwareUTC;
     bool updating = false;
 
     void startup();

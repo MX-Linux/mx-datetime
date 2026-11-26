@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QScopeGuard>
+#include <QSignalBlocker>
 #include <QStandardPaths>
 #include <QTextCharFormat>
 #include <QTimeZone>
@@ -396,6 +397,12 @@ bool MXDateTime::saveDateTime() {
         if (!applied) {
             return showSaveError(tr("Could not set the system time zone to %1.").arg(zone), error);
         }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+        const QSignalBlocker syncingZone(timeEdit);
+        timeEdit->setTimeZone(QTimeZone(zone.toUtf8()));
+        timeEdit->updateDateTime(QDateTime::currentDateTime().addSecs(timeDelta));
+        clock->setTime(timeEdit->time());
+#endif
         pendingTimeZoneFile = zone;
         zoneDelta = 0;
         zoneIdChanged = false;

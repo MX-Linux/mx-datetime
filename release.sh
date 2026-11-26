@@ -61,14 +61,6 @@ validate_version() {
     echo "$version"
 }
 
-# Check if tag already exists locally or on the remote
-tag_exists() {
-    local version=$1
-    if git tag -l | grep -q "^${version}$"; then return 0; fi
-    if git ls-remote --tags origin 2>/dev/null | grep -q "refs/tags/${version}$"; then return 0; fi
-    return 1
-}
-
 # Get latest numeric release tag for comparison
 get_latest_tag() {
 	{
@@ -399,8 +391,30 @@ main() {
 
     check_aur_checkout
     print_step "Checking if tag '$version' already exists..."
-    if tag_exists "$version"; then
-        print_warning "Tag '$version' already exists; no new tag will be created"
+    local tag_ref="refs/tags/$version"
+    local remote_refs remote_target local_target
+    if ! remote_refs=$(git ls-remote --tags origin "$tag_ref" "${tag_ref}^{}"); then
+        print_error "Could not check tag '$version' on origin"
+        exit 1
+    fi
+    remote_target=$(awk -v ref="$tag_ref" '
+        $2 == ref { object = $1 }
+        $2 == ref "^{}" { peeled = $1 }
+        END { print peeled ? peeled : object }
+    ' <<< "$remote_refs")
+    if [ -n "$remote_target" ] && ! git show-ref --verify --quiet "$tag_ref"; then
+        git fetch --no-tags origin "$tag_ref:$tag_ref"
+    fi
+    if git show-ref --verify --quiet "$tag_ref"; then
+        local_target=$(git rev-parse --verify "${tag_ref}^{commit}")
+        if [ -z "$remote_target" ]; then
+            print_step "Publishing existing tag '$version' at $local_target to origin..."
+            git push origin "$tag_ref:$tag_ref"
+        elif [ "$local_target" != "$remote_target" ]; then
+            print_error "Local and origin tags for '$version' point to different commits"
+            exit 1
+        fi
+        print_step "Reusing tag '$version' at $local_target"
         tag_status="existing"
         ANNOTATION=$(get_tag_annotation "$version")
         if [ -z "$ANNOTATION" ]; then
@@ -436,7 +450,7 @@ main() {
         fi
         create_tag "$version" "$annotation"
         print_step "Pushing tag to GitHub..."
-        git push origin "$version"
+        git push origin "$tag_ref:$tag_ref"
         print_success "Tag pushed to GitHub"
     fi
 

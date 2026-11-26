@@ -343,12 +343,12 @@ bool isSourceLine(const QByteArray &line) {
 int handleChronyFile(const QString &action, const QStringList &arguments) {
     using namespace Qt::StringLiterals;
     const QString config = Chrony::chronyConfigFile();
+    const bool activate = action == u"activate-chrony-sources"_s;
     if (!isTrustedChronyPath(config) || arguments.size() != 1) {
         printError(u"Invalid chrony configuration path or argument count"_s);
         return 1;
     }
-    const bool retire = action == u"retire-inline-sources"_s;
-    const QString expected = retire ? config : Chrony::chronySourcesFile();
+    const QString expected = Chrony::chronySourcesFile();
     if (arguments.first() != expected || !isTrustedChronyPath(expected)) {
         printError(u"Invalid chrony destination"_s);
         return 1;
@@ -363,7 +363,7 @@ int handleChronyFile(const QString &action, const QStringList &arguments) {
         printError(u"Invalid chrony source data"_s);
         return 1;
     }
-    if (!retire) {
+    if (!activate) {
         for (const QByteArray &raw : content.split('\n')) {
             const QByteArray line = raw.trimmed();
             if (!line.isEmpty() && !line.startsWith('#') && !isSourceLine(line)) {
@@ -374,6 +374,11 @@ int handleChronyFile(const QString &action, const QStringList &arguments) {
         return writeManagedFile(expected, content);
     }
 
+    const QFileInfo sources(expected);
+    if (!sources.isFile()) {
+        printError(u"Managed chrony sources are missing"_s);
+        return 1;
+    }
     QFile file(config);
     if (!file.open(QIODevice::ReadOnly)) {
         printError(file.errorString());
@@ -382,8 +387,12 @@ int handleChronyFile(const QString &action, const QStringList &arguments) {
     const QList<QByteArray> snapshot = content.split('\n');
     QByteArray updated;
     bool changed = false;
+    bool included = false;
     while (!file.atEnd()) {
         const QByteArray raw = file.readLine();
+        for (const QString &dir : Chrony::sourceDirectories(raw)) {
+            included |= QDir(dir).absolutePath() == sources.absolutePath();
+        }
         if (isSourceLine(raw) && snapshot.contains(raw.trimmed())) {
             updated.append("##");
             changed = true;
@@ -395,6 +404,13 @@ int handleChronyFile(const QString &action, const QStringList &arguments) {
         return 1;
     }
     file.close();
+    if (!included) {
+        if (!updated.isEmpty() && !updated.endsWith('\n')) {
+            updated.append('\n');
+        }
+        updated.append("sourcedir " + sources.absolutePath().toUtf8() + '\n');
+        changed = true;
+    }
     if (changed && writeManagedFile(config, updated, true) != 0) {
         return 1;
     }
@@ -415,7 +431,7 @@ int main(int argc, char *argv[])
     const QString action = arguments.constFirst();
     const QStringList remainingArgs = arguments.mid(1);
 
-    if (action == QStringLiteral("install-chrony-sources") || action == QStringLiteral("retire-inline-sources")) {
+    if (action == QStringLiteral("install-chrony-sources") || action == QStringLiteral("activate-chrony-sources")) {
         return handleChronyFile(action, remainingArgs);
     }
     if (action == QStringLiteral("set-hwclock-mode")) {

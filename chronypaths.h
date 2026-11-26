@@ -38,29 +38,26 @@ inline QString chronyConfigFile()
     return u"/etc/chrony/chrony.conf"_s;
 }
 
-inline QString chronySourcesFile()
-{
-    const QString configFile = chronyConfigFile();
-    QFile file(configFile);
-    QString persistentSourcesFile;
+inline QStringList sourceDirectories(const QByteArray &raw) {
+    const QString line = QString::fromUtf8(raw).section('#', 0, 0).simplified();
+    QStringList tokens = line.split(' ', Qt::SkipEmptyParts);
+    if (tokens.isEmpty() || tokens.takeFirst().compare(u"sourcedir"_s, Qt::CaseInsensitive) != 0) {
+        return {};
+    }
+    return tokens;
+}
+
+inline QString chronySourcesFile() {
+    QFile file(chronyConfigFile());
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         while (!file.atEnd()) {
-            QString line = QString::fromUtf8(file.readLine()).simplified();
-            line = line.section('#', 0, 0).trimmed();
-            if (line.startsWith(u"sourcedir "_s)) {
-                const QStringList parts = line.split(' ', Qt::SkipEmptyParts);
-                if (parts.size() >= 2) {
-                    const QString dirPath = parts.at(1);
-                    if (dirPath.startsWith(u"/etc/"_s)) {
-                        persistentSourcesFile = QDir(dirPath).filePath(u"mx-datetime.sources"_s);
-                        break;
-                    }
+            const QStringList dirs = sourceDirectories(file.readLine());
+            for (const QString &dir : dirs) {
+                if (dir.startsWith(u"/etc/"_s)) {
+                    return QDir(dir).filePath(u"mx-datetime.sources"_s);
                 }
             }
         }
-    }
-    if (!persistentSourcesFile.isEmpty()) {
-        return persistentSourcesFile;
     }
     if (QFileInfo(u"/etc/chrony/sources.d"_s).isDir()) {
         return u"/etc/chrony/sources.d/mx-datetime.sources"_s;

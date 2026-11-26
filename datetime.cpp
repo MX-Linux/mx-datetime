@@ -780,14 +780,12 @@ bool MXDateTime::saveNetworkTime()
             return showSaveError(tr("Could not save the time sources to %1.").arg(sourcesFile), error);
         }
         if (ntp) {
-            if (!inlineSources.isEmpty()) {
-                QByteArray result;
-                if (!runHelper({u"retire-inline-sources"_s, configFile}, &result, &error, inlineSources)) {
-                    return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
-                }
-                chronyNeedsRestart |= result.trimmed() == "changed";
-                inlineSources.clear();
+            QByteArray result;
+            if (!runHelper({u"activate-chrony-sources"_s, sourcesFile}, &result, &error, inlineSources)) {
+                return showSaveError(tr("Could not update the time sources in %1.").arg(configFile), error);
             }
+            chronyNeedsRestart |= result.trimmed() == "changed";
+            inlineSources.clear();
             QStringList action {u"reload-sources"_s};
             if (chronyNeedsRestart) {
                 if (sysInit == SystemD) {

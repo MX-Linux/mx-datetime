@@ -1,87 +1,116 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset CDPATH
 shopt -s nullglob
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+root=$PWD
 
-translations_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-project_dir=$(dirname -- "$translations_dir")
-app=mx-datetime
-sources=("$project_dir"/*.cpp "$project_dir"/*.h "$project_dir"/*.ui)
-if (( ${#sources[@]} == 0 )); then
-    echo "No C++, header, or UI sources found in $project_dir" >&2
-    exit 1
-fi
-if ! command -v tx >/dev/null; then
-    echo "The Transifex client (tx) is required to refresh translations." >&2
-    exit 1
-fi
-lupdate=
-for candidate in lupdate-qt6 /usr/lib/qt6/bin/lupdate lupdate; do
-    if command -v "$candidate" >/dev/null; then
-        lupdate=$candidate
-        break
-    fi
-done
-if [[ -z $lupdate ]]; then
-    echo "Qt lupdate is required to extract source strings." >&2
-    exit 1
-fi
+fail() { echo "$*" >&2; exit 1; }
 
-# Stage at the same depth as translations/ so lupdate records the same relative paths.
-stage=$(mktemp -d "$project_dir/.translation-refresh.XXXXXXXX")
+(( $# <= 1 )) || fail "Usage: get_translations [--desktop]"
+case "${1:-}" in
+    '')
+        directory=$root/translations
+        english=("$directory/"*_en.ts)
+        (( ${#english[@]} == 1 )) || fail "Expected one English source catalog in $directory"
+        resource=${english[0]##*/}
+        resource=${resource%_en.ts}
+        source_file=${resource}_en.ts
+        output=.
+        extension=ts
+        minimum=25
+        lupdate=
+        for tool in lupdate-qt6 /usr/lib/qt6/bin/lupdate lupdate6 lupdate; do
+            if command -v "$tool" >/dev/null; then lupdate=$tool; break; fi
+        done
+        [[ -n $lupdate ]] || fail "Qt lupdate is required"
+        sources=()
+        for file in "$root/"*.{cpp,cc,cxx,h,hpp,ui,qml}; do
+            case ${file##*/} in moc_*|qrc_*|ui_*.h) continue ;; esac
+            sources+=("$file")
+        done
+        for dir in src qml; do
+            [[ ! -d $root/$dir ]] || sources+=("$root/$dir")
+        done
+        (( ${#sources[@]} )) || fail "No application sources found in $root"
+        ;;
+    --desktop)
+        directory=$root/translations-desktop-file
+        templates=("$directory/pot/"*.pot)
+        (( ${#templates[@]} == 1 )) || fail "Expected one desktop translation template in $directory/pot"
+        resource=${templates[0]##*/}
+        resource=${resource%.pot}
+        source_file=pot/$resource.pot
+        output=po
+        extension=po
+        minimum=''
+        ;;
+    *) fail "Usage: get_translations [--desktop]" ;;
+esac
+
+command -v tx >/dev/null || fail "The Transifex client (tx) is required"
+exec 9<"$directory"
+flock -x 9
+# A sibling of translations/ preserves the source paths written by lupdate.
+stage=$(mktemp -d "$root/.translation-refresh.XXXXXXXX")
 trap 'rm -rf -- "$stage"' EXIT
 cd -- "$stage"
-mkdir .tx
-if [[ -s $translations_dir/.tx/config ]]; then
-    # Keep project settings while directing all downloads into the staging directory.
-    sed -E "s|^[[:space:]]*file_filter[[:space:]]*=.*|file_filter = ${app}_<lang>.ts|; s|^[[:space:]]*source_file[[:space:]]*=.*|source_file = ${app}_en.ts|" \
-        "$translations_dir/.tx/config" > .tx/config
+mkdir -p .tx "$output" "$(dirname -- "$source_file")"
+config=$directory/.tx/config
+if [[ -s $config ]]; then
+    # Older desktop configs point at a template in the working directory.
+    sed -E "s|^([[:space:]]*source_file[[:space:]]*=).*|\\1 $source_file|; s|^([[:space:]]*file_filter[[:space:]]*=).*|\\1 $output/${resource}_<lang>.$extension|" "$config" > .tx/config
 else
     cat > .tx/config <<CONFIG
 [main]
 host = https://www.transifex.com
 
-[o:anticapitalista:p:antix-development:r:$app]
-file_filter = ${app}_<lang>.ts
-source_file = ${app}_en.ts
+[o:anticapitalista:p:antix-development:r:$resource]
+file_filter = $output/${resource}_<lang>.$extension
+source_file = $source_file
 source_lang = en
-type = ts
+type = $extension
 CONFIG
 fi
-if ! grep -Eq '^[[:space:]]*minimum_perc[[:space:]]*=' .tx/config; then
-    echo 'minimum_perc = 25' >> .tx/config
+if [[ -n $minimum ]] && ! grep -Eq '^[[:space:]]*minimum_perc[[:space:]]*=' .tx/config; then
+    echo "minimum_perc = $minimum" >> .tx/config
 fi
+cp -- "$directory/$source_file" "$source_file"
+tx pull -r "antix-development.$resource" --all
 
-tx pull -r "antix-development.$app" --all
-# English is regenerated below. US English duplicates the source catalog.
-rm -f -- "${app}_en.ts" "${app}_en_US.ts"
-downloads=("${app}_"*.ts)
-if (( ${#downloads[@]} == 0 )); then
-    echo "Transifex returned no translation catalogs." >&2
-    exit 1
+if [[ $extension == ts ]]; then
+    rm -f -- "$source_file" "${resource}_en_US.ts"
 fi
+downloads=("$output/${resource}_"*."$extension")
+(( ${#downloads[@]} )) || fail "No translations downloaded for $resource"
 for catalog in "${downloads[@]}"; do
-    if [[ ! -s $catalog ]]; then
-        echo "Transifex returned an empty catalog: $catalog" >&2
-        exit 1
-    fi
+    [[ -f $catalog && -s $catalog ]] || fail "Empty or invalid catalog: $catalog"
 done
+if [[ $extension == ts ]]; then
+    python3 - "${downloads[@]}" <<'PYTHON'
+import sys
+import xml.etree.ElementTree as ET
 
-english=${app}_en.ts
-if [[ -f $translations_dir/$english ]]; then
-    cp -- "$translations_dir/$english" "$english"
+for catalog in sys.argv[1:]:
+    if ET.parse(catalog).getroot().tag != "TS":
+        sys.exit(f"Invalid Qt translation catalog: {catalog}")
+PYTHON
+    cp -- "$directory/$source_file" "$source_file"
+    "$lupdate" "${sources[@]}" -ts "$source_file"
+else
+    for catalog in "${downloads[@]}"; do msgfmt -o /dev/null "$catalog"; done
 fi
-"$lupdate" "${sources[@]}" -ts "$english"
 
-# Publish complete refreshes one at a time. Prune obsolete locales last.
-exec {lock_fd}<"$translations_dir"
-flock -x "$lock_fd"
+# Install the complete download before pruning locales that disappeared upstream.
+mkdir -p "$directory/$output"
 obsolete=()
-for catalog in "$translations_dir/${app}_"*.ts; do
-    if [[ ! -f ${catalog##*/} ]]; then
-        obsolete+=("$catalog")
-    fi
+for file in "$directory/$output/${resource}_"*."$extension"; do
+    [[ -f "$output/${file##*/}" ]] || obsolete+=("$file")
 done
-mv -f -- "${app}_"*.ts "$translations_dir/"
-if (( ${#obsolete[@]} )); then
-    rm -- "${obsolete[@]}"
+mv -f -- "$output/${resource}_"*."$extension" "$directory/$output/"
+if (( ${#obsolete[@]} )); then rm -f -- "${obsolete[@]}"; fi
+# Leave a usable config for tx commands run directly in the catalog directory.
+if ! cmp -s .tx/config "$config"; then
+    mkdir -p "$directory/.tx"
+    mv -f -- .tx/config "$config"
 fi

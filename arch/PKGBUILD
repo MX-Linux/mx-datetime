@@ -21,10 +21,8 @@ makedepends=('cmake' 'ninja' 'qt6-tools')
 source=("${pkgname}_${pkgver}.tar.xz")
 sha256sums=('SKIP')
 
-# Unlike the other MX repos, dpkg-source packed this tarball from a directory
-# called "mx-datetime" rather than "src", so that - not "src" and not
-# ${pkgname}-${pkgver} - is what it unpacks to.
-_srcdir="mx-datetime"
+# The Debian source tarball has a top-level src/ directory.
+_srcdir="src"
 
 build() {
     cd "${srcdir}/${_srcdir}"

@@ -8,3 +8,6 @@ tar-ignore = "CMakeUserPresets.json"
 tar-ignore = "_build_"
 tar-ignore = "build"
 tar-ignore = "debs"
+
+# CMake build trees and locally built Arch packages.
+tar-ignore = build-*

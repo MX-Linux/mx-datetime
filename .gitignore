@@ -51,3 +51,4 @@ debian/*.substvars
 
 # Transifex ignore
 .tx/
+/build-appimage/

@@ -17,6 +17,8 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
+#include "apppaths.h"
+
 #include <QApplication>
 #include <QDateTime>
 #include <QDebug>
@@ -41,7 +43,14 @@ using namespace Qt::StringLiterals;
 
 namespace
 {
-const QString HelperPath = QStringLiteral(HELPER_PATH);
+QString helperPath()
+{
+#ifdef APPIMAGE_BUILD
+    return QCoreApplication::applicationDirPath() + u"/../libexec/mx-datetime/helper"_s;
+#else
+    return QStringLiteral(HELPER_PATH);
+#endif
+}
 
 QString elevationProgram()
 {
@@ -262,7 +271,7 @@ bool MXDateTime::execute(const QString &program, const QStringList &arguments, Q
 bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QByteArray *error, const QByteArray &input)
 {
     qDebug() << "Helper:" << arguments;
-    QString program = HelperPath;
+    QString program = helperPath();
     QStringList programArgs = arguments;
     if (getuid() != 0) {
         program = elevationProgram();
@@ -273,7 +282,12 @@ bool MXDateTime::runHelper(const QStringList &arguments, QByteArray *output, QBy
             qWarning() << "No suitable elevation command found (pkexec or gksu)";
             return false;
         }
-        programArgs.prepend(HelperPath);
+#ifdef APPIMAGE_BUILD
+        programArgs.prepend(u"--run-helper"_s);
+        programArgs.prepend(qEnvironmentVariable("APPIMAGE"));
+#else
+        programArgs.prepend(helperPath());
+#endif
     }
     return execute(program, programArgs, output, error, input);
 }
@@ -1003,11 +1017,11 @@ void MXDateTime::aboutClicked()
         + u"</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br/>"_s
             u"</p><p align=\"center\">"_s
         + tr("Copyright (c) MX Linux") + u"<br /><br /></p>"_s,
-        u"/usr/share/doc/mx-datetime/license.html"_s, tr("%1 License").arg(this->windowTitle()));
+        sharePath(QStringLiteral("doc/mx-datetime/license.html")), tr("%1 License").arg(this->windowTitle()));
 }
 void MXDateTime::helpClicked()
 {
-    displayHelpDoc(u"/usr/share/doc/mx-datetime/mx-datetime.html"_s, tr("MX Date & Time Help"));
+    displayHelpDoc(sharePath(QStringLiteral("doc/mx-datetime/mx-datetime.html")), tr("MX Date & Time Help"));
 }
 
 // SUBCLASSING FOR QTimeEdit THAT FIXES CURSOR AND SELECTION JUMPING EVERY SECOND

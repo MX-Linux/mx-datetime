@@ -17,6 +17,8 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
+#include "apppaths.h"
+
 #include <unistd.h>
 #include <QApplication>
 #include <QLibraryInfo>
@@ -33,8 +35,16 @@
 
 using namespace Qt::StringLiterals;
 
+#include <cstdio>
+#include <cstring>
+
 int main(int argc, char *argv[])
 {
+    if (argc == 2 && std::strcmp(argv[1], "--version") == 0) {
+        std::puts("mx-datetime " VERSION);
+        return EXIT_SUCCESS;
+    }
+
     if (qEnvironmentVariableIsEmpty("DISPLAY") && qEnvironmentVariableIsEmpty("WAYLAND_DISPLAY")
         && qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM")) {
         qWarning("mx-datetime: no display available (DISPLAY and WAYLAND_DISPLAY are both unset); "
@@ -68,7 +78,7 @@ int main(int argc, char *argv[])
         a.installTranslator(&qtBaseTran);
     }
     QTranslator appTran;
-    if (appTran.load(QLocale::system(), a.applicationName(), u"_"_s, u"/usr/share/mx-datetime/locale"_s)) {
+    if (appTran.load(QLocale::system(), a.applicationName(), u"_"_s, sharePath(QStringLiteral("mx-datetime/locale")))) {
         a.installTranslator(&appTran);
     }
 

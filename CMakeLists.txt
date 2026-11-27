@@ -84,6 +84,11 @@ build_translation_files(mx-datetime translations)
 build_compilation_setup(helper)
 build_version_definition(helper VERSION)
 
+option(APPIMAGE_BUILD "Build the relocatable AppImage" OFF)
+if(APPIMAGE_BUILD)
+    target_compile_definitions(mx-datetime PRIVATE APPIMAGE_BUILD)
+endif()
+
 target_compile_definitions(mx-datetime PRIVATE
 	HELPER_PATH="${HELPER_PATH}"
 	QT_DISABLE_DEPRECATED_UP_TO=0x060400

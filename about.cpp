@@ -17,6 +17,8 @@
  * This file is part of mx-datetime.
  **********************************************************************/
 
+#include "apppaths.h"
+
 #include "about.h"
 
 #include <QApplication>
@@ -107,7 +109,7 @@ void displayAboutMsgBox(const QString &title, const QString &message, const QStr
         text->setReadOnly(true);
         QProcess proc;
         const QString appName = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
-        const QString changelogPath = u"/usr/share/doc/"_s + appName + u"/changelog.gz"_s;
+        const QString changelogPath = sharePath(QStringLiteral("doc/")) + appName + u"/changelog.gz"_s;
         proc.start(u"zcat"_s, {changelogPath}, QIODevice::ReadOnly);
         if (proc.waitForStarted(3000) && proc.waitForFinished(3000)) {
             text->setText(QString::fromUtf8(proc.readAllStandardOutput()));
